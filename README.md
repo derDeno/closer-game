@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="https://raw.githubusercontent.com/derDeno/closer-game/refs/heads/main/public/logo.png" alt="Logo" width="200"/>
+</p>
+
 # Näher Draan
 
 Ein einfaches Schätzspiel für bis zu acht Spieler:innen. Die Teilnehmenden treten über einen zufälligen Lobby-Code einer Runde bei, beantworten Schätzfragen und sehen anschließend, wer am nächsten bzw. am weitesten von der korrekten Lösung entfernt war.
