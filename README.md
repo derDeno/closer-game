@@ -1,4 +1,4 @@
-# Closer Game
+# Näher Draan
 
 Ein einfaches Schätzspiel für bis zu acht Spieler:innen. Die Teilnehmenden treten über einen zufälligen Lobby-Code einer Runde bei, beantworten Schätzfragen und sehen anschließend, wer am nächsten bzw. am weitesten von der korrekten Lösung entfernt war.
 
@@ -39,9 +39,13 @@ Die Datei [`questions.json`](./questions.json) enthält die Fragen. Jede Frage b
 {
   "id": 1,
   "question": "Fragestellung als Text",
-  "type": "number" | "text",
-  "answer": 42 // nur bei Zahlfragen notwendig
+  "type": "number",
+  "answer": 42
 }
 ```
 
-Neue Fragen können einfach ergänzt werden. Bei `type: "text"` wird keine Auswertung vorgenommen und lediglich die Antworten angezeigt.
+Neue Fragen können einfach ergänzt werden. Es werden lediglich Zahlen als Antworten erlaubt, da sonst eine automatische Auswertung nicht möglich ist.
+
+
+## Highscore
+Am Ende des Spiels, bzw. wenn für ein Ende abgestimmt wurde, wird ein Highscore mit den erreichten Punkten und der durchschnittlichen Punktzahl angezeigt.
