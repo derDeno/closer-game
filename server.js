@@ -63,6 +63,25 @@ function getConnectedPlayers(lobby) {
   return Object.values(lobby.players).filter(player => player.connected);
 }
 
+function ensurePlayerStats(lobby, playerId, name) {
+  if (!lobby.playerStats.has(playerId)) {
+    lobby.playerStats.set(playerId, {
+      playerId,
+      name,
+      rounds: 0,
+      validAnswers: 0,
+      totalDeviation: 0,
+      points: 0,
+      lastDeviation: null,
+      lastPoints: 0
+    });
+  }
+
+  const stats = lobby.playerStats.get(playerId);
+  stats.name = name;
+  return stats;
+}
+
 function getLobbyState(lobby) {
   const connectedPlayers = getConnectedPlayers(lobby);
   const status = lobby.gameFinished
@@ -164,6 +183,27 @@ function evaluateRound(lobby) {
     farthestId = validDistances[validDistances.length - 1].playerId;
   }
 
+  const participantCount = answers.length;
+  answers.forEach(entry => {
+    const stats = ensurePlayerStats(lobby, entry.playerId, entry.name);
+    stats.rounds += 1;
+    if (typeof entry.distance === 'number') {
+      stats.validAnswers += 1;
+      stats.totalDeviation += entry.distance;
+      stats.lastDeviation = entry.distance;
+    } else {
+      stats.lastDeviation = null;
+    }
+    stats.lastPoints = 0;
+  });
+
+  validDistances.forEach((entry, index) => {
+    const stats = ensurePlayerStats(lobby, entry.playerId, entry.name);
+    const pointsAwarded = participantCount - index;
+    stats.points += pointsAwarded;
+    stats.lastPoints = pointsAwarded;
+  });
+
   const payload = {
     questionId: question?.id ?? null,
     question: question?.question ?? null,
@@ -194,24 +234,41 @@ function evaluateRound(lobby) {
   return payload;
 }
 
-function buildHighscore(results) {
-  if (!results?.answers) {
+function buildHighscore(lobby) {
+  if (!lobby?.playerStats) {
     return [];
   }
 
-  return results.answers
-    .map(entry => ({
-      name: entry.name,
-      answer: entry.answer,
-      distance: typeof entry.distance === 'number' ? Number(entry.distance) : null
-    }))
+  return Array.from(lobby.playerStats.values())
+    .map(stats => {
+      const averageDeviation = stats.validAnswers > 0 ? stats.totalDeviation / stats.validAnswers : null;
+      return {
+        name: stats.name,
+        points: stats.points,
+        averageDeviation,
+        totalDeviation: stats.totalDeviation,
+        validAnswers: stats.validAnswers,
+        rounds: stats.rounds
+      };
+    })
+    .filter(entry => entry.rounds > 0 || entry.points > 0 || entry.validAnswers > 0)
     .sort((a, b) => {
-      const aValid = typeof a.distance === 'number';
-      const bValid = typeof b.distance === 'number';
-      if (aValid && bValid) return a.distance - b.distance;
-      if (aValid) return -1;
-      if (bValid) return 1;
-      return 0;
+      if (b.points !== a.points) {
+        return b.points - a.points;
+      }
+
+      const aAvg = typeof a.averageDeviation === 'number' ? a.averageDeviation : Number.POSITIVE_INFINITY;
+      const bAvg = typeof b.averageDeviation === 'number' ? b.averageDeviation : Number.POSITIVE_INFINITY;
+
+      if (aAvg !== bAvg) {
+        return aAvg - bAvg;
+      }
+
+      if (a.totalDeviation !== b.totalDeviation) {
+        return a.totalDeviation - b.totalDeviation;
+      }
+
+      return a.name.localeCompare(b.name, 'de');
     });
 }
 
@@ -230,9 +287,7 @@ function finalizeGame(lobby, reason, resultsOverride) {
 
   const summary = {
     reason,
-    question: results?.question ?? null,
-    correctAnswer: results?.correctAnswer ?? null,
-    highscore: buildHighscore(results),
+    highscore: buildHighscore(lobby),
     roundsPlayed: lobby.roundsPlayed
   };
 
@@ -272,7 +327,8 @@ app.post('/lobbies', (req, res) => {
     roundsPlayed: 0,
     endVotes: new Set(),
     gameFinished: false,
-    finalSummary: null
+    finalSummary: null,
+    playerStats: new Map()
   };
   lobbies.set(code, lobby);
   res.json({ code });
@@ -302,6 +358,8 @@ io.on('connection', socket => {
       ready: false,
       connected: true
     };
+
+    ensurePlayerStats(lobby, socket.id, displayName);
 
     socket.join(lobby.code);
     broadcastLobby(lobby);
