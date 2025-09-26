@@ -277,7 +277,9 @@ function displayResults({ answers = [], correctAnswer, type }) {
       badge.className = 'badge good';
       badge.textContent = 'Am nächsten dran';
       div.appendChild(badge);
-    } else if (entry.farthest) {
+    }
+
+    if (entry.farthest) {
       const badge = document.createElement('span');
       badge.className = 'badge bad';
       badge.textContent = 'Am weitesten weg';
