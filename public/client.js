@@ -41,11 +41,44 @@ const distanceFormatter = new Intl.NumberFormat('de-DE', {
   useGrouping: true
 });
 
+const numberFormatter = new Intl.NumberFormat('de-DE', {
+  maximumFractionDigits: 20,
+  useGrouping: true
+});
+
+const integerFormatter = new Intl.NumberFormat('de-DE', {
+  maximumFractionDigits: 0,
+  useGrouping: true
+});
+
 function formatDistance(value) {
   if (typeof value !== 'number' || Number.isNaN(value)) {
     return null;
   }
   return distanceFormatter.format(value);
+}
+
+function formatNumericValue(value, { integer = false } = {}) {
+  if (typeof value === 'number') {
+    if (!Number.isFinite(value)) {
+      return null;
+    }
+    return (integer ? integerFormatter : numberFormatter).format(value);
+  }
+
+  if (typeof value === 'string') {
+    const normalized = value.replace(',', '.').trim();
+    if (normalized.length === 0) {
+      return null;
+    }
+    const parsed = Number(normalized);
+    if (!Number.isFinite(parsed)) {
+      return null;
+    }
+    return (integer ? integerFormatter : numberFormatter).format(parsed);
+  }
+
+  return null;
 }
 
 function showEntry() {
@@ -261,7 +294,11 @@ function displayResults({ answers = [], correctAnswer, type }) {
   if (typeof correctAnswer !== 'undefined' && correctAnswer !== null) {
     const correct = document.createElement('p');
     correct.className = 'hint';
-    correct.textContent = `Richtige Antwort: ${correctAnswer}`;
+    const formattedCorrect = formatNumericValue(correctAnswer, {
+      integer: typeof correctAnswer === 'number' && Number.isInteger(correctAnswer)
+    });
+    const answerText = formattedCorrect ?? correctAnswer;
+    correct.textContent = `Richtige Antwort: ${answerText}`;
     resultsArea.appendChild(correct);
   }
 
@@ -269,7 +306,9 @@ function displayResults({ answers = [], correctAnswer, type }) {
     const div = document.createElement('div');
     div.className = `result-entry ${entry.closest ? 'closest' : ''} ${entry.farthest ? 'farthest' : ''}`;
     const label = document.createElement('span');
-    label.innerHTML = `<strong>${escapeHtml(entry.name)}</strong>: ${escapeHtml(entry.answer ?? '–')}`;
+    const formattedAnswer = formatNumericValue(entry.answer);
+    const answerText = formattedAnswer ?? (entry.answer ?? '–');
+    label.innerHTML = `<strong>${escapeHtml(entry.name)}</strong>: ${escapeHtml(answerText)}`;
     div.appendChild(label);
 
     if (entry.closest) {
@@ -340,7 +379,8 @@ function renderSummary(summary) {
   if (typeof data.roundsPlayed === 'number') {
     const roundsInfo = document.createElement('p');
     roundsInfo.className = 'hint';
-    roundsInfo.textContent = `Gespielte Runden: ${data.roundsPlayed}`;
+    const formattedRounds = formatNumericValue(data.roundsPlayed, { integer: true });
+    roundsInfo.textContent = `Gespielte Runden: ${formattedRounds ?? data.roundsPlayed}`;
     summaryArea.appendChild(roundsInfo);
   }
 
@@ -370,7 +410,8 @@ function renderSummary(summary) {
       const parts = [];
 
       if (typeof entry.points === 'number') {
-        parts.push(`Punkte: ${entry.points}`);
+        const formattedPoints = formatNumericValue(entry.points, { integer: true });
+        parts.push(`Punkte: ${formattedPoints ?? entry.points}`);
       }
 
       if (typeof entry.averageDeviation === 'number') {
