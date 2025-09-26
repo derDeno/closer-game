@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Closer Game</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <main class="app">
+      <section id="entry-screen" class="card">
+        <img src="/logo.png" alt="Näher Draan Logo" class="app-logo" />
+        <h1 class="visually-hidden">Closer</h1>
+        <p class="tagline">Tritt einer Lobby bei und zeige dein Schätz-Talent!</p>
+        <div class="form-group">
+          <label for="name-input">Dein Name</label>
+          <input id="name-input" type="text" maxlength="18" placeholder="Spieler" />
+        </div>
+        <div class="form-group">
+          <label for="code-input">Lobby-Code</label>
+          <input id="code-input" type="text" maxlength="4" placeholder="ABCD" />
+        </div>
+        <fieldset class="form-group" id="round-options">
+          <legend>Rundenmodus</legend>
+          <label class="option-row">
+            <input
+              type="radio"
+              name="question-mode"
+              id="mode-fixed"
+              value="fixed"
+              checked
+            />
+            <span>Feste Anzahl von Fragen</span>
+          </label>
+          <div class="option-nested" id="fixed-config">
+            <label for="question-count">Anzahl der Fragen</label>
+            <input
+              id="question-count"
+              type="number"
+              min="1"
+              max="99"
+              step="1"
+              value="5"
+            />
+          </div>
+          <label class="option-row">
+            <input type="radio" name="question-mode" id="mode-unlimited" value="unlimited" />
+            <span>Unbegrenzt – Spielende per Abstimmung</span>
+          </label>
+        </fieldset>
+        <div class="actions">
+          <button id="join-btn" class="primary">Lobby beitreten</button>
+          <button id="create-btn" class="secondary">Neue Lobby erstellen</button>
+        </div>
+        <p id="entry-error" class="error" role="alert"></p>
+      </section>
+
+      <section id="lobby-screen" class="card hidden">
+        <header class="lobby-header">
+          <h2>Lobby <span id="lobby-code"></span></h2>
+          <button id="leave-btn" class="link">Verlassen</button>
+        </header>
+        <div class="players" id="player-list"></div>
+        <div id="status-area"></div>
+        <div id="question-area" class="hidden">
+          <p id="question-text"></p>
+          <form id="answer-form">
+            <input
+              id="answer-input"
+              type="number"
+              inputmode="decimal"
+              step="any"
+              autocomplete="off"
+              required
+              placeholder="Deine Antwort"
+            />
+            <button type="submit" class="primary">Antwort senden</button>
+          </form>
+          <p id="answer-hint" class="hint"></p>
+        </div>
+        <div id="results-area" class="hidden"></div>
+        <div id="summary-area" class="hidden"></div>
+        <button id="ready-btn" class="primary hidden">Bereit für nächste Runde</button>
+        <button id="end-vote-btn" class="secondary hidden">Spiel beenden (Abstimmung)</button>
+      </section>
+    </main>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/client.js" type="module"></script>
+  </body>
+</html>

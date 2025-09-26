@@ -1,0 +1,152 @@
+[
+  {
+    "id": 1,
+    "question": "Wie viele Sekunden hat ein Tag?",
+    "type": "number",
+    "answer": 86400
+  },
+  {
+    "id": 2,
+    "question": "Wie hoch ist der Eiffelturm (in Metern)?",
+    "type": "number",
+    "answer": 330
+  },
+  {
+    "id": 3,
+    "question": "In welchem Jahr wurde die Berliner Mauer gebaut?",
+    "type": "number",
+    "answer": 1961
+  },
+  {
+    "id": 4,
+    "question": "Wie viele Planeten hat unser Sonnensystem?",
+    "type": "number",
+    "answer": 8
+  },
+  {
+    "id": 5,
+    "question": "Wie viele Buchstaben hat das deutsche Alphabet (ohne Sonderzeichen)?",
+    "type": "number",
+    "answer": 26
+  },
+  {
+    "id": 6,
+    "question": "Wie viele Bundesländer hat Deutschland?",
+    "type": "number",
+    "answer": 16
+  },
+  {
+    "id": 7,
+    "question": "Wie viele Kilometer ist der Rhein lang?",
+    "type": "number",
+    "answer": 1232
+  },
+  {
+    "id": 8,
+    "question": "In welchem Jahr startete die erste bemannte Mondlandung?",
+    "type": "number",
+    "answer": 1969
+  },
+  {
+    "id": 9,
+    "question": "Wie viele Minuten hat eine Woche?",
+    "type": "number",
+    "answer": 10080
+  },
+  {
+    "id": 10,
+    "question": "In welchem Jahr endete der Zweite Weltkrieg?",
+    "type": "number",
+    "answer": 1945
+  },
+  {
+    "id": 11,
+    "question": "Wie viele Meter ist der Mount Everest hoch?",
+    "type": "number",
+    "answer": 8849
+  },
+  {
+    "id": 12,
+    "question": "Wie viele Spieler stehen beim Fußball pro Team auf dem Feld?",
+    "type": "number",
+    "answer": 11
+  },
+  {
+    "id": 13,
+    "question": "Wie viele Tasten hat ein klassisches Klavier?",
+    "type": "number",
+    "answer": 88
+  },
+  {
+    "id": 14,
+    "question": "Wie viele Kilometer beträgt der Umfang der Erde am Äquator?",
+    "type": "number",
+    "answer": 40075
+  },
+  {
+    "id": 15,
+    "question": "Wie viele Bundeskanzler hatte Deutschland seit 1949?",
+    "type": "number",
+    "answer": 9
+  },
+  {
+    "id": 16,
+    "question": "Wie viele Sekunden hat ein Jahr (ohne Schaltjahr)?",
+    "type": "number",
+    "answer": 31536000
+  },
+  {
+    "id": 17,
+    "question": "Wie viele Einwohner hat Berlin (Stand 2023, gerundet auf Tausender)?",
+    "type": "number",
+    "answer": 3660000
+  },
+  {
+    "id": 18,
+    "question": "Wie viele Kilometer misst die Donau?",
+    "type": "number",
+    "answer": 2850
+  },
+  {
+    "id": 19,
+    "question": "Wie viele Zeitzonen hat Russland?",
+    "type": "number",
+    "answer": 11
+  },
+  {
+    "id": 20,
+    "question": "Wie viele Karten hat ein Skatblatt?",
+    "type": "number",
+    "answer": 32
+  },
+  {
+    "id": 21,
+    "question": "Wie viele Kilometer misst die Luftlinie zwischen Berlin und München?",
+    "type": "number",
+    "answer": 505
+  },
+  {
+    "id": 22,
+    "question": "Wie viele Meter ist der Kölner Dom hoch?",
+    "type": "number",
+    "answer": 157
+  },
+  {
+    "id": 23,
+    "question": "Wie viele Inseln gehören zu Schweden (gerundet)?",
+    "type": "number",
+    "answer": 267570
+  },
+  {
+    "id": 24,
+    "question": "Wie viele Tage hat ein Schaltjahr?",
+    "type": "number",
+    "answer": 366
+  },
+  {
+    "id": 25,
+    "question": "Wie viele Einwohner hat die Schweiz (Stand 2023, gerundet auf Tausender)?",
+    "type": "number",
+    "answer": 8700000
+  }
+]
