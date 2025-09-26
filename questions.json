@@ -1,152 +1,602 @@
 [
   {
     "id": 1,
-    "question": "Wie viele Sekunden hat ein Tag?",
+    "question": "Wie viele Kilometer misst die Transsibirische Eisenbahn von Moskau nach Wladiwostok?",
     "type": "number",
-    "answer": 86400
+    "answer": 9289
   },
   {
     "id": 2,
-    "question": "Wie hoch ist der Eiffelturm (in Metern)?",
+    "question": "Wie hoch ist der Vulkan Ojos del Salado in Metern?",
     "type": "number",
-    "answer": 330
+    "answer": 6893
   },
   {
     "id": 3,
-    "question": "In welchem Jahr wurde die Berliner Mauer gebaut?",
+    "question": "Wie viele Einwohner hatte das Byzantinische Reich um 560 n. Chr. zur Zeit Justinians I. (Schätzung)?",
     "type": "number",
-    "answer": 1961
+    "answer": 26000000
   },
   {
     "id": 4,
-    "question": "Wie viele Planeten hat unser Sonnensystem?",
+    "question": "Wie viele Tage dauerte die Belagerung von Leningrad?",
     "type": "number",
-    "answer": 8
+    "answer": 872
   },
   {
     "id": 5,
-    "question": "Wie viele Buchstaben hat das deutsche Alphabet (ohne Sonderzeichen)?",
+    "question": "Wie viele Verse umfasst die Ilias von Homer?",
     "type": "number",
-    "answer": 26
+    "answer": 15693
   },
   {
     "id": 6,
-    "question": "Wie viele Bundesländer hat Deutschland?",
+    "question": "Wie viele Einwohner zählte das Römische Reich unter Kaiser Trajan (Schätzung)?",
     "type": "number",
-    "answer": 16
+    "answer": 60000000
   },
   {
     "id": 7,
-    "question": "Wie viele Kilometer ist der Rhein lang?",
+    "question": "Wie viele Kilometer Küstenlinie besitzt Japan laut offizieller Vermessung (gerundet)?",
     "type": "number",
-    "answer": 1232
+    "answer": 29751
   },
   {
     "id": 8,
-    "question": "In welchem Jahr startete die erste bemannte Mondlandung?",
+    "question": "Wie groß ist die mittlere Entfernung zwischen Erde und Sonne in Kilometern?",
     "type": "number",
-    "answer": 1969
+    "answer": 149597870
   },
   {
     "id": 9,
-    "question": "Wie viele Minuten hat eine Woche?",
+    "question": "Wie viele Kilometer misst die Linie 3 der Metro Guangzhou, die längste U-Bahn-Linie der Welt?",
     "type": "number",
-    "answer": 10080
+    "answer": 67.3
   },
   {
     "id": 10,
-    "question": "In welchem Jahr endete der Zweite Weltkrieg?",
+    "question": "Wie viele UNESCO-Welterbestätten waren Ende 2023 weltweit gelistet?",
     "type": "number",
-    "answer": 1945
+    "answer": 1199
   },
   {
     "id": 11,
-    "question": "Wie viele Meter ist der Mount Everest hoch?",
+    "question": "Wie tief liegt der Challenger Deep im Marianengraben in Metern?",
     "type": "number",
-    "answer": 8849
+    "answer": 10984
   },
   {
     "id": 12,
-    "question": "Wie viele Spieler stehen beim Fußball pro Team auf dem Feld?",
+    "question": "Wie viele Mitglieder hatte die Internationale Astronomische Union 2023?",
     "type": "number",
-    "answer": 11
+    "answer": 13667
   },
   {
     "id": 13,
-    "question": "Wie viele Tasten hat ein klassisches Klavier?",
+    "question": "Wie viele Primzahlen gibt es unter 1000?",
     "type": "number",
-    "answer": 88
+    "answer": 168
   },
   {
     "id": 14,
-    "question": "Wie viele Kilometer beträgt der Umfang der Erde am Äquator?",
+    "question": "Wie viele Dezimalstellen besitzt die Zahl 2^1000?",
     "type": "number",
-    "answer": 40075
+    "answer": 302
   },
   {
     "id": 15,
-    "question": "Wie viele Bundeskanzler hatte Deutschland seit 1949?",
+    "question": "Wie viele Dezimalstellen hat 100!?",
     "type": "number",
-    "answer": 9
+    "answer": 158
   },
   {
     "id": 16,
-    "question": "Wie viele Sekunden hat ein Jahr (ohne Schaltjahr)?",
+    "question": "Wie viele Jahre beträgt die durchschnittliche Umlaufzeit des Halleyschen Kometen?",
     "type": "number",
-    "answer": 31536000
+    "answer": 75.3
   },
   {
     "id": 17,
-    "question": "Wie viele Einwohner hat Berlin (Stand 2023, gerundet auf Tausender)?",
+    "question": "Wie viele Protonen besitzt ein Atom des Elements Wismut?",
     "type": "number",
-    "answer": 3660000
+    "answer": 83
   },
   {
     "id": 18,
-    "question": "Wie viele Kilometer misst die Donau?",
+    "question": "Wie viele Kilometer ist der Nil inklusive Weißem und Blauem Nil lang?",
     "type": "number",
-    "answer": 2850
+    "answer": 6650
   },
   {
     "id": 19,
-    "question": "Wie viele Zeitzonen hat Russland?",
+    "question": "Wie viele Meter Durchmesser hat der Zwergplanet Pluto im Mittel?",
     "type": "number",
-    "answer": 11
+    "answer": 2376
   },
   {
     "id": 20,
-    "question": "Wie viele Karten hat ein Skatblatt?",
+    "question": "Wie viele Kelvin beträgt die effektive Oberflächentemperatur der Sonne?",
     "type": "number",
-    "answer": 32
+    "answer": 5778
   },
   {
     "id": 21,
-    "question": "Wie viele Kilometer misst die Luftlinie zwischen Berlin und München?",
+    "question": "Wie viele Lichtjahre entfernt ist die Andromedagalaxie von der Milchstraße?",
+    "type": "number",
+    "answer": 2537000
+  },
+  {
+    "id": 22,
+    "question": "Wie viele Objekte umfasst der Messier-Katalog?",
+    "type": "number",
+    "answer": 110
+  },
+  {
+    "id": 23,
+    "question": "Wie viele Meter pro Sekunde beträgt die Lichtgeschwindigkeit im Vakuum?",
+    "type": "number",
+    "answer": 299792458
+  },
+  {
+    "id": 24,
+    "question": "Wie viele proteinkodierende Gene enthält das menschliche Genom ungefähr?",
+    "type": "number",
+    "answer": 20000
+  },
+  {
+    "id": 25,
+    "question": "Wie viele Kilometer lang ist der Mekong?",
+    "type": "number",
+    "answer": 4350
+  },
+  {
+    "id": 26,
+    "question": "Wie viele Kilometer erstreckt sich die Great Dividing Range in Australien?",
+    "type": "number",
+    "answer": 3500
+  },
+  {
+    "id": 27,
+    "question": "Wie viele Basenpaare umfasst das menschliche Genom ungefähr?",
+    "type": "number",
+    "answer": 3200000000
+  },
+  {
+    "id": 28,
+    "question": "Wie viele Meter stürzt das Wasser der Salto Ángel in Venezuela hinab?",
+    "type": "number",
+    "answer": 979
+  },
+  {
+    "id": 29,
+    "question": "Wie viele verschiedene Aminosäuren kodiert der genetische Code?",
+    "type": "number",
+    "answer": 20
+  },
+  {
+    "id": 30,
+    "question": "Wie viele Tage vergingen zwischen dem Auslaufen von Magellans Armada 1519 und der Rückkehr der Victoria 1522?",
+    "type": "number",
+    "answer": 1082
+  },
+  {
+    "id": 31,
+    "question": "Wie viele Einwohner hatte Singapur 2023 (gerundet auf Tausender)?",
+    "type": "number",
+    "answer": 5900000
+  },
+  {
+    "id": 32,
+    "question": "Wie viele Kilometer legt die Internationale Raumstation pro Umlauf zurück (gerundet)?",
+    "type": "number",
+    "answer": 42669
+  },
+  {
+    "id": 33,
+    "question": "Wie viele Nukleotide umfasst das Genom von SARS-CoV-2?",
+    "type": "number",
+    "answer": 29903
+  },
+  {
+    "id": 34,
+    "question": "Wie viele Kilometer legt Licht in einer Stunde im Vakuum zurück?",
+    "type": "number",
+    "answer": 1079252848800
+  },
+  {
+    "id": 35,
+    "question": "Wie viele Einwohner erreichte das Großmogulreich um 1700 (Schätzung)?",
+    "type": "number",
+    "answer": 150000000
+  },
+  {
+    "id": 36,
+    "question": "Wie tief ist der Baikalsee an seiner tiefsten Stelle in Metern?",
+    "type": "number",
+    "answer": 1642
+  },
+  {
+    "id": 37,
+    "question": "Wie viele Kilometer beträgt der Umfang des Mondes?",
+    "type": "number",
+    "answer": 10921
+  },
+  {
+    "id": 38,
+    "question": "Wie viele Tage umfasst ein Saros-Zyklus?",
+    "type": "number",
+    "answer": 6585.3
+  },
+  {
+    "id": 39,
+    "question": "Wie viele Knoten betrug die Höchstgeschwindigkeit des Luftschiffs LZ 129 Hindenburg?",
+    "type": "number",
+    "answer": 73
+  },
+  {
+    "id": 40,
+    "question": "Wie viele Kilometer lang ist der Gotthard-Basistunnel?",
+    "type": "number",
+    "answer": 57.1
+  },
+  {
+    "id": 41,
+    "question": "Wie viele Einwohner hatte Reykjavik 2023 (gerundet)?",
+    "type": "number",
+    "answer": 139000
+  },
+  {
+    "id": 42,
+    "question": "Wie viele Lösungen besitzt das Acht-Damen-Problem im Schach?",
+    "type": "number",
+    "answer": 92
+  },
+  {
+    "id": 43,
+    "question": "Wie viele Meter beträgt die Spannweite eines Airbus A380-800?",
+    "type": "number",
+    "answer": 79.8
+  },
+  {
+    "id": 44,
+    "question": "Wie viele Jahre dauerte der Hundertjährige Krieg?",
+    "type": "number",
+    "answer": 116
+  },
+  {
+    "id": 45,
+    "question": "Wie viele Bücher umfasst die 'Naturalis Historia' von Plinius dem Älteren?",
+    "type": "number",
+    "answer": 37
+  },
+  {
+    "id": 46,
+    "question": "Wie hoch erhebt sich der Olympus Mons über die Marsoberfläche in Metern?",
+    "type": "number",
+    "answer": 21229
+  },
+  {
+    "id": 47,
+    "question": "Wie viele Kilometer ist die Interstate 90 in den USA lang?",
+    "type": "number",
+    "answer": 4991
+  },
+  {
+    "id": 48,
+    "question": "Wie viele bekannte Monde besitzt Jupiter (Stand 2023)?",
+    "type": "number",
+    "answer": 95
+  },
+  {
+    "id": 49,
+    "question": "Wie viele Tasten hat eine Standard-Tastatur nach ANSI-Layout?",
+    "type": "number",
+    "answer": 104
+  },
+  {
+    "id": 50,
+    "question": "Wie viele Elemente zählt das Periodensystem der Elemente (Stand 2023)?",
+    "type": "number",
+    "answer": 118
+  },
+  {
+    "id": 51,
+    "question": "Wie viele Jahre umfasste das Alte Reich im Alten Ägypten (2686–2181 v. Chr.)?",
     "type": "number",
     "answer": 505
   },
   {
-    "id": 22,
-    "question": "Wie viele Meter ist der Kölner Dom hoch?",
+    "id": 52,
+    "question": "Wie viele Meter unter dem Meeresspiegel liegt die Oberfläche des Toten Meeres?",
     "type": "number",
-    "answer": 157
+    "answer": 430
   },
   {
-    "id": 23,
-    "question": "Wie viele Inseln gehören zu Schweden (gerundet)?",
+    "id": 53,
+    "question": "Wie viele Einwohner hatte die Republik Venedig um 1500 (Schätzung)?",
     "type": "number",
-    "answer": 267570
+    "answer": 2500000
   },
   {
-    "id": 24,
-    "question": "Wie viele Tage hat ein Schaltjahr?",
+    "id": 54,
+    "question": "Wie viele Verse umfasst Dantes 'Divina Commedia'?",
     "type": "number",
-    "answer": 366
+    "answer": 14233
   },
   {
-    "id": 25,
-    "question": "Wie viele Einwohner hat die Schweiz (Stand 2023, gerundet auf Tausender)?",
+    "id": 55,
+    "question": "Wie viele Jahre herrschte die Ming-Dynastie in China?",
     "type": "number",
-    "answer": 8700000
+    "answer": 276
+  },
+  {
+    "id": 56,
+    "question": "Wie viele Kapitel enthält 'Don Quijote' in beiden Teilen zusammen?",
+    "type": "number",
+    "answer": 126
+  },
+  {
+    "id": 57,
+    "question": "Wie viele Einwohner hatte Bhutan 2023 (gerundet)?",
+    "type": "number",
+    "answer": 787000
+  },
+  {
+    "id": 58,
+    "question": "Wie viele Meter hoch ist der Merdeka 118 in Kuala Lumpur?",
+    "type": "number",
+    "answer": 679
+  },
+  {
+    "id": 59,
+    "question": "Wie viele Kilometer lang ist der Panamakanal?",
+    "type": "number",
+    "answer": 82
+  },
+  {
+    "id": 60,
+    "question": "Wie viele Inseln zählt Indonesien nach offizieller Zählung von 2017?",
+    "type": "number",
+    "answer": 17508
+  },
+  {
+    "id": 61,
+    "question": "Wie viele Kilometer misst die Küstenlinie der Antarktis?",
+    "type": "number",
+    "answer": 17968
+  },
+  {
+    "id": 62,
+    "question": "Wie viele Meter tief ist das Schwarze Meer an seiner tiefsten Stelle?",
+    "type": "number",
+    "answer": 2212
+  },
+  {
+    "id": 63,
+    "question": "Wie viele Jahre liegen zwischen dem Untergang des Weströmischen Reiches 476 und der Kaiserkrönung Karls des Großen 800?",
+    "type": "number",
+    "answer": 324
+  },
+  {
+    "id": 64,
+    "question": "Wie viele Stunden dauerte die Apollo-11-Mission vom Start bis zur Wasserung?",
+    "type": "number",
+    "answer": 195
+  },
+  {
+    "id": 65,
+    "question": "Wie viele Bits umfasst eine IPv6-Adresse?",
+    "type": "number",
+    "answer": 128
+  },
+  {
+    "id": 66,
+    "question": "Wie viele Byte enthält ein Pebibyte (PiB)?",
+    "type": "number",
+    "answer": 1125899906842624
+  },
+  {
+    "id": 67,
+    "question": "Wie viele Meter hoch ist der Mont Blanc?",
+    "type": "number",
+    "answer": 4808
+  },
+  {
+    "id": 68,
+    "question": "Wie viele Einwohner hat Island insgesamt 2023 (gerundet)?",
+    "type": "number",
+    "answer": 388000
+  },
+  {
+    "id": 69,
+    "question": "Wie viele Schnittpunkte besitzt ein 19x19-Go-Brett?",
+    "type": "number",
+    "answer": 361
+  },
+  {
+    "id": 70,
+    "question": "Wie viele Mitgliedsstaaten zählt die Afrikanische Union?",
+    "type": "number",
+    "answer": 55
+  },
+  {
+    "id": 71,
+    "question": "Wie viele Kilometer misst der polare Erddurchmesser?",
+    "type": "number",
+    "answer": 12713
+  },
+  {
+    "id": 72,
+    "question": "Wie viele Tage dauert die siderische Rotation der Sonne am Äquator?",
+    "type": "number",
+    "answer": 24.47
+  },
+  {
+    "id": 73,
+    "question": "Wie viele Einwohner hatte Tenochtitlán um 1519 (Schätzung)?",
+    "type": "number",
+    "answer": 200000
+  },
+  {
+    "id": 74,
+    "question": "Wie viele Meter hoch ist der Ätna?",
+    "type": "number",
+    "answer": 3357
+  },
+  {
+    "id": 75,
+    "question": "Wie viele Kilometer umfasst das Londoner U-Bahn-Netz (TfL)?",
+    "type": "number",
+    "answer": 402
+  },
+  {
+    "id": 76,
+    "question": "Wie viele Einwohner hat die Metropolregion Lagos (Schätzung 2023)?",
+    "type": "number",
+    "answer": 15000000
+  },
+  {
+    "id": 77,
+    "question": "Wie viele Wörter enthält der Originaltext der US-Verfassung?",
+    "type": "number",
+    "answer": 4543
+  },
+  {
+    "id": 78,
+    "question": "Wie viele Meter tief ist der Bodensee an seiner tiefsten Stelle?",
+    "type": "number",
+    "answer": 251
+  },
+  {
+    "id": 79,
+    "question": "Wie viele Kombinationen sind beim deutschen Lotto 6 aus 49 möglich?",
+    "type": "number",
+    "answer": 13983816
+  },
+  {
+    "id": 80,
+    "question": "Wie viele Meter hoch ist der Dhaulagiri I?",
+    "type": "number",
+    "answer": 8167
+  },
+  {
+    "id": 81,
+    "question": "Wie viele Qubits nutzte Googles Sycamore-Prozessor beim Demonstrationslauf 2019?",
+    "type": "number",
+    "answer": 53
+  },
+  {
+    "id": 82,
+    "question": "Wie viele Nanometer beträgt die mittlere Wellenlänge der Natrium-D-Linie?",
+    "type": "number",
+    "answer": 589
+  },
+  {
+    "id": 83,
+    "question": "Wie viele Gigajoule Energie entspricht einer Kilotonne TNT?",
+    "type": "number",
+    "answer": 4184
+  },
+  {
+    "id": 84,
+    "question": "Wie viele Minuten dauerte die längste totale Sonnenfinsternis des 21. Jahrhunderts (11. Juli 2010)?",
+    "type": "number",
+    "answer": 6.63
+  },
+  {
+    "id": 85,
+    "question": "Wie viele Meter hoch ist der K2?",
+    "type": "number",
+    "answer": 8611
+  },
+  {
+    "id": 86,
+    "question": "Wie viele Bundesstaaten hat Indien?",
+    "type": "number",
+    "answer": 28
+  },
+  {
+    "id": 87,
+    "question": "Wie viele Jahre dauerte der Bau der Sagrada Família bis 2023 seit Grundsteinlegung?",
+    "type": "number",
+    "answer": 141
+  },
+  {
+    "id": 88,
+    "question": "Wie viele Kilometer lang ist das Mississippi-Missouri-Flusssystem?",
+    "type": "number",
+    "answer": 6275
+  },
+  {
+    "id": 89,
+    "question": "Wie viele Zeichen umfasst der Unicode-Standard Version 15.0?",
+    "type": "number",
+    "answer": 149813
+  },
+  {
+    "id": 90,
+    "question": "Wie viele Hertz beträgt die Grundfrequenz der Schumann-Resonanz?",
+    "type": "number",
+    "answer": 7.83
+  },
+  {
+    "id": 91,
+    "question": "Wie viele Meter beträgt die mittlere Dicke des antarktischen Eisschildes?",
+    "type": "number",
+    "answer": 2160
+  },
+  {
+    "id": 92,
+    "question": "Wie viele Einwohner hat die Europäische Union 2023 (gerundet)?",
+    "type": "number",
+    "answer": 448000000
+  },
+  {
+    "id": 93,
+    "question": "Wie viele Protonen besitzt das Element Einsteinium?",
+    "type": "number",
+    "answer": 99
+  },
+  {
+    "id": 94,
+    "question": "Wie viele Kilometer beträgt der Äquatorumfang des Jupiter?",
+    "type": "number",
+    "answer": 439264
+  },
+  {
+    "id": 95,
+    "question": "Wie viele Byte umfasst eine SHA-256-Hashausgabe?",
+    "type": "number",
+    "answer": 32
+  },
+  {
+    "id": 96,
+    "question": "Wie viele Grad beträgt die Neigung der Erdachse?",
+    "type": "number",
+    "answer": 23.44
+  },
+  {
+    "id": 97,
+    "question": "Wie viele Kilogramm wiegt ein Kubikmeter Meerwasser durchschnittlich?",
+    "type": "number",
+    "answer": 1025
+  },
+  {
+    "id": 98,
+    "question": "Wie viele Meter entspricht die Wellenlänge einer Funkwelle mit 100 MHz?",
+    "type": "number",
+    "answer": 2.998
+  },
+  {
+    "id": 99,
+    "question": "Wie viele Einwohner hatte das Inkareich um 1530 (Schätzung)?",
+    "type": "number",
+    "answer": 12000000
+  },
+  {
+    "id": 100,
+    "question": "Wie viele Jahre umfasst der Zyklus des gregorianischen Kalenders, bevor sich das Schaltjahrmuster wiederholt?",
+    "type": "number",
+    "answer": 400
   }
 ]
