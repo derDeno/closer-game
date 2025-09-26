@@ -49,6 +49,8 @@ function formatDistance(value) {
 }
 
 function showEntry() {
+  document.body.classList.remove('lobby-view', 'round-active');
+  lobbyScreen.classList.remove('round-active');
   entryScreen.classList.remove('hidden');
   lobbyScreen.classList.add('hidden');
 }
@@ -56,6 +58,7 @@ function showEntry() {
 function showLobby() {
   entryScreen.classList.add('hidden');
   lobbyScreen.classList.remove('hidden');
+  document.body.classList.add('lobby-view');
   document.body.classList.remove('round-active');
   lobbyScreen.classList.remove('round-active');
 }
