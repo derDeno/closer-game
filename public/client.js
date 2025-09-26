@@ -141,7 +141,6 @@ function parseAnswerInputValue(value) {
   }
 
   const endsWithComma = unsigned.endsWith(',');
-  const endsWithDot = unsigned.endsWith('.');
 
   unsigned = unsigned.replace(/[^0-9.,]/g, '');
 
@@ -149,20 +148,13 @@ function parseAnswerInputValue(value) {
     return { formatted: negative ? '-' : '', normalized: '', hasDigits: false };
   }
 
-  const groupingPattern = /^\d{1,3}(\.\d{3})+$/;
   let decimalSeparator = null;
-
-  if (unsigned.includes(',')) {
-    decimalSeparator = ',';
-  } else if (!groupingPattern.test(unsigned) && unsigned.includes('.')) {
-    decimalSeparator = '.';
-  }
-
   let integerPart = unsigned;
   let fractionPart = '';
 
-  if (decimalSeparator) {
-    const index = unsigned.indexOf(decimalSeparator);
+  if (unsigned.includes(',')) {
+    decimalSeparator = ',';
+    const index = unsigned.indexOf(',');
     integerPart = unsigned.slice(0, index);
     fractionPart = unsigned.slice(index + 1);
   }
@@ -183,27 +175,22 @@ function parseAnswerInputValue(value) {
 
   let formatted = formattedInteger;
 
-  const shouldShowDecimal =
-    decimalSeparator === ','
-      ? fractionPart.length > 0 || endsWithComma
-      : decimalSeparator === '.'
-        ? fractionPart.length > 0 || endsWithDot
-        : false;
+  const shouldShowDecimal = decimalSeparator === ',' && (fractionPart.length > 0 || endsWithComma);
 
   if (decimalSeparator && shouldShowDecimal) {
     formatted += ',' + fractionPart;
-    if (fractionPart.length === 0 && !((decimalSeparator === ',' && endsWithComma) || (decimalSeparator === '.' && endsWithDot))) {
+    if (fractionPart.length === 0 && !endsWithComma) {
       formatted = formattedInteger;
     }
-  } else if (!decimalSeparator && fractionPart.length > 0) {
-    formatted += ',' + fractionPart;
   }
 
   if (negative) {
     formatted = formatted ? `-${formatted}` : '-';
   }
 
-  const normalized = hasDigits ? normalizeNumericString(`${negative ? '-' : ''}${unsigned}`) || '' : '';
+  const normalized = hasDigits
+    ? `${negative ? '-' : ''}${integerPart}${fractionPart.length > 0 ? `.${fractionPart}` : ''}`
+    : '';
 
   return { formatted, normalized, hasDigits };
 }
