@@ -598,5 +598,605 @@
     "question": "Wie viele Jahre umfasst der Zyklus des gregorianischen Kalenders, bevor sich das Schaltjahrmuster wiederholt?",
     "type": "number",
     "answer": 400
+  },
+  {
+    "id": 101,
+    "question": "Wie viele Tasten hat ein klassisches Klavier?",
+    "type": "number",
+    "answer": 88
+  },
+  {
+    "id": 102,
+    "question": "Wie viele Bundesländer hat Deutschland?",
+    "type": "number",
+    "answer": 16
+  },
+  {
+    "id": 103,
+    "question": "Wie viele Knoten umfasst der minimal notwendige DNS-Root-Zonenbestand global?",
+    "type": "number",
+    "answer": 13
+  },
+  {
+    "id": 104,
+    "question": "In welchem Jahr wurde die erste bemannte Mondlandung durchgeführt?",
+    "type": "number",
+    "answer": 1969
+  },
+  {
+    "id": 105,
+    "question": "Wie viele Planeten gehören zu unserem Sonnensystem?",
+    "type": "number",
+    "answer": 8
+  },
+  {
+    "id": 106,
+    "question": "Wie viele Minuten dauert ein offizielles Fußballspiel ohne Nachspielzeit?",
+    "type": "number",
+    "answer": 90
+  },
+  {
+    "id": 107,
+    "question": "Wie viele Schachfelder befinden sich auf einem Standard-Schachbrett?",
+    "type": "number",
+    "answer": 64
+  },
+  {
+    "id": 108,
+    "question": "Wie viele Spieler stehen in einer Rugby-Union-Mannschaft gleichzeitig auf dem Platz?",
+    "type": "number",
+    "answer": 15
+  },
+  {
+    "id": 109,
+    "question": "Wie viele Seiten hat ein Ikosaeder?",
+    "type": "number",
+    "answer": 20
+  },
+  {
+    "id": 110,
+    "question": "Wie viele Jahre dauerte der Hundertjährige Krieg?",
+    "type": "number",
+    "answer": 116
+  },
+  {
+    "id": 111,
+    "question": "Wie viele Buchstaben hat das moderne griechische Alphabet?",
+    "type": "number",
+    "answer": 24
+  },
+  {
+    "id": 112,
+    "question": "Wie viele Protonen enthält das Element Gold?",
+    "type": "number",
+    "answer": 79
+  },
+  {
+    "id": 113,
+    "question": "Wie viele Einwohner hat Österreich (Stand 2023, gerundet)?",
+    "type": "number",
+    "answer": 9000000
+  },
+  {
+    "id": 114,
+    "question": "Wie viele Wochen hat ein Schaltjahr?",
+    "type": "number",
+    "answer": 53
+  },
+  {
+    "id": 115,
+    "question": "Wie viele Meter ist der Mount Everest hoch?",
+    "type": "number",
+    "answer": 8849
+  },
+  {
+    "id": 116,
+    "question": "Wie viele Grad Celsius beträgt der Gefrierpunkt von Wasser?",
+    "type": "number",
+    "answer": 0
+  },
+  {
+    "id": 117,
+    "question": "Wie viele Herzen hat ein Oktopus?",
+    "type": "number",
+    "answer": 3
+  },
+  {
+    "id": 118,
+    "question": "Wie viele Spieler stehen bei Baseball pro Team gleichzeitig auf dem Feld?",
+    "type": "number",
+    "answer": 9
+  },
+  {
+    "id": 119,
+    "question": "Wie viele Bundesstaaten hat die USA?",
+    "type": "number",
+    "answer": 50
+  },
+  {
+    "id": 120,
+    "question": "Wie viele Tage braucht die Erde für einen Umlauf um die Sonne?",
+    "type": "number",
+    "answer": 365.25
+  },
+  {
+    "id": 121,
+    "question": "Wie viele Tasten besitzt eine Standard-Computer-Tastatur (ohne Numpad)?",
+    "type": "number",
+    "answer": 88
+  },
+  {
+    "id": 122,
+    "question": "Wie viele Stufen hat die Freiheitsstatue vom Sockel bis zur Krone?",
+    "type": "number",
+    "answer": 354
+  },
+  {
+    "id": 123,
+    "question": "Wie viele Speichen hat typischerweise ein klassisches Fahrrad-Vorderrad?",
+    "type": "number",
+    "answer": 32
+  },
+  {
+    "id": 124,
+    "question": "Wie viele Kapitel hat die Bibel (protestantische Ausgabe)?",
+    "type": "number",
+    "answer": 1189
+  },
+  {
+    "id": 125,
+    "question": "Wie viele Kilometer lang ist der Nil?",
+    "type": "number",
+    "answer": 6650
+  },
+  {
+    "id": 126,
+    "question": "Wie viele Länder liegen in der Europäischen Union (Stand 2023)?",
+    "type": "number",
+    "answer": 27
+  },
+  {
+    "id": 127,
+    "question": "Wie viele Nullen hat die Zahl eine Billion im deutschen Zahlensystem?",
+    "type": "number",
+    "answer": 12
+  },
+  {
+    "id": 128,
+    "question": "Wie viele Zähne hat ein Erwachsener im Normalfall?",
+    "type": "number",
+    "answer": 32
+  },
+  {
+    "id": 129,
+    "question": "Wie viele Meter misst ein Marathon?",
+    "type": "number",
+    "answer": 42195
+  },
+  {
+    "id": 130,
+    "question": "Wie viele Farben befinden sich im traditionellen Regenbogen?",
+    "type": "number",
+    "answer": 7
+  },
+  {
+    "id": 131,
+    "question": "Wie viele Spieler umfasst ein Volleyballteam auf dem Spielfeld?",
+    "type": "number",
+    "answer": 6
+  },
+  {
+    "id": 132,
+    "question": "Wie viele Sterne sind auf der Flagge der Europäischen Union?",
+    "type": "number",
+    "answer": 12
+  },
+  {
+    "id": 133,
+    "question": "Wie viele Elemente umfasst das Periodensystem (Stand 2023)?",
+    "type": "number",
+    "answer": 118
+  },
+  {
+    "id": 134,
+    "question": "Wie viele Karat hat reines Gold?",
+    "type": "number",
+    "answer": 24
+  },
+  {
+    "id": 135,
+    "question": "Wie viele Zeitzonen hat Russland?",
+    "type": "number",
+    "answer": 11
+  },
+  {
+    "id": 136,
+    "question": "Wie viele Tasten hat eine Standard-Klarinette?",
+    "type": "number",
+    "answer": 17
+  },
+  {
+    "id": 137,
+    "question": "Wie viele Tage dauert die Reise des Orient-Express von Paris nach Istanbul im historischen Fahrplan?",
+    "type": "number",
+    "answer": 6
+  },
+  {
+    "id": 138,
+    "question": "Wie viele Bundeskanzler hatte die Bundesrepublik Deutschland bis 2023?",
+    "type": "number",
+    "answer": 9
+  },
+  {
+    "id": 139,
+    "question": "Wie viele Dezibel beträgt die Hörschwelle eines durchschnittlichen Menschen?",
+    "type": "number",
+    "answer": 0
+  },
+  {
+    "id": 140,
+    "question": "Wie viele Zähne hat ein ausgewachsener Löwe?",
+    "type": "number",
+    "answer": 30
+  },
+  {
+    "id": 141,
+    "question": "Wie viele Jahre beträgt die Umlaufzeit des Halley’schen Kometen?",
+    "type": "number",
+    "answer": 75.3
+  },
+  {
+    "id": 142,
+    "question": "Wie viele Meter hoch ist der Kölner Dom?",
+    "type": "number",
+    "answer": 157
+  },
+  {
+    "id": 143,
+    "question": "Wie viele Ringe hat das olympische Symbol?",
+    "type": "number",
+    "answer": 5
+  },
+  {
+    "id": 144,
+    "question": "Wie viele Jahre sitzt ein US-Senator regulär im Amt?",
+    "type": "number",
+    "answer": 6
+  },
+  {
+    "id": 145,
+    "question": "Wie viele Megapixel hat ein 4K-UHD-Bild (3840x2160)?",
+    "type": "number",
+    "answer": 8.29
+  },
+  {
+    "id": 146,
+    "question": "Wie viele Personen können in den Bundestag laut Gesetz mindestens einziehen?",
+    "type": "number",
+    "answer": 598
+  },
+  {
+    "id": 147,
+    "question": "Wie viele Würfelaugen hat ein Standard-Backgammon-Set insgesamt?",
+    "type": "number",
+    "answer": 168
+  },
+  {
+    "id": 148,
+    "question": "Wie viele Milliliter fasst eine klassische Weinflasche?",
+    "type": "number",
+    "answer": 750
+  },
+  {
+    "id": 149,
+    "question": "Wie viele Spieler umfasst ein Wasserballteam im Becken?",
+    "type": "number",
+    "answer": 7
+  },
+  {
+    "id": 150,
+    "question": "Wie viele Minuten dauert ein NHL-Eishockeyspiel ohne Verlängerung?",
+    "type": "number",
+    "answer": 60
+  },
+  {
+    "id": 151,
+    "question": "Wie viele Monate dauerte das Bauprojekt des Burj Khalifa (rund)?",
+    "type": "number",
+    "answer": 72
+  },
+  {
+    "id": 152,
+    "question": "Wie viele Seiten hat ein Dodekagon?",
+    "type": "number",
+    "answer": 12
+  },
+  {
+    "id": 153,
+    "question": "Wie viele Buchstaben enthält das hawaiianische Alphabet?",
+    "type": "number",
+    "answer": 13
+  },
+  {
+    "id": 154,
+    "question": "Wie viele Kilometer pro Stunde beträgt die Schallgeschwindigkeit in Luft bei 20°C?",
+    "type": "number",
+    "answer": 343
+  },
+  {
+    "id": 155,
+    "question": "Wie viele Stockwerke hat der Eiffelturm?",
+    "type": "number",
+    "answer": 3
+  },
+  {
+    "id": 156,
+    "question": "Wie viele aktive Vulkane gibt es in Island?",
+    "type": "number",
+    "answer": 32
+  },
+  {
+    "id": 157,
+    "question": "Wie viele Einwohner hat Berlin (2023, gerundet)?",
+    "type": "number",
+    "answer": 3700000
+  },
+  {
+    "id": 158,
+    "question": "Wie viele Knoten bilden das Sargasso-Meer im Atlantik?",
+    "type": "number",
+    "answer": 4
+  },
+  {
+    "id": 159,
+    "question": "Wie viele Sekunden dauert ein kompletter Umlauf der Internationalen Raumstation um die Erde?",
+    "type": "number",
+    "answer": 5550
+  },
+  {
+    "id": 160,
+    "question": "Wie viele Tasten hat eine Kirchenorgel durchschnittlich pro Manual?",
+    "type": "number",
+    "answer": 61
+  },
+  {
+    "id": 161,
+    "question": "Wie viele Funktionen kann ein Schweizer Taschenmesser der Offizierslinie maximal bieten?",
+    "type": "number",
+    "answer": 33
+  },
+  {
+    "id": 162,
+    "question": "Wie viele Spieler zählt ein olympisches Basketballteam auf dem Feld?",
+    "type": "number",
+    "answer": 5
+  },
+  {
+    "id": 163,
+    "question": "Wie viele Länder grenzen an das Mittelmeer?",
+    "type": "number",
+    "answer": 21
+  },
+  {
+    "id": 164,
+    "question": "Wie viele Meter misst die Golden Gate Bridge in San Francisco?",
+    "type": "number",
+    "answer": 2737
+  },
+  {
+    "id": 165,
+    "question": "Wie viele Jahre regierte Königin Victoria?",
+    "type": "number",
+    "answer": 63
+  },
+  {
+    "id": 166,
+    "question": "Wie viele Flügelspannweite in Metern hat ein Airbus A380?",
+    "type": "number",
+    "answer": 79.75
+  },
+  {
+    "id": 167,
+    "question": "Wie viele Einwohner hat die Schweiz (2023, gerundet)?",
+    "type": "number",
+    "answer": 8800000
+  },
+  {
+    "id": 168,
+    "question": "Wie viele Pharaonen regierten im Alten Ägypten (ungefähr)?",
+    "type": "number",
+    "answer": 170
+  },
+  {
+    "id": 169,
+    "question": "Wie viele Jahre dauerte der Bau der Chinesischen Mauer (Hauptabschnitte)?",
+    "type": "number",
+    "answer": 2000
+  },
+  {
+    "id": 170,
+    "question": "Wie viele Kalorien liefert ein Gramm Fett?",
+    "type": "number",
+    "answer": 9
+  },
+  {
+    "id": 171,
+    "question": "Wie viele Reichskreise hatte das Heilige Römische Reich Deutscher Nation um 1512?",
+    "type": "number",
+    "answer": 10
+  },
+  {
+    "id": 172,
+    "question": "Wie viele Symphonien komponierte Beethoven?",
+    "type": "number",
+    "answer": 9
+  },
+  {
+    "id": 173,
+    "question": "Wie viele Strophen hat das Deutschlandlied offiziell?",
+    "type": "number",
+    "answer": 1
+  },
+  {
+    "id": 174,
+    "question": "Wie viele Lichtjahre entfernt ist Proxima Centauri von der Erde?",
+    "type": "number",
+    "answer": 4.24
+  },
+  {
+    "id": 175,
+    "question": "Wie viele Knochen hat der menschliche Körper eines Erwachsenen?",
+    "type": "number",
+    "answer": 206
+  },
+  {
+    "id": 176,
+    "question": "Wie viele Kilometer ist der Rhein lang?",
+    "type": "number",
+    "answer": 1230
+  },
+  {
+    "id": 177,
+    "question": "Wie viele UNESCO-Welterbestätten hat Italien (2023)?",
+    "type": "number",
+    "answer": 58
+  },
+  {
+    "id": 178,
+    "question": "Wie viele Einträge hat das Pascal-Dreieck in der 10. Zeile?",
+    "type": "number",
+    "answer": 11
+  },
+  {
+    "id": 179,
+    "question": "Wie viele Jahre beträgt das Durchschnittsalter der Erstgebärenden in Deutschland (2022)?",
+    "type": "number",
+    "answer": 30.4
+  },
+  {
+    "id": 180,
+    "question": "Wie viele Minuten dauert eine typische TED-Talk-Präsentation maximal?",
+    "type": "number",
+    "answer": 18
+  },
+  {
+    "id": 181,
+    "question": "Wie viele Kontinente gibt es auf der Erde?",
+    "type": "number",
+    "answer": 7
+  },
+  {
+    "id": 182,
+    "question": "Wie viele Seiten umfasst die Gutenberg-Bibel (pro Band)?",
+    "type": "number",
+    "answer": 1282
+  },
+  {
+    "id": 183,
+    "question": "Wie viele Sekunden braucht Licht, um von der Sonne zur Erde zu gelangen?",
+    "type": "number",
+    "answer": 499
+  },
+  {
+    "id": 184,
+    "question": "Wie viele Mitarbeiter beschäftigte die NASA im Jahr 2022 ungefähr?",
+    "type": "number",
+    "answer": 18000
+  },
+  {
+    "id": 185,
+    "question": "Wie viele Kilometer misst die Küstenlinie Japans?",
+    "type": "number",
+    "answer": 29751
+  },
+  {
+    "id": 186,
+    "question": "Wie viele Grad umfasst ein Vollwinkel?",
+    "type": "number",
+    "answer": 360
+  },
+  {
+    "id": 187,
+    "question": "Wie viele Monde besitzt der Planet Jupiter (2023)?",
+    "type": "number",
+    "answer": 95
+  },
+  {
+    "id": 188,
+    "question": "Wie viele Einwohner hat Mexiko (2023, gerundet)?",
+    "type": "number",
+    "answer": 128000000
+  },
+  {
+    "id": 189,
+    "question": "Wie viele Tasten hat ein Akkordeon in der Standardausführung (Diskant)?",
+    "type": "number",
+    "answer": 41
+  },
+  {
+    "id": 190,
+    "question": "Wie viele Tage dauert der Ramadan im Mittel?",
+    "type": "number",
+    "answer": 29.5
+  },
+  {
+    "id": 191,
+    "question": "Wie viele Länder grenzen an Deutschland?",
+    "type": "number",
+    "answer": 9
+  },
+  {
+    "id": 192,
+    "question": "Wie viele Meter hoch ist der Fernsehturm in Berlin?",
+    "type": "number",
+    "answer": 368
+  },
+  {
+    "id": 193,
+    "question": "Wie viele Mitglieder zählt die UNO (2023)?",
+    "type": "number",
+    "answer": 193
+  },
+  {
+    "id": 194,
+    "question": "Wie viele Jahre beträgt die durchschnittliche Lebenserwartung weltweit (2022)?",
+    "type": "number",
+    "answer": 72.6
+  },
+  {
+    "id": 195,
+    "question": "Wie viele Felder hat ein Sudoku-Gitter?",
+    "type": "number",
+    "answer": 81
+  },
+  {
+    "id": 196,
+    "question": "Wie viele Spieler umfasst ein Lacrosse-Team auf dem Feld?",
+    "type": "number",
+    "answer": 10
+  },
+  {
+    "id": 197,
+    "question": "Wie viele Tänze umfasst das Welttanzprogramm der Standardtänze?",
+    "type": "number",
+    "answer": 5
+  },
+  {
+    "id": 198,
+    "question": "Wie viele Halbtöne umfasst eine Oktave in der westlichen Musik?",
+    "type": "number",
+    "answer": 12
+  },
+  {
+    "id": 199,
+    "question": "Wie viele Jahre dauerte der Trojanische Krieg laut Mythos?",
+    "type": "number",
+    "answer": 10
+  },
+  {
+    "id": 200,
+    "question": "Wie viele Steinlagen besitzt die Cheops-Pyramide?",
+    "type": "number",
+    "answer": 203
   }
 ]
