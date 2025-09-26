@@ -173,14 +173,31 @@ function evaluateRound(lobby) {
     };
   });
 
-  let closestId = null;
-  let farthestId = null;
-
   const validDistances = answers.filter(entry => typeof entry.distance === 'number');
-  if (validDistances.length > 0) {
-    validDistances.sort((a, b) => a.distance - b.distance);
-    closestId = validDistances[0].playerId;
-    farthestId = validDistances[validDistances.length - 1].playerId;
+  const sortedDistances = [...validDistances].sort((a, b) => a.distance - b.distance);
+
+  const closestIds = new Set();
+  const farthestIds = new Set();
+
+  if (sortedDistances.length > 0) {
+    const minDistance = sortedDistances[0].distance;
+    const maxDistance = sortedDistances[sortedDistances.length - 1].distance;
+
+    sortedDistances
+      .filter(entry => entry.distance === minDistance)
+      .forEach(entry => closestIds.add(entry.playerId));
+
+    sortedDistances
+      .filter(entry => entry.distance === maxDistance)
+      .forEach(entry => farthestIds.add(entry.playerId));
+
+    if (closestIds.size === sortedDistances.length && farthestIds.size === sortedDistances.length) {
+      if (minDistance === 0) {
+        farthestIds.clear();
+      } else {
+        closestIds.clear();
+      }
+    }
   }
 
   const participantCount = answers.length;
@@ -197,7 +214,7 @@ function evaluateRound(lobby) {
     stats.lastPoints = 0;
   });
 
-  validDistances.forEach((entry, index) => {
+  sortedDistances.forEach((entry, index) => {
     const stats = ensurePlayerStats(lobby, entry.playerId, entry.name);
     const pointsAwarded = participantCount - index;
     stats.points += pointsAwarded;
@@ -213,8 +230,8 @@ function evaluateRound(lobby) {
       name: entry.name,
       answer: entry.answer,
       distance: entry.distance,
-      closest: entry.playerId === closestId,
-      farthest: entry.playerId === farthestId
+      closest: closestIds.has(entry.playerId),
+      farthest: farthestIds.has(entry.playerId)
     })),
     correctAnswer: question?.answer ?? null
   };
