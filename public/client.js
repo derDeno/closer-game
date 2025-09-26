@@ -20,6 +20,7 @@ const answerInput = document.getElementById('answer-input');
 const answerHint = document.getElementById('answer-hint');
 const resultsArea = document.getElementById('results-area');
 const summaryArea = document.getElementById('summary-area');
+const highscoreBtn = document.getElementById('show-highscore-btn');
 const statusArea = document.getElementById('status-area');
 const readyBtn = document.getElementById('ready-btn');
 const leaveBtn = document.getElementById('leave-btn');
@@ -30,6 +31,10 @@ let currentPlayerId = null;
 let answerSubmitted = false;
 let readySent = false;
 let lastResultsShown = false;
+let currentLobbyStatus = 'waiting';
+let latestPlayers = [];
+let pendingSummary = null;
+let summaryVisible = false;
 
 const distanceFormatter = new Intl.NumberFormat('de-DE', {
   maximumFractionDigits: 2,
@@ -51,6 +56,8 @@ function showEntry() {
 function showLobby() {
   entryScreen.classList.add('hidden');
   lobbyScreen.classList.remove('hidden');
+  document.body.classList.remove('round-active');
+  lobbyScreen.classList.remove('round-active');
 }
 
 function updateQuestionModeUI() {
@@ -66,6 +73,13 @@ function updateQuestionModeUI() {
 
 async function createLobby() {
   try {
+    const name = nameInput.value.trim();
+    if (!name) {
+      errorEl.textContent = 'Bitte gib deinen Namen ein.';
+      nameInput.focus();
+      return;
+    }
+
     const mode = modeUnlimitedRadio.checked ? 'unlimited' : 'fixed';
     let questionCount = null;
     errorEl.textContent = '';
@@ -98,6 +112,12 @@ async function createLobby() {
 function joinLobby() {
   const name = nameInput.value.trim();
   const code = codeInput.value.trim().toUpperCase();
+
+  if (!name) {
+    errorEl.textContent = 'Bitte gib deinen Namen ein.';
+    nameInput.focus();
+    return;
+  }
 
   if (!code || code.length !== 4) {
     errorEl.textContent = 'Bitte gib einen gültigen 4-stelligen Code ein.';
@@ -137,15 +157,60 @@ function joinLobby() {
   });
 }
 
-function renderPlayers(players) {
+function updatePlayers(players = []) {
+  latestPlayers = players.map(player => ({
+    ...player,
+    hasSubmitted: Boolean(player?.hasSubmitted)
+  }));
+  renderPlayers();
+}
+
+function getPlayerStatus(player) {
+  if (!player?.connected) {
+    return 'Offline';
+  }
+
+  if (currentLobbyStatus === 'collecting') {
+    return player.hasSubmitted ? 'Antwort gesendet' : 'Antwort ausstehend';
+  }
+
+  if (currentLobbyStatus === 'finished') {
+    return 'Spiel beendet';
+  }
+
+  return player.ready ? 'Bereit' : 'Wartet';
+}
+
+function renderPlayers() {
   playerListEl.innerHTML = '';
-  players.forEach(player => {
+
+  latestPlayers.forEach(player => {
+    const classes = ['player-card'];
+    if (!player.connected) {
+      classes.push('offline');
+    } else if (player.ready && currentLobbyStatus !== 'collecting') {
+      classes.push('ready');
+    } else {
+      classes.push('waiting');
+    }
+    if (player.hasSubmitted && currentLobbyStatus === 'collecting') {
+      classes.push('submitted');
+    }
+
     const div = document.createElement('div');
-    div.className = `player-card ${player.ready ? 'ready' : 'waiting'}`;
-    div.innerHTML = `
-      <span class="player-name">${escapeHtml(player.name)}</span>
-      <span class="player-status">${player.ready ? 'Bereit' : 'Wartet'}</span>
-    `;
+    div.className = classes.join(' ');
+
+    const nameEl = document.createElement('span');
+    nameEl.className = 'player-name';
+    nameEl.textContent = player.name ?? '';
+
+    const statusEl = document.createElement('span');
+    statusEl.className = 'player-status';
+    const statusText = getPlayerStatus(player);
+    statusEl.textContent = statusText || '\u00a0';
+
+    div.appendChild(nameEl);
+    div.appendChild(statusEl);
     playerListEl.appendChild(div);
   });
 }
@@ -168,6 +233,10 @@ function resetRoundUI() {
   readyBtn.disabled = false;
   readySent = false;
   lastResultsShown = false;
+  pendingSummary = null;
+  highscoreBtn.classList.add('hidden');
+  highscoreBtn.disabled = true;
+  summaryVisible = false;
 }
 
 function escapeHtml(text) {
@@ -221,7 +290,29 @@ function displayResults({ answers = [], correctAnswer, type }) {
   lastResultsShown = true;
 }
 
-function displaySummary(summary) {
+function prepareSummary(summary) {
+  if (summaryVisible) {
+    if (summary) {
+      renderSummary(summary);
+    }
+    return;
+  }
+
+  pendingSummary = summary || null;
+  summaryArea.classList.add('hidden');
+  summaryArea.innerHTML = '';
+  summaryVisible = false;
+
+  if (pendingSummary) {
+    highscoreBtn.classList.remove('hidden');
+    highscoreBtn.disabled = false;
+  } else {
+    highscoreBtn.classList.add('hidden');
+    highscoreBtn.disabled = true;
+  }
+}
+
+function renderSummary(summary) {
   const data = summary || {};
   questionArea.classList.add('hidden');
   resultsArea.classList.add('hidden');
@@ -232,6 +323,10 @@ function displaySummary(summary) {
   answerInput.disabled = true;
   answerHint.textContent = '';
   lastResultsShown = true;
+  pendingSummary = null;
+  highscoreBtn.classList.add('hidden');
+  highscoreBtn.disabled = true;
+  summaryVisible = true;
 
   const heading = document.createElement('h3');
   heading.textContent = 'Highscore der Runde';
@@ -302,12 +397,27 @@ function displaySummary(summary) {
 
 function applyLobbyState(state) {
   if (!state) return;
-  renderPlayers(state.players || []);
+
+  currentLobbyStatus = state.status || 'waiting';
+
+  if (Array.isArray(state.players)) {
+    updatePlayers(state.players);
+  } else {
+    renderPlayers();
+  }
+
+  if (currentLobbyStatus === 'collecting') {
+    document.body.classList.add('round-active');
+    lobbyScreen.classList.add('round-active');
+  } else {
+    document.body.classList.remove('round-active');
+    lobbyScreen.classList.remove('round-active');
+  }
 
   const settings = state.settings || {};
   const endVote = state.endVote || null;
 
-  if (settings.mode === 'unlimited' && state.status !== 'finished') {
+  if (settings.mode === 'unlimited' && currentLobbyStatus !== 'finished') {
     voteBtn.classList.remove('hidden');
     const label = endVote ? `Spiel beenden (${endVote.count}/${endVote.required})` : 'Spiel beenden (Abstimmung)';
     voteBtn.textContent = label;
@@ -320,18 +430,20 @@ function applyLobbyState(state) {
 
   let statusMessage = null;
 
-  if (state.status === 'collecting' && state.currentQuestion) {
+  if (currentLobbyStatus === 'collecting' && state.currentQuestion) {
     questionText.textContent = state.currentQuestion.question;
     questionArea.classList.remove('hidden');
     resultsArea.classList.add('hidden');
     summaryArea.classList.add('hidden');
+    prepareSummary(null);
     if (!answerSubmitted) {
       answerInput.disabled = false;
       answerHint.textContent = '';
     }
     readyBtn.classList.add('hidden');
     statusMessage = 'Runde läuft – gib deine Antwort ein!';
-  } else if (state.status === 'waiting') {
+  } else if (currentLobbyStatus === 'waiting') {
+    prepareSummary(null);
     questionArea.classList.add('hidden');
     resultsArea.classList.add('hidden');
     summaryArea.classList.add('hidden');
@@ -341,15 +453,25 @@ function applyLobbyState(state) {
       readyBtn.textContent = 'Bereit zum Start';
     }
     statusMessage = 'Warte auf den Start der Runde.';
-  } else if (state.status === 'results' && state.lastResults && !lastResultsShown) {
+  } else if (currentLobbyStatus === 'results' && state.lastResults && !lastResultsShown) {
+    prepareSummary(null);
     displayResults(state.lastResults);
     statusMessage = 'Runde beendet. Klicke auf "Bereit" um fortzufahren.';
-  } else if (state.status === 'finished') {
-    displaySummary(state.finalSummary || null);
-    statusMessage = 'Spiel beendet.';
+  } else if (currentLobbyStatus === 'finished') {
+    questionArea.classList.add('hidden');
+    readyBtn.classList.add('hidden');
+    readyBtn.disabled = true;
+    voteBtn.classList.add('hidden');
+    voteBtn.disabled = true;
+    answerInput.disabled = true;
+    answerHint.textContent = '';
+    prepareSummary(state.finalSummary || null);
+    statusMessage = pendingSummary
+      ? 'Spiel beendet. Klicke auf „Highscore anzeigen“, um die Rangliste zu sehen.'
+      : 'Spiel beendet.';
   }
 
-  if (endVote && state.status !== 'finished') {
+  if (endVote && currentLobbyStatus !== 'finished') {
     const voterNames = Array.isArray(endVote.voterNames) && endVote.voterNames.length > 0 ? ` – ${endVote.voterNames.join(', ')}` : '';
     const voteMessage = `Stimmen für Spielende: ${endVote.count}/${endVote.required}${voterNames}`;
     statusMessage = statusMessage ? `${statusMessage} ${voteMessage}` : voteMessage;
@@ -358,6 +480,8 @@ function applyLobbyState(state) {
   if (statusMessage !== null) {
     setStatus(statusMessage);
   }
+
+  renderPlayers();
 }
 
 joinBtn.addEventListener('click', joinLobby);
@@ -410,6 +534,11 @@ voteBtn.addEventListener('click', () => {
   });
 });
 
+highscoreBtn.addEventListener('click', () => {
+  if (!pendingSummary) return;
+  renderSummary(pendingSummary);
+});
+
 socket.on('connect_error', () => {
   errorEl.textContent = 'Verbindung fehlgeschlagen.';
   joinBtn.disabled = false;
@@ -421,27 +550,46 @@ socket.on('lobbyUpdate', state => {
 });
 
 socket.on('playersUpdate', players => {
-  renderPlayers(players || []);
+  updatePlayers(players || []);
 });
 
 socket.on('roundStarted', payload => {
   questionText.textContent = payload.question;
   setStatus('Runde läuft – gib deine Antwort ein!');
   resetRoundUI();
+  currentLobbyStatus = 'collecting';
+  document.body.classList.add('round-active');
+  lobbyScreen.classList.add('round-active');
+  renderPlayers();
 });
 
-socket.on('answerReceived', ({ name }) => {
-  setStatus(`${name} hat geantwortet…`);
+socket.on('answerReceived', ({ playerId }) => {
+  if (!playerId) return;
+  latestPlayers = latestPlayers.map(player =>
+    player.id === playerId ? { ...player, hasSubmitted: true } : player
+  );
+  renderPlayers();
 });
 
 socket.on('roundResults', payload => {
   displayResults(payload);
+  currentLobbyStatus = 'results';
+  document.body.classList.remove('round-active');
+  lobbyScreen.classList.remove('round-active');
+  renderPlayers();
   setStatus('Runde beendet. Klicke auf "Bereit" um fortzufahren.');
 });
 
 socket.on('gameSummary', summary => {
-  displaySummary(summary);
-  setStatus('Spiel beendet.');
+  currentLobbyStatus = 'finished';
+  prepareSummary(summary);
+  document.body.classList.remove('round-active');
+  lobbyScreen.classList.remove('round-active');
+  const message = pendingSummary
+    ? 'Spiel beendet. Klicke auf „Highscore anzeigen“, um die Rangliste zu sehen.'
+    : 'Spiel beendet.';
+  setStatus(message);
+  renderPlayers();
 });
 
 updateQuestionModeUI();
