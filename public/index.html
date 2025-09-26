@@ -3,18 +3,26 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Closer Game</title>
+    <meta name="theme-color" content="#0f172a" />
+    <meta name="application-name" content="Closer Game" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Closer" />
+    <title>Näher Draan</title>
+    <link rel="icon" type="image/png" sizes="512x512" href="/logo.png" />
+    <link rel="apple-touch-icon" href="/logo.png" />
+    <link rel="manifest" href="/manifest.webmanifest" />
     <link rel="stylesheet" href="/styles.css" />
   </head>
   <body>
     <main class="app">
       <section id="entry-screen" class="card">
         <img src="/logo.png" alt="Näher Draan Logo" class="app-logo" />
-        <h1 class="visually-hidden">Closer</h1>
+        <h1 class="visually-hidden">Näher Draan</h1>
         <p class="tagline">Tritt einer Lobby bei und zeige dein Schätz-Talent!</p>
         <div class="form-group">
           <label for="name-input">Dein Name</label>
-          <input id="name-input" type="text" maxlength="18" placeholder="Spieler" />
+          <input id="name-input" type="text" maxlength="18" placeholder="Spieler" required />
         </div>
         <div class="form-group">
           <label for="code-input">Lobby-Code</label>
@@ -56,32 +64,62 @@
       </section>
 
       <section id="lobby-screen" class="card hidden">
-        <header class="lobby-header">
-          <h2>Lobby <span id="lobby-code"></span></h2>
-          <button id="leave-btn" class="link">Verlassen</button>
-        </header>
-        <div class="players" id="player-list"></div>
-        <div id="status-area"></div>
-        <div id="question-area" class="hidden">
-          <p id="question-text"></p>
-          <form id="answer-form">
-            <input
-              id="answer-input"
-              type="number"
-              inputmode="decimal"
-              step="any"
-              autocomplete="off"
-              required
-              placeholder="Deine Antwort"
-            />
-            <button type="submit" class="primary">Antwort senden</button>
-          </form>
-          <p id="answer-hint" class="hint"></p>
+        <div class="lobby-top">
+          <header class="lobby-header">
+            <span class="lobby-code" aria-label="Lobby-Code">
+              <span class="visually-hidden">Lobby-Code:</span>
+              <span id="lobby-code"></span>
+            </span>
+            <img src="/logo.png" alt="Näher Draan Logo" class="lobby-logo" />
+            <button
+              id="leave-btn"
+              class="link icon-button"
+              type="button"
+              aria-label="Lobby verlassen"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                role="img"
+                aria-hidden="true"
+                focusable="false"
+              >
+                <path
+                  d="M4.75 4A1.75 1.75 0 0 1 6.5 2.25h6.75A1.75 1.75 0 0 1 15 4v4.25a.75.75 0 0 1-1.5 0V4c0-.138-.112-.25-.25-.25H6.5a.25.25 0 0 0-.25.25v16c0 .138.112.25.25.25h6.75c.138 0 .25-.112.25-.25v-4.25a.75.75 0 0 1 1.5 0V20a1.75 1.75 0 0 1-1.75 1.75H6.5A1.75 1.75 0 0 1 4.75 20V4Zm12.47 6.47a.75.75 0 0 0-1.06 1.06l1.72 1.72H11a.75.75 0 0 0 0 1.5h6.88l-1.72 1.72a.75.75 0 1 0 1.06 1.06l3-3a.75.75 0 0 0 0-1.06l-3-3Z"
+                />
+              </svg>
+              <span class="visually-hidden">Lobby verlassen</span>
+            </button>
+          </header>
+          <div class="players" id="player-list"></div>
         </div>
-        <div id="results-area" class="hidden"></div>
-        <div id="summary-area" class="hidden"></div>
-        <button id="ready-btn" class="primary hidden">Bereit für nächste Runde</button>
-        <button id="end-vote-btn" class="secondary hidden">Spiel beenden (Abstimmung)</button>
+        <div class="stage">
+          <div id="status-area" role="status" aria-live="polite"></div>
+          <div id="question-area" class="hidden">
+            <p id="question-text"></p>
+            <form id="answer-form">
+              <input
+                id="answer-input"
+                type="number"
+                inputmode="decimal"
+                step="any"
+                autocomplete="off"
+                required
+                placeholder="Deine Antwort"
+              />
+              <button type="submit" class="primary">Antwort senden</button>
+            </form>
+            <p id="answer-hint" class="hint"></p>
+          </div>
+          <div id="results-area" class="hidden"></div>
+          <div id="summary-area" class="hidden"></div>
+          <button id="show-highscore-btn" type="button" class="secondary hidden">
+            Highscore anzeigen
+          </button>
+          <button id="ready-btn" class="primary hidden" type="button">Bereit für nächste Runde</button>
+          <button id="end-vote-btn" class="secondary hidden" type="button">
+            Spiel beenden (Abstimmung)
+          </button>
+        </div>
       </section>
     </main>
 

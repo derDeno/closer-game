@@ -79,7 +79,8 @@ function getLobbyState(lobby) {
       id: player.id,
       name: player.name,
       ready: player.ready,
-      connected: player.connected
+      connected: player.connected,
+      hasSubmitted: player.hasSubmitted
     })),
     status,
     currentQuestion:
@@ -321,6 +322,8 @@ io.on('connection', socket => {
       playerId: player.id,
       name: player.name
     });
+
+    broadcastPlayers(lobby);
 
     if (allPlayersSubmitted(lobby)) {
       evaluateRound(lobby);
