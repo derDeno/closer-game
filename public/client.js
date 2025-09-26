@@ -67,8 +67,8 @@ function formatNumericValue(value, { integer = false } = {}) {
   }
 
   if (typeof value === 'string') {
-    const normalized = value.replace(',', '.').trim();
-    if (normalized.length === 0) {
+    const normalized = normalizeNumericString(value);
+    if (!normalized) {
       return null;
     }
     const parsed = Number(normalized);
@@ -79,6 +79,158 @@ function formatNumericValue(value, { integer = false } = {}) {
   }
 
   return null;
+}
+
+function normalizeNumericString(value) {
+  if (typeof value !== 'string') {
+    return null;
+  }
+
+  const trimmed = value.trim();
+  if (trimmed.length === 0) {
+    return null;
+  }
+
+  let negative = false;
+  let normalized = trimmed;
+
+  if (normalized.startsWith('-')) {
+    negative = true;
+    normalized = normalized.slice(1);
+  } else if (normalized.startsWith('+')) {
+    normalized = normalized.slice(1);
+  }
+
+  normalized = normalized.replace(/\s+/g, '');
+  normalized = normalized.replace(/[^0-9.,]/g, '');
+
+  if (normalized.length === 0) {
+    return null;
+  }
+
+  if (normalized.includes(',')) {
+    normalized = normalized.replace(/\./g, '').replace(',', '.');
+  } else if (/^\d{1,3}(\.\d{3})+$/.test(normalized)) {
+    normalized = normalized.replace(/\./g, '');
+  } else {
+    normalized = normalized.replace(/,/g, '');
+  }
+
+  const result = (negative ? '-' : '') + normalized;
+  return result.endsWith('.') ? result.slice(0, -1) : result;
+}
+
+function parseAnswerInputValue(value) {
+  if (typeof value !== 'string') {
+    return { formatted: '', normalized: '', hasDigits: false };
+  }
+
+  const trimmed = value.replace(/\s+/g, '');
+  if (trimmed.length === 0) {
+    return { formatted: '', normalized: '', hasDigits: false };
+  }
+
+  let negative = false;
+  let unsigned = trimmed;
+
+  if (unsigned.startsWith('-')) {
+    negative = true;
+    unsigned = unsigned.slice(1);
+  } else if (unsigned.startsWith('+')) {
+    unsigned = unsigned.slice(1);
+  }
+
+  const endsWithComma = unsigned.endsWith(',');
+  const endsWithDot = unsigned.endsWith('.');
+
+  unsigned = unsigned.replace(/[^0-9.,]/g, '');
+
+  if (unsigned.length === 0) {
+    return { formatted: negative ? '-' : '', normalized: '', hasDigits: false };
+  }
+
+  const groupingPattern = /^\d{1,3}(\.\d{3})+$/;
+  let decimalSeparator = null;
+
+  if (unsigned.includes(',')) {
+    decimalSeparator = ',';
+  } else if (!groupingPattern.test(unsigned) && unsigned.includes('.')) {
+    decimalSeparator = '.';
+  }
+
+  let integerPart = unsigned;
+  let fractionPart = '';
+
+  if (decimalSeparator) {
+    const index = unsigned.indexOf(decimalSeparator);
+    integerPart = unsigned.slice(0, index);
+    fractionPart = unsigned.slice(index + 1);
+  }
+
+  integerPart = integerPart.replace(/\D/g, '');
+  fractionPart = fractionPart.replace(/\D/g, '');
+
+  if (integerPart.length === 0 && fractionPart.length > 0) {
+    integerPart = '0';
+  }
+
+  const hasDigits = integerPart.length > 0 || fractionPart.length > 0;
+
+  let formattedInteger = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+  if (formattedInteger.length === 0 && hasDigits) {
+    formattedInteger = '0';
+  }
+
+  let formatted = formattedInteger;
+
+  const shouldShowDecimal =
+    decimalSeparator === ','
+      ? fractionPart.length > 0 || endsWithComma
+      : decimalSeparator === '.'
+        ? fractionPart.length > 0 || endsWithDot
+        : false;
+
+  if (decimalSeparator && shouldShowDecimal) {
+    formatted += ',' + fractionPart;
+    if (fractionPart.length === 0 && !((decimalSeparator === ',' && endsWithComma) || (decimalSeparator === '.' && endsWithDot))) {
+      formatted = formattedInteger;
+    }
+  } else if (!decimalSeparator && fractionPart.length > 0) {
+    formatted += ',' + fractionPart;
+  }
+
+  if (negative) {
+    formatted = formatted ? `-${formatted}` : '-';
+  }
+
+  const normalized = hasDigits ? normalizeNumericString(`${negative ? '-' : ''}${unsigned}`) || '' : '';
+
+  return { formatted, normalized, hasDigits };
+}
+
+function countDigitsBeforeIndex(value, index) {
+  if (!value || index <= 0) {
+    return 0;
+  }
+  const slice = value.slice(0, index);
+  return (slice.match(/\d/g) || []).length;
+}
+
+function findCaretPositionForDigitIndex(value, digitIndex) {
+  if (digitIndex <= 0) {
+    return value.startsWith('-') ? 1 : 0;
+  }
+
+  let digitsSeen = 0;
+  for (let i = 0; i < value.length; i += 1) {
+    if (/\d/.test(value[i])) {
+      digitsSeen += 1;
+      if (digitsSeen === digitIndex) {
+        return i + 1;
+      }
+    }
+  }
+  return value.length;
 }
 
 function showEntry() {
@@ -530,21 +682,72 @@ createBtn.addEventListener('click', createLobby);
 modeFixedRadio.addEventListener('change', updateQuestionModeUI);
 modeUnlimitedRadio.addEventListener('change', updateQuestionModeUI);
 
+answerInput.addEventListener('input', () => {
+  const rawValue = answerInput.value;
+  const selectionStart = answerInput.selectionStart ?? rawValue.length;
+  const selectionEnd = answerInput.selectionEnd ?? selectionStart;
+  const digitsBeforeStart = countDigitsBeforeIndex(rawValue, selectionStart);
+  const digitsBeforeEnd = countDigitsBeforeIndex(rawValue, selectionEnd);
+  const { formatted } = parseAnswerInputValue(rawValue);
+
+  if (formatted !== rawValue) {
+    answerInput.value = formatted;
+  }
+
+  if (document.activeElement === answerInput) {
+    const updatedValue = answerInput.value;
+    const newStart = findCaretPositionForDigitIndex(updatedValue, digitsBeforeStart);
+    const newEnd = findCaretPositionForDigitIndex(updatedValue, digitsBeforeEnd);
+    const applyCaret = () => {
+      try {
+        answerInput.setSelectionRange(newStart, newEnd);
+      } catch (error) {
+        // Ignore selection errors in browsers that do not support setSelectionRange on unfocused inputs.
+      }
+    };
+
+    if (typeof window.requestAnimationFrame === 'function') {
+      window.requestAnimationFrame(applyCaret);
+    } else {
+      setTimeout(applyCaret, 0);
+    }
+  }
+});
+
+answerInput.addEventListener('blur', () => {
+  const { normalized } = parseAnswerInputValue(answerInput.value);
+  if (!normalized) {
+    answerInput.value = '';
+    return;
+  }
+
+  const parsed = Number(normalized);
+  if (Number.isFinite(parsed)) {
+    answerInput.value = formatNumericValue(parsed) ?? answerInput.value;
+  }
+});
+
 answerForm.addEventListener('submit', event => {
   event.preventDefault();
   if (answerSubmitted) return;
-  const answer = answerInput.value.trim();
-  if (!answer) {
+  const rawAnswer = answerInput.value;
+  const trimmed = rawAnswer.trim();
+  if (!trimmed) {
     answerHint.textContent = 'Bitte gib eine Zahl ein.';
     return;
   }
-  const normalized = answer.replace(',', '.');
-  const numericValue = Number(normalized);
+  const parsedAnswer = parseAnswerInputValue(rawAnswer);
+  if (!parsedAnswer.hasDigits || !parsedAnswer.normalized) {
+    answerHint.textContent = 'Bitte gib eine gültige Zahl ein.';
+    return;
+  }
+  const numericValue = Number(parsedAnswer.normalized);
   if (!Number.isFinite(numericValue)) {
     answerHint.textContent = 'Bitte gib eine gültige Zahl ein.';
     return;
   }
-  socket.emit('submitAnswer', answer);
+  answerInput.value = parsedAnswer.formatted;
+  socket.emit('submitAnswer', parsedAnswer.normalized);
   answerSubmitted = true;
   answerInput.disabled = true;
   answerHint.textContent = 'Antwort gesendet. Warte auf die anderen Spieler…';

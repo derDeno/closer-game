@@ -51,9 +51,40 @@ function parseNumericAnswer(value) {
     return Number.isFinite(value) ? value : null;
   }
   if (typeof value === 'string') {
-    const normalized = value.replace(',', '.').trim();
-    if (normalized.length === 0) return null;
-    const parsed = Number(normalized);
+    const trimmed = value.trim();
+    if (trimmed.length === 0) return null;
+
+    let negative = false;
+    let normalized = trimmed;
+
+    if (normalized.startsWith('-')) {
+      negative = true;
+      normalized = normalized.slice(1);
+    } else if (normalized.startsWith('+')) {
+      normalized = normalized.slice(1);
+    }
+
+    normalized = normalized.replace(/\s+/g, '');
+    normalized = normalized.replace(/[^0-9.,]/g, '');
+
+    if (normalized.length === 0) {
+      return null;
+    }
+
+    if (normalized.includes(',')) {
+      normalized = normalized.replace(/\./g, '').replace(',', '.');
+    } else if (/^\d{1,3}(\.\d{3})+$/.test(normalized)) {
+      normalized = normalized.replace(/\./g, '');
+    } else {
+      normalized = normalized.replace(/,/g, '');
+    }
+
+    let result = (negative ? '-' : '') + normalized;
+    if (result.endsWith('.')) {
+      result = result.slice(0, -1);
+    }
+
+    const parsed = Number(result);
     return Number.isFinite(parsed) ? parsed : null;
   }
   return null;
