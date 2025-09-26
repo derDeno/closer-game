@@ -46,7 +46,33 @@ function pickQuestion(lobby) {
   return choice;
 }
 
+function parseNumericAnswer(value) {
+  if (typeof value === 'number') {
+    return Number.isFinite(value) ? value : null;
+  }
+  if (typeof value === 'string') {
+    const normalized = value.replace(',', '.').trim();
+    if (normalized.length === 0) return null;
+    const parsed = Number(normalized);
+    return Number.isFinite(parsed) ? parsed : null;
+  }
+  return null;
+}
+
+function getConnectedPlayers(lobby) {
+  return Object.values(lobby.players).filter(player => player.connected);
+}
+
 function getLobbyState(lobby) {
+  const connectedPlayers = getConnectedPlayers(lobby);
+  const status = lobby.gameFinished
+    ? 'finished'
+    : lobby.collectingAnswers
+      ? 'collecting'
+      : lobby.lastResults
+        ? 'results'
+        : 'waiting';
+
   return {
     code: lobby.code,
     players: Object.values(lobby.players).map(player => ({
@@ -55,13 +81,32 @@ function getLobbyState(lobby) {
       ready: player.ready,
       connected: player.connected
     })),
-    status: lobby.collectingAnswers ? 'collecting' : lobby.currentQuestion ? 'results' : 'waiting',
-    currentQuestion: lobby.collectingAnswers ? {
-      id: lobby.currentQuestion.id,
-      question: lobby.currentQuestion.question,
-      type: lobby.currentQuestion.type
-    } : null,
-    lastResults: lobby.lastResults
+    status,
+    currentQuestion:
+      lobby.collectingAnswers && lobby.currentQuestion
+        ? {
+            id: lobby.currentQuestion.id,
+            question: lobby.currentQuestion.question,
+            type: lobby.currentQuestion.type
+          }
+        : null,
+    lastResults: lobby.lastResults,
+    settings: {
+      mode: lobby.isUnlimited ? 'unlimited' : 'fixed',
+      questionLimit: lobby.questionLimit
+    },
+    roundsPlayed: lobby.roundsPlayed,
+    endVote: lobby.isUnlimited && !lobby.gameFinished
+      ? {
+          count: lobby.endVotes.size,
+          required: connectedPlayers.length,
+          voterIds: Array.from(lobby.endVotes),
+          voterNames: Array.from(lobby.endVotes)
+            .map(id => lobby.players[id]?.name)
+            .filter(Boolean)
+        }
+      : null,
+    finalSummary: lobby.gameFinished ? lobby.finalSummary : null
   };
 }
 
@@ -74,9 +119,15 @@ function broadcastPlayers(lobby) {
 }
 
 function startRound(lobby) {
+  if (lobby.gameFinished) return;
+  if (!lobby.isUnlimited && lobby.questionLimit && lobby.roundsPlayed >= lobby.questionLimit) {
+    finalizeGame(lobby, 'limit');
+    return;
+  }
   lobby.currentQuestion = pickQuestion(lobby);
   lobby.collectingAnswers = true;
   lobby.lastResults = null;
+  lobby.endVotes.clear();
   for (const player of Object.values(lobby.players)) {
     player.hasSubmitted = false;
     player.answer = null;
@@ -90,47 +141,104 @@ function startRound(lobby) {
 }
 
 function evaluateRound(lobby) {
-  const answers = Object.values(lobby.players)
-    .filter(player => player.connected)
-    .map(player => ({
+  const question = lobby.currentQuestion;
+  const answers = getConnectedPlayers(lobby).map(player => {
+    const numeric = parseNumericAnswer(player.answer);
+    const distance = typeof question?.answer === 'number' && numeric !== null ? Math.abs(numeric - question.answer) : null;
+    return {
       playerId: player.id,
       name: player.name,
-      answer: player.answer
-    }));
+      answer: player.answer,
+      distance
+    };
+  });
 
   let closestId = null;
   let farthestId = null;
 
-  if (lobby.currentQuestion.type === 'number' && typeof lobby.currentQuestion.answer === 'number') {
-    const numericAnswers = answers
-      .map(entry => ({
-        ...entry,
-        numeric: Number(String(entry.answer).replace(',', '.'))
-      }))
-      .filter(entry => !Number.isNaN(entry.numeric));
-
-    if (numericAnswers.length > 0) {
-      numericAnswers.sort((a, b) => Math.abs(a.numeric - lobby.currentQuestion.answer) - Math.abs(b.numeric - lobby.currentQuestion.answer));
-      closestId = numericAnswers[0].playerId;
-      farthestId = numericAnswers[numericAnswers.length - 1].playerId;
-    }
+  const validDistances = answers.filter(entry => typeof entry.distance === 'number');
+  if (validDistances.length > 0) {
+    validDistances.sort((a, b) => a.distance - b.distance);
+    closestId = validDistances[0].playerId;
+    farthestId = validDistances[validDistances.length - 1].playerId;
   }
 
   const payload = {
+    questionId: question?.id ?? null,
+    question: question?.question ?? null,
+    type: question?.type ?? null,
     answers: answers.map(entry => ({
-      ...entry,
+      playerId: entry.playerId,
+      name: entry.name,
+      answer: entry.answer,
+      distance: entry.distance,
       closest: entry.playerId === closestId,
       farthest: entry.playerId === farthestId
     })),
-    correctAnswer: lobby.currentQuestion.answer ?? null,
-    type: lobby.currentQuestion.type
+    correctAnswer: question?.answer ?? null
   };
 
   lobby.lastResults = payload;
+  lobby.collectingAnswers = false;
+  lobby.roundsPlayed += 1;
 
   io.to(lobby.code).emit('roundResults', payload);
 
+  if (!lobby.isUnlimited && lobby.questionLimit && lobby.roundsPlayed >= lobby.questionLimit) {
+    finalizeGame(lobby, 'limit', payload);
+  } else {
+    broadcastLobby(lobby);
+  }
+
+  return payload;
+}
+
+function buildHighscore(results) {
+  if (!results?.answers) {
+    return [];
+  }
+
+  return results.answers
+    .map(entry => ({
+      name: entry.name,
+      answer: entry.answer,
+      distance: typeof entry.distance === 'number' ? Number(entry.distance) : null
+    }))
+    .sort((a, b) => {
+      const aValid = typeof a.distance === 'number';
+      const bValid = typeof b.distance === 'number';
+      if (aValid && bValid) return a.distance - b.distance;
+      if (aValid) return -1;
+      if (bValid) return 1;
+      return 0;
+    });
+}
+
+function finalizeGame(lobby, reason, resultsOverride) {
+  if (lobby.gameFinished) return;
+
+  let results = resultsOverride || lobby.lastResults || null;
+
+  if (!results && lobby.collectingAnswers) {
+    results = evaluateRound(lobby);
+  }
+
+  lobby.gameFinished = true;
   lobby.collectingAnswers = false;
+  lobby.endVotes.clear();
+
+  const summary = {
+    reason,
+    question: results?.question ?? null,
+    correctAnswer: results?.correctAnswer ?? null,
+    highscore: buildHighscore(results),
+    roundsPlayed: lobby.roundsPlayed
+  };
+
+  lobby.finalSummary = summary;
+  lobby.currentQuestion = null;
+
+  io.to(lobby.code).emit('gameSummary', summary);
   broadcastLobby(lobby);
 }
 
@@ -147,13 +255,23 @@ function allPlayersReady(lobby) {
 
 app.post('/lobbies', (req, res) => {
   const code = generateLobbyCode();
+  const mode = req.body?.mode === 'unlimited' ? 'unlimited' : 'fixed';
+  const requestedCount = Number.parseInt(req.body?.questionCount, 10);
+  const questionLimit = mode === 'fixed' && Number.isInteger(requestedCount) && requestedCount > 0 ? Math.min(requestedCount, 99) : 5;
+
   const lobby = {
     code,
     players: {},
     currentQuestion: null,
     collectingAnswers: false,
     usedQuestionIds: new Set(),
-    lastResults: null
+    lastResults: null,
+    questionLimit: mode === 'unlimited' ? null : questionLimit,
+    isUnlimited: mode === 'unlimited',
+    roundsPlayed: 0,
+    endVotes: new Set(),
+    gameFinished: false,
+    finalSummary: null
   };
   lobbies.set(code, lobby);
   res.json({ code });
@@ -186,12 +304,12 @@ io.on('connection', socket => {
 
     socket.join(lobby.code);
     broadcastLobby(lobby);
-    callback?.({ success: true, lobby: getLobbyState(lobby) });
+    callback?.({ success: true, lobby: getLobbyState(lobby), playerId: socket.id });
   });
 
   socket.on('submitAnswer', answer => {
     const lobby = findLobbyBySocket(socket.id);
-    if (!lobby || !lobby.collectingAnswers) return;
+    if (!lobby || lobby.gameFinished || !lobby.collectingAnswers) return;
 
     const player = lobby.players[socket.id];
     if (!player || player.hasSubmitted) return;
@@ -211,7 +329,7 @@ io.on('connection', socket => {
 
   socket.on('playerReady', () => {
     const lobby = findLobbyBySocket(socket.id);
-    if (!lobby || lobby.collectingAnswers) return;
+    if (!lobby || lobby.collectingAnswers || lobby.gameFinished) return;
     const player = lobby.players[socket.id];
     if (!player) return;
     player.ready = true;
@@ -223,10 +341,33 @@ io.on('connection', socket => {
 
   socket.on('startRound', () => {
     const lobby = findLobbyBySocket(socket.id);
-    if (!lobby || lobby.collectingAnswers) return;
+    if (!lobby || lobby.collectingAnswers || lobby.gameFinished) return;
     if (!lobby.currentQuestion) {
       startRound(lobby);
     }
+  });
+
+  socket.on('voteEndGame', callback => {
+    const lobby = findLobbyBySocket(socket.id);
+    if (!lobby || !lobby.isUnlimited || lobby.gameFinished) {
+      callback?.({ success: false, error: 'Eine Abstimmung ist derzeit nicht möglich.' });
+      return;
+    }
+
+    if (lobby.endVotes.has(socket.id)) {
+      callback?.({ success: false, error: 'Du hast bereits für das Spielende gestimmt.' });
+      return;
+    }
+
+    lobby.endVotes.add(socket.id);
+    broadcastLobby(lobby);
+
+    const connectedCount = getConnectedPlayers(lobby).length;
+    if (connectedCount > 0 && lobby.endVotes.size >= connectedCount) {
+      finalizeGame(lobby, 'vote');
+    }
+
+    callback?.({ success: true });
   });
 
   socket.on('disconnect', () => {
@@ -235,6 +376,7 @@ io.on('connection', socket => {
 
     delete lobby.players[socket.id];
     socket.leave(lobby.code);
+    lobby.endVotes.delete(socket.id);
 
     const remaining = Object.keys(lobby.players).length;
     if (remaining === 0) {

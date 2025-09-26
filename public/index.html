@@ -19,6 +19,34 @@
           <label for="code-input">Lobby-Code</label>
           <input id="code-input" type="text" maxlength="4" placeholder="ABCD" />
         </div>
+        <fieldset class="form-group" id="round-options">
+          <legend>Rundenmodus</legend>
+          <label class="option-row">
+            <input
+              type="radio"
+              name="question-mode"
+              id="mode-fixed"
+              value="fixed"
+              checked
+            />
+            <span>Feste Anzahl von Fragen</span>
+          </label>
+          <div class="option-nested" id="fixed-config">
+            <label for="question-count">Anzahl der Fragen</label>
+            <input
+              id="question-count"
+              type="number"
+              min="1"
+              max="99"
+              step="1"
+              value="5"
+            />
+          </div>
+          <label class="option-row">
+            <input type="radio" name="question-mode" id="mode-unlimited" value="unlimited" />
+            <span>Unbegrenzt – Spielende per Abstimmung</span>
+          </label>
+        </fieldset>
         <div class="actions">
           <button id="join-btn" class="primary">Lobby beitreten</button>
           <button id="create-btn" class="secondary">Neue Lobby erstellen</button>
@@ -36,13 +64,23 @@
         <div id="question-area" class="hidden">
           <p id="question-text"></p>
           <form id="answer-form">
-            <input id="answer-input" type="text" autocomplete="off" required placeholder="Deine Antwort" />
+            <input
+              id="answer-input"
+              type="number"
+              inputmode="decimal"
+              step="any"
+              autocomplete="off"
+              required
+              placeholder="Deine Antwort"
+            />
             <button type="submit" class="primary">Antwort senden</button>
           </form>
           <p id="answer-hint" class="hint"></p>
         </div>
         <div id="results-area" class="hidden"></div>
+        <div id="summary-area" class="hidden"></div>
         <button id="ready-btn" class="primary hidden">Bereit für nächste Runde</button>
+        <button id="end-vote-btn" class="secondary hidden">Spiel beenden (Abstimmung)</button>
       </section>
     </main>
 
