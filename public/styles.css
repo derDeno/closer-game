@@ -16,6 +16,24 @@ body {
   box-sizing: border-box;
 }
 
+.app-footer {
+  margin-top: clamp(1.5rem, 4vw, 2.5rem);
+  text-align: center;
+  color: #94a3b8;
+  font-size: 0.85rem;
+}
+
+.app-footer a {
+  color: #38bdf8;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.app-footer a:focus,
+.app-footer a:hover {
+  text-decoration: underline;
+}
+
 body.round-active {
   align-items: flex-start;
   padding-top: 1rem;
