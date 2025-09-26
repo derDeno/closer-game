@@ -1,0 +1,60 @@
+[
+  {
+    "id": 1,
+    "question": "Wie viele Sekunden hat ein Tag?",
+    "type": "number",
+    "answer": 86400
+  },
+  {
+    "id": 2,
+    "question": "Wie hoch ist der Eiffelturm (in Metern)?",
+    "type": "number",
+    "answer": 330
+  },
+  {
+    "id": 3,
+    "question": "In welchem Jahr wurde die Berliner Mauer gebaut?",
+    "type": "number",
+    "answer": 1961
+  },
+  {
+    "id": 4,
+    "question": "Wie viele Planeten hat unser Sonnensystem?",
+    "type": "number",
+    "answer": 8
+  },
+  {
+    "id": 5,
+    "question": "Wie viele Buchstaben hat das deutsche Alphabet (ohne Sonderzeichen)?",
+    "type": "number",
+    "answer": 26
+  },
+  {
+    "id": 6,
+    "question": "Wie viele Bundesländer hat Deutschland?",
+    "type": "number",
+    "answer": 16
+  },
+  {
+    "id": 7,
+    "question": "Wie viele Kilometer ist der Rhein lang?",
+    "type": "number",
+    "answer": 1232
+  },
+  {
+    "id": 8,
+    "question": "In welchem Jahr startete die erste bemannte Mondlandung?",
+    "type": "number",
+    "answer": 1969
+  },
+  {
+    "id": 9,
+    "question": "Nenne eine bekannte deutsche Märchenfigur.",
+    "type": "text"
+  },
+  {
+    "id": 10,
+    "question": "Was ist dein Lieblings-Sommergetränk?",
+    "type": "text"
+  }
+]

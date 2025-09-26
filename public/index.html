@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Closer Game</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <main class="app">
+      <section id="entry-screen" class="card">
+        <h1>Closer</h1>
+        <p class="tagline">Tritt einer Lobby bei und zeige dein Schätz-Talent!</p>
+        <div class="form-group">
+          <label for="name-input">Dein Name</label>
+          <input id="name-input" type="text" maxlength="18" placeholder="Spieler" />
+        </div>
+        <div class="form-group">
+          <label for="code-input">Lobby-Code</label>
+          <input id="code-input" type="text" maxlength="4" placeholder="ABCD" />
+        </div>
+        <div class="actions">
+          <button id="join-btn" class="primary">Lobby beitreten</button>
+          <button id="create-btn" class="secondary">Neue Lobby erstellen</button>
+        </div>
+        <p id="entry-error" class="error" role="alert"></p>
+      </section>
+
+      <section id="lobby-screen" class="card hidden">
+        <header class="lobby-header">
+          <h2>Lobby <span id="lobby-code"></span></h2>
+          <button id="leave-btn" class="link">Verlassen</button>
+        </header>
+        <div class="players" id="player-list"></div>
+        <div id="status-area"></div>
+        <div id="question-area" class="hidden">
+          <p id="question-text"></p>
+          <form id="answer-form">
+            <input id="answer-input" type="text" autocomplete="off" required placeholder="Deine Antwort" />
+            <button type="submit" class="primary">Antwort senden</button>
+          </form>
+          <p id="answer-hint" class="hint"></p>
+        </div>
+        <div id="results-area" class="hidden"></div>
+        <button id="ready-btn" class="primary hidden">Bereit für nächste Runde</button>
+      </section>
+    </main>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/client.js" type="module"></script>
+  </body>
+</html>
