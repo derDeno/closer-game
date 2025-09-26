@@ -1198,5 +1198,605 @@
     "question": "Wie viele Steinlagen besitzt die Cheops-Pyramide?",
     "type": "number",
     "answer": 203
+  },
+  {
+    "id": 201,
+    "question": "Wie viele Kilometer umfasst die Ringstraße um Island?",
+    "type": "number",
+    "answer": 1332
+  },
+  {
+    "id": 202,
+    "question": "Wie viele Einwohner hat die Stadt Vilnius im Jahr 2023 (gerundet)?",
+    "type": "number",
+    "answer": 600000
+  },
+  {
+    "id": 203,
+    "question": "Wie viele Meter tief ist der Marianengraben an seiner tiefsten Stelle (Challenger-Tief)?",
+    "type": "number",
+    "answer": 10984
+  },
+  {
+    "id": 204,
+    "question": "Wie viele Treppenstufen führen im Empire State Building offiziell bis zur Aussichtsplattform im 86. Stock?",
+    "type": "number",
+    "answer": 1576
+  },
+  {
+    "id": 205,
+    "question": "Wie viele Liter Wasser fallen durchschnittlich als Regen pro Jahr in Berlin (in Millimetern gemessen)?",
+    "type": "number",
+    "answer": 570
+  },
+  {
+    "id": 206,
+    "question": "Wie viele Kilometer lang ist der Rhein von seiner Quelle bis zur Mündung?",
+    "type": "number",
+    "answer": 1230
+  },
+  {
+    "id": 207,
+    "question": "Wie viele Mitglieder hat der Deutsche Bundestag seit 2021 inklusive Überhang- und Ausgleichsmandaten?",
+    "type": "number",
+    "answer": 736
+  },
+  {
+    "id": 208,
+    "question": "Wie viele Kalorien enthält ein durchschnittlicher Apfel (mittelgroß) in Kilokalorien?",
+    "type": "number",
+    "answer": 95
+  },
+  {
+    "id": 209,
+    "question": "Wie viele Jahre dauerte der Hundertjährige Krieg tatsächlich?",
+    "type": "number",
+    "answer": 116
+  },
+  {
+    "id": 210,
+    "question": "Wie viele Einwohner hat Luxemburg-Stadt im Jahr 2023 (gerundet)?",
+    "type": "number",
+    "answer": 135000
+  },
+  {
+    "id": 211,
+    "question": "Wie viele Kilometer lang ist die Autobahn A7 in Deutschland?",
+    "type": "number",
+    "answer": 962
+  },
+  {
+    "id": 212,
+    "question": "Wie viele Kacheln bedecken etwa den Boden der Sixtinischen Kapelle?",
+    "type": "number",
+    "answer": 600
+  },
+  {
+    "id": 213,
+    "question": "Wie viele verschiedene Aminosäuren werden beim Aufbau menschlicher Proteine verwendet?",
+    "type": "number",
+    "answer": 20
+  },
+  {
+    "id": 214,
+    "question": "Wie viele Meter beträgt der Durchmesser des Large Hadron Collider am CERN (ungefähr)?",
+    "type": "number",
+    "answer": 8400
+  },
+  {
+    "id": 215,
+    "question": "Wie viele Strophen umfasst die deutsche Nationalhymne offiziell?",
+    "type": "number",
+    "answer": 1
+  },
+  {
+    "id": 216,
+    "question": "Wie viele Meter hoch ist der Burj Khalifa?",
+    "type": "number",
+    "answer": 828
+  },
+  {
+    "id": 217,
+    "question": "Wie viele Spieler umfasst ein Kader bei einer Fußball-Weltmeisterschaft seit 2022?",
+    "type": "number",
+    "answer": 26
+  },
+  {
+    "id": 218,
+    "question": "Wie viele Knochen hat der menschliche Körper im Erwachsenenalter?",
+    "type": "number",
+    "answer": 206
+  },
+  {
+    "id": 219,
+    "question": "Wie viele Elemente umfasst das Periodensystem (Stand 2023)?",
+    "type": "number",
+    "answer": 118
+  },
+  {
+    "id": 220,
+    "question": "Wie viele Tage dauerte die Berliner Luftbrücke von 1948 bis 1949?",
+    "type": "number",
+    "answer": 322
+  },
+  {
+    "id": 221,
+    "question": "Wie viele Kilometer misst die Chinesische Mauer inklusive ihrer Nebenmauern laut offizieller Vermessung?",
+    "type": "number",
+    "answer": 21196
+  },
+  {
+    "id": 222,
+    "question": "Wie viele Einwohner hat die Stadt Marrakesch (gerundet nach 2022)?",
+    "type": "number",
+    "answer": 980000
+  },
+  {
+    "id": 223,
+    "question": "Wie viele Schachfelder befinden sich auf einem klassischen Schachbrett?",
+    "type": "number",
+    "answer": 64
+  },
+  {
+    "id": 224,
+    "question": "Wie viele Kilometer beträgt die Entfernung zwischen Erde und Mond im Mittel?",
+    "type": "number",
+    "answer": 384400
+  },
+  {
+    "id": 225,
+    "question": "Wie viele Minuten dauerte das längste registrierte Wimbledon-Finale der Herren (2019 Djokovic vs. Federer)?",
+    "type": "number",
+    "answer": 295
+  },
+  {
+    "id": 226,
+    "question": "Wie viele Einwohner leben in Singapur (Stand 2022, gerundet)?",
+    "type": "number",
+    "answer": 5700000
+  },
+  {
+    "id": 227,
+    "question": "Wie viele Seiten umfasst die Gutenberg-Bibel pro Band im Durchschnitt?",
+    "type": "number",
+    "answer": 324
+  },
+  {
+    "id": 228,
+    "question": "Wie viele Planeten besaß das Sonnensystem laut IAU-Definition ab 2006?",
+    "type": "number",
+    "answer": 8
+  },
+  {
+    "id": 229,
+    "question": "Wie viele Kilometer legt ein Lichtstrahl in einer Sekunde im Vakuum zurück?",
+    "type": "number",
+    "answer": 299792
+  },
+  {
+    "id": 230,
+    "question": "Wie viele Einwohner hat die Stadt Lissabon (Metropolregion, gerundet 2022)?",
+    "type": "number",
+    "answer": 2800000
+  },
+  {
+    "id": 231,
+    "question": "Wie viele Tonnen wog die Freiheitsstatue bei ihrer Einweihung inklusive Fundament?",
+    "type": "number",
+    "answer": 22500
+  },
+  {
+    "id": 232,
+    "question": "Wie viele Mitarbeiter beschäftigte die NASA zur Zeit der Apollo-11-Mission (ungefähr)?",
+    "type": "number",
+    "answer": 400000
+  },
+  {
+    "id": 233,
+    "question": "Wie viele Meter hoch ist der Tafelberg in Südafrika?",
+    "type": "number",
+    "answer": 1085
+  },
+  {
+    "id": 234,
+    "question": "Wie viele Kilometer misst die Donau von der Quelle bis zur Mündung?",
+    "type": "number",
+    "answer": 2857
+  },
+  {
+    "id": 235,
+    "question": "Wie viele Bände umfasst die Gesamtausgabe von Thomas Manns Werken (Fischer Ausgabe)?",
+    "type": "number",
+    "answer": 13
+  },
+  {
+    "id": 236,
+    "question": "Wie viele aktive Vulkane gibt es in Indonesien (ungefähr)?",
+    "type": "number",
+    "answer": 120
+  },
+  {
+    "id": 237,
+    "question": "Wie viele Länder gehören den Vereinten Nationen (UNO) im Jahr 2023 an?",
+    "type": "number",
+    "answer": 193
+  },
+  {
+    "id": 238,
+    "question": "Wie viele Meter hoch ist der höchste Wasserfall der Welt, der Salto Ángel?",
+    "type": "number",
+    "answer": 979
+  },
+  {
+    "id": 239,
+    "question": "Wie viele Menschen starben beim Ausbruch des Vesuvs im Jahr 79 n. Chr. (Schätzung)?",
+    "type": "number",
+    "answer": 16000
+  },
+  {
+    "id": 240,
+    "question": "Wie viele Kapitel hat der Roman \"Der Herr der Ringe\" in der Standardausgabe (ohne Anhänge)?",
+    "type": "number",
+    "answer": 62
+  },
+  {
+    "id": 241,
+    "question": "Wie viele Länder durchfließt der Nil auf seinem Weg zum Mittelmeer?",
+    "type": "number",
+    "answer": 11
+  },
+  {
+    "id": 242,
+    "question": "Wie viele Kilometer ist der Jakobsweg Camino Francés von Saint-Jean-Pied-de-Port nach Santiago de Compostela lang?",
+    "type": "number",
+    "answer": 780
+  },
+  {
+    "id": 243,
+    "question": "Wie viele Meter hoch war der Kölner Dom bei seiner Fertigstellung 1880?",
+    "type": "number",
+    "answer": 157
+  },
+  {
+    "id": 244,
+    "question": "Wie viele Jahre regierte Königin Elizabeth II. Großbritannien?",
+    "type": "number",
+    "answer": 70
+  },
+  {
+    "id": 245,
+    "question": "Wie viele Arbeiter waren am Bau des Panamakanals beteiligt (Schätzung)?",
+    "type": "number",
+    "answer": 40000
+  },
+  {
+    "id": 246,
+    "question": "Wie viele Meter beträgt die Spannweite der Airbus A380?",
+    "type": "number",
+    "answer": 79
+  },
+  {
+    "id": 247,
+    "question": "Wie viele Einwohner hat die Stadt Addis Abeba (Stand 2022, gerundet)?",
+    "type": "number",
+    "answer": 3600000
+  },
+  {
+    "id": 248,
+    "question": "Wie viele Brücken hat die Stadt Venedig (gerundet)?",
+    "type": "number",
+    "answer": 435
+  },
+  {
+    "id": 249,
+    "question": "Wie viele Seiten umfasst der Kodex Leicester von Leonardo da Vinci?",
+    "type": "number",
+    "answer": 72
+  },
+  {
+    "id": 250,
+    "question": "Wie viele Jahre dauerte der Bau der Sagrada Família bis 2023 seit der Grundsteinlegung?",
+    "type": "number",
+    "answer": 141
+  },
+  {
+    "id": 251,
+    "question": "Wie viele UNESCO-Welterbestätten gibt es in Deutschland (Stand 2023)?",
+    "type": "number",
+    "answer": 52
+  },
+  {
+    "id": 252,
+    "question": "Wie viele Kilometer misst die Strecke des New York City Marathon?",
+    "type": "number",
+    "answer": 42
+  },
+  {
+    "id": 253,
+    "question": "Wie viele Einwohner hat die Stadt Montevideo (gerundet 2022)?",
+    "type": "number",
+    "answer": 1700000
+  },
+  {
+    "id": 254,
+    "question": "Wie viele Jahre alt wurde Leonardo da Vinci?",
+    "type": "number",
+    "answer": 67
+  },
+  {
+    "id": 255,
+    "question": "Wie viele Meter tief ist der Baikalsee im Maximum?",
+    "type": "number",
+    "answer": 1642
+  },
+  {
+    "id": 256,
+    "question": "Wie viele Musiker gehören zu einem klassischen Streichquartett?",
+    "type": "number",
+    "answer": 4
+  },
+  {
+    "id": 257,
+    "question": "Wie viele Einwohner zählte das Aztekenreich zur Zeit von Moctezuma II. (Schätzung)?",
+    "type": "number",
+    "answer": 15000000
+  },
+  {
+    "id": 258,
+    "question": "Wie viele Figuren umfasst ein Set des russischen Brettspiels Matroschka (durchschnittlich)?",
+    "type": "number",
+    "answer": 5
+  },
+  {
+    "id": 259,
+    "question": "Wie viele Liter Fassungsvermögen hat ein olympisches Schwimmbecken (50 m)?",
+    "type": "number",
+    "answer": 2500000
+  },
+  {
+    "id": 260,
+    "question": "Wie viele Jahre dauerte der Bau des Parthenon in Athen?",
+    "type": "number",
+    "answer": 9
+  },
+  {
+    "id": 261,
+    "question": "Wie viele Einwohner hat die Stadt Hanoi (Metropolregion, gerundet 2022)?",
+    "type": "number",
+    "answer": 8000000
+  },
+  {
+    "id": 262,
+    "question": "Wie viele Meter lang ist das Kolosseum in Rom an seiner längsten Achse?",
+    "type": "number",
+    "answer": 188
+  },
+  {
+    "id": 263,
+    "question": "Wie viele Bundesstaaten hat Indien?",
+    "type": "number",
+    "answer": 28
+  },
+  {
+    "id": 264,
+    "question": "Wie viele Kilometer lang ist der Panamakanal?",
+    "type": "number",
+    "answer": 82
+  },
+  {
+    "id": 265,
+    "question": "Wie viele Menschen leben in der Region Katalonien (gerundet 2022)?",
+    "type": "number",
+    "answer": 7600000
+  },
+  {
+    "id": 266,
+    "question": "Wie viele Meter hoch ist der höchste Gipfel der Alpen, der Mont Blanc?",
+    "type": "number",
+    "answer": 4808
+  },
+  {
+    "id": 267,
+    "question": "Wie viele Einwohner hat die Stadt Boston (Metropolregion, gerundet 2022)?",
+    "type": "number",
+    "answer": 4900000
+  },
+  {
+    "id": 268,
+    "question": "Wie viele Spieler umfasst eine Rugby-Union-Mannschaft auf dem Feld?",
+    "type": "number",
+    "answer": 15
+  },
+  {
+    "id": 269,
+    "question": "Wie viele Inseln gehören zu den Philippinen (ungefähr)?",
+    "type": "number",
+    "answer": 7641
+  },
+  {
+    "id": 270,
+    "question": "Wie viele Stunden dauert ein kompletter Umlauf der Internationalen Raumstation ISS um die Erde?",
+    "type": "number",
+    "answer": 1
+  },
+  {
+    "id": 271,
+    "question": "Wie viele Meter hoch ist der Viktoriafall?",
+    "type": "number",
+    "answer": 108
+  },
+  {
+    "id": 272,
+    "question": "Wie viele Einwohner hat die Stadt Kapstadt (Metropolregion, gerundet 2022)?",
+    "type": "number",
+    "answer": 4600000
+  },
+  {
+    "id": 273,
+    "question": "Wie viele Loks umfasst der längste Güterzug, der je in Australien eingesetzt wurde (Rekord 2001)?",
+    "type": "number",
+    "answer": 8
+  },
+  {
+    "id": 274,
+    "question": "Wie viele Einwohner hat die Stadt Tallinn (gerundet 2022)?",
+    "type": "number",
+    "answer": 450000
+  },
+  {
+    "id": 275,
+    "question": "Wie viele Jahre dauerte der Bau der Großen Moschee von Córdoba?",
+    "type": "number",
+    "answer": 200
+  },
+  {
+    "id": 276,
+    "question": "Wie viele Meter hoch ist der Fernsehturm in Berlin inklusive Antenne?",
+    "type": "number",
+    "answer": 368
+  },
+  {
+    "id": 277,
+    "question": "Wie viele Länder grenzen an das Mittelmeer?",
+    "type": "number",
+    "answer": 21
+  },
+  {
+    "id": 278,
+    "question": "Wie viele Einwohner hat die Stadt Auckland (Metropolregion, gerundet 2022)?",
+    "type": "number",
+    "answer": 1700000
+  },
+  {
+    "id": 279,
+    "question": "Wie viele Werke umfasst der Kanon der Grimm'schen Kinder- und Hausmärchen in der Ausgabe von 1857?",
+    "type": "number",
+    "answer": 200
+  },
+  {
+    "id": 280,
+    "question": "Wie viele Kilometer lang ist die Strecke des berühmten Transalpine Express in Neuseeland?",
+    "type": "number",
+    "answer": 223
+  },
+  {
+    "id": 281,
+    "question": "Wie viele Jahre alt ist das Shwedagon-Pagodenheiligtum in Myanmar (Schätzung)?",
+    "type": "number",
+    "answer": 2600
+  },
+  {
+    "id": 282,
+    "question": "Wie viele Meter lang ist der Hoover-Staudamm?",
+    "type": "number",
+    "answer": 379
+  },
+  {
+    "id": 283,
+    "question": "Wie viele Einwohner hat die Stadt Córdoba in Argentinien (gerundet 2022)?",
+    "type": "number",
+    "answer": 1500000
+  },
+  {
+    "id": 284,
+    "question": "Wie viele Bücher umfasst die Sammlung der Library of Congress (gerundet)?",
+    "type": "number",
+    "answer": 170000000
+  },
+  {
+    "id": 285,
+    "question": "Wie viele Meter beträgt der Höhenunterschied der Zugspitze zur Partnachklamm?",
+    "type": "number",
+    "answer": 2962
+  },
+  {
+    "id": 286,
+    "question": "Wie viele Einwohner hat die Stadt Porto (Metropolregion, gerundet 2022)?",
+    "type": "number",
+    "answer": 1700000
+  },
+  {
+    "id": 287,
+    "question": "Wie viele Länder grenzen an den Tschad?",
+    "type": "number",
+    "answer": 6
+  },
+  {
+    "id": 288,
+    "question": "Wie viele Seiten umfasst der Roman \"Krieg und Frieden\" in der russischen Originalausgabe (ungefähr)?",
+    "type": "number",
+    "answer": 1300
+  },
+  {
+    "id": 289,
+    "question": "Wie viele Meter hoch ist der höchste Turm der Kathedrale Notre-Dame de Paris?",
+    "type": "number",
+    "answer": 69
+  },
+  {
+    "id": 290,
+    "question": "Wie viele Einwohner hat die Stadt Casablanca (Metropolregion, gerundet 2022)?",
+    "type": "number",
+    "answer": 4300000
+  },
+  {
+    "id": 291,
+    "question": "Wie viele Kilometer lang ist die Seine von der Quelle bis zur Mündung?",
+    "type": "number",
+    "answer": 777
+  },
+  {
+    "id": 292,
+    "question": "Wie viele Menschen leben in der Region Quebec (gerundet 2022)?",
+    "type": "number",
+    "answer": 8700000
+  },
+  {
+    "id": 293,
+    "question": "Wie viele Brücken überspannen den Fluss Themse in London (ungefähr)?",
+    "type": "number",
+    "answer": 35
+  },
+  {
+    "id": 294,
+    "question": "Wie viele Kilometer lang ist der Jakobsweg Via de la Plata?",
+    "type": "number",
+    "answer": 1000
+  },
+  {
+    "id": 295,
+    "question": "Wie viele Einwohner hat die Stadt San José in Costa Rica (Metropolregion, gerundet 2022)?",
+    "type": "number",
+    "answer": 1700000
+  },
+  {
+    "id": 296,
+    "question": "Wie viele Kilometer lang ist der Grand Canyon an seiner längsten Ausdehnung?",
+    "type": "number",
+    "answer": 446
+  },
+  {
+    "id": 297,
+    "question": "Wie viele Einwohner hat die Stadt Oslo (Metropolregion, gerundet 2022)?",
+    "type": "number",
+    "answer": 1100000
+  },
+  {
+    "id": 298,
+    "question": "Wie viele Staaten bilden den Europarat (Stand 2023)?",
+    "type": "number",
+    "answer": 46
+  },
+  {
+    "id": 299,
+    "question": "Wie viele Jahre dauerte der Bau des Taj Mahal?",
+    "type": "number",
+    "answer": 22
+  },
+  {
+    "id": 300,
+    "question": "Wie viele Seiten umfasst die erste Auflage von Immanuel Kants \"Kritik der reinen Vernunft\"?",
+    "type": "number",
+    "answer": 856
   }
 ]
