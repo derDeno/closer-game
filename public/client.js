@@ -332,7 +332,7 @@ function renderSummary(summary) {
   summaryVisible = true;
 
   const heading = document.createElement('h3');
-  heading.textContent = 'Highscore der Runde';
+  heading.textContent = 'Highscore des Spiels';
   summaryArea.appendChild(heading);
 
   if (typeof data.roundsPlayed === 'number') {
@@ -352,18 +352,6 @@ function renderSummary(summary) {
     summaryArea.appendChild(reasonText);
   }
 
-  if (data.question) {
-    const questionInfo = document.createElement('p');
-    questionInfo.innerHTML = `<strong>Frage:</strong> ${escapeHtml(data.question)}`;
-    summaryArea.appendChild(questionInfo);
-  }
-
-  if (typeof data.correctAnswer !== 'undefined' && data.correctAnswer !== null) {
-    const answerInfo = document.createElement('p');
-    answerInfo.innerHTML = `<strong>Richtige Antwort:</strong> ${escapeHtml(data.correctAnswer)}`;
-    summaryArea.appendChild(answerInfo);
-  }
-
   if (Array.isArray(data.highscore) && data.highscore.length > 0) {
     const list = document.createElement('div');
     list.className = 'results-list';
@@ -377,13 +365,20 @@ function renderSummary(summary) {
       row.appendChild(name);
 
       const details = document.createElement('span');
-      if (entry.distance === null || entry.distance === undefined) {
-        details.textContent = 'Keine gültige Antwort';
-      } else {
-        const answerText = typeof entry.answer === 'undefined' || entry.answer === null ? '–' : entry.answer;
-        const formatted = formatDistance(entry.distance);
-        details.textContent = `${answerText} (Abweichung: ${formatted ?? entry.distance})`;
+      const parts = [];
+
+      if (typeof entry.points === 'number') {
+        parts.push(`Punkte: ${entry.points}`);
       }
+
+      if (typeof entry.averageDeviation === 'number') {
+        const formatted = formatDistance(entry.averageDeviation);
+        parts.push(`Ø Abweichung: ${formatted ?? entry.averageDeviation}`);
+      } else {
+        parts.push('Ø Abweichung: –');
+      }
+
+      details.textContent = parts.join(' | ');
       row.appendChild(details);
 
       list.appendChild(row);
