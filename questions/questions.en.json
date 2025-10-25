@@ -1,0 +1,1802 @@
+[
+  {
+    "id": 1,
+    "question": "How many kilometers is the Trans-Siberian Railway from Moscow to Vladivostok?",
+    "type": "number",
+    "answer": 9289
+  },
+  {
+    "id": 2,
+    "question": "How high is the Ojos del Salado volcano in meters?",
+    "type": "number",
+    "answer": 6893
+  },
+  {
+    "id": 3,
+    "question": "How many inhabitants did the Byzantine Empire have around 560 AD at the time of Justinian I (estimate)?",
+    "type": "number",
+    "answer": 26000000
+  },
+  {
+    "id": 4,
+    "question": "How many days did the siege of Leningrad last?",
+    "type": "number",
+    "answer": 872
+  },
+  {
+    "id": 5,
+    "question": "How many verses are in Homer's Iliad?",
+    "type": "number",
+    "answer": 15693
+  },
+  {
+    "id": 6,
+    "question": "How many inhabitants did the Roman Empire have under Emperor Trajan (estimate)?",
+    "type": "number",
+    "answer": 60000000
+  },
+  {
+    "id": 7,
+    "question": "According to official surveys, how many kilometers of coastline does Japan have (rounded)?",
+    "type": "number",
+    "answer": 29751
+  },
+  {
+    "id": 8,
+    "question": "What is the average distance between the Earth and the Sun in kilometers?",
+    "type": "number",
+    "answer": 149597870
+  },
+  {
+    "id": 9,
+    "question": "How many kilometers is Line 3 of the Guangzhou Metro, the longest subway line in the world?",
+    "type": "number",
+    "answer": 67.3
+  },
+  {
+    "id": 10,
+    "question": "How many UNESCO World Heritage sites were listed worldwide at the end of 2023?",
+    "type": "number",
+    "answer": 1199
+  },
+  {
+    "id": 11,
+    "question": "How deep is the Challenger Deep in the Mariana Trench in meters?",
+    "type": "number",
+    "answer": 10984
+  },
+  {
+    "id": 12,
+    "question": "How many members did the International Astronomical Union have in 2023?",
+    "type": "number",
+    "answer": 13667
+  },
+  {
+    "id": 13,
+    "question": "How many prime numbers are there under 1000?",
+    "type": "number",
+    "answer": 168
+  },
+  {
+    "id": 14,
+    "question": "How many decimal places does the number 2^1000 have?",
+    "type": "number",
+    "answer": 302
+  },
+  {
+    "id": 15,
+    "question": "How many decimal places does 100 have!?",
+    "type": "number",
+    "answer": 158
+  },
+  {
+    "id": 16,
+    "question": "How many years is the average orbital period of Halley's Comet?",
+    "type": "number",
+    "answer": 75.3
+  },
+  {
+    "id": 17,
+    "question": "How many protons does an atom of the element bismuth have?",
+    "type": "number",
+    "answer": 83
+  },
+  {
+    "id": 18,
+    "question": "How many kilometers is the Nile including the White and Blue Nile?",
+    "type": "number",
+    "answer": 6650
+  },
+  {
+    "id": 19,
+    "question": "How many meters in diameter does the dwarf planet Pluto have on average?",
+    "type": "number",
+    "answer": 2376
+  },
+  {
+    "id": 20,
+    "question": "How many Kelvin is the effective surface temperature of the Sun?",
+    "type": "number",
+    "answer": 5778
+  },
+  {
+    "id": 21,
+    "question": "How many light years away is the Andromeda Galaxy from the Milky Way?",
+    "type": "number",
+    "answer": 2537000
+  },
+  {
+    "id": 22,
+    "question": "How many objects does the Messier catalog contain?",
+    "type": "number",
+    "answer": 110
+  },
+  {
+    "id": 23,
+    "question": "How many meters per second is the speed of light in a vacuum?",
+    "type": "number",
+    "answer": 299792458
+  },
+  {
+    "id": 24,
+    "question": "Approximately how many protein-coding genes does the human genome contain?",
+    "type": "number",
+    "answer": 20000
+  },
+  {
+    "id": 25,
+    "question": "How many kilometers long is the Mekong?",
+    "type": "number",
+    "answer": 4350
+  },
+  {
+    "id": 26,
+    "question": "How many kilometers does the Great Dividing Range extend in Australia?",
+    "type": "number",
+    "answer": 3500
+  },
+  {
+    "id": 27,
+    "question": "Approximately how many base pairs does the human genome contain?",
+    "type": "number",
+    "answer": 3200000000
+  },
+  {
+    "id": 28,
+    "question": "How many meters does the water fall from the Salto Ángel in Venezuela?",
+    "type": "number",
+    "answer": 979
+  },
+  {
+    "id": 29,
+    "question": "How many different amino acids does the genetic code encode?",
+    "type": "number",
+    "answer": 20
+  },
+  {
+    "id": 30,
+    "question": "How many days passed between the departure of Magellan's Armada in 1519 and the return of the Victoria in 1522?",
+    "type": "number",
+    "answer": 1082
+  },
+  {
+    "id": 31,
+    "question": "How many inhabitants did Singapore have in 2023 (rounded to the nearest thousand)?",
+    "type": "number",
+    "answer": 5900000
+  },
+  {
+    "id": 32,
+    "question": "How many kilometers does the International Space Station travel per orbit (rounded)?",
+    "type": "number",
+    "answer": 42669
+  },
+  {
+    "id": 33,
+    "question": "How many nucleotides are in the SARS-CoV-2 genome?",
+    "type": "number",
+    "answer": 29903
+  },
+  {
+    "id": 34,
+    "question": "How many kilometers does light travel in an hour in a vacuum?",
+    "type": "number",
+    "answer": 1079252848800
+  },
+  {
+    "id": 35,
+    "question": "How many inhabitants did the Great Mughal Empire reach around 1700 (estimate)?",
+    "type": "number",
+    "answer": 150000000
+  },
+  {
+    "id": 36,
+    "question": "How deep is Lake Baikal at its deepest point in meters?",
+    "type": "number",
+    "answer": 1642
+  },
+  {
+    "id": 37,
+    "question": "How many kilometers is the circumference of the moon?",
+    "type": "number",
+    "answer": 10921
+  },
+  {
+    "id": 38,
+    "question": "How many days is a Saros cycle?",
+    "type": "number",
+    "answer": 6585.3
+  },
+  {
+    "id": 39,
+    "question": "How many knots was the top speed of the airship LZ 129 Hindenburg?",
+    "type": "number",
+    "answer": 73
+  },
+  {
+    "id": 40,
+    "question": "How many kilometers long is the Gotthard Base Tunnel?",
+    "type": "number",
+    "answer": 57.1
+  },
+  {
+    "id": 41,
+    "question": "How many inhabitants did Reykjavik have in 2023 (rounded)?",
+    "type": "number",
+    "answer": 139000
+  },
+  {
+    "id": 42,
+    "question": "How many solutions does the eight-queens problem in chess have?",
+    "type": "number",
+    "answer": 92
+  },
+  {
+    "id": 43,
+    "question": "How many meters is the wingspan of an Airbus A380-800?",
+    "type": "number",
+    "answer": 79.8
+  },
+  {
+    "id": 44,
+    "question": "How many years did the Hundred Years' War last?",
+    "type": "number",
+    "answer": 116
+  },
+  {
+    "id": 45,
+    "question": "How many books does Pliny the Elder's 'Naturalis Historia' contain?",
+    "type": "number",
+    "answer": 37
+  },
+  {
+    "id": 46,
+    "question": "How high does Olympus Mons rise above the surface of Mars in meters?",
+    "type": "number",
+    "answer": 21229
+  },
+  {
+    "id": 47,
+    "question": "How many kilometers is Interstate 90 in the USA?",
+    "type": "number",
+    "answer": 4991
+  },
+  {
+    "id": 48,
+    "question": "How many known moons does Jupiter have (as of 2023)?",
+    "type": "number",
+    "answer": 95
+  },
+  {
+    "id": 49,
+    "question": "How many keys does a standard ANSI keyboard have?",
+    "type": "number",
+    "answer": 104
+  },
+  {
+    "id": 50,
+    "question": "How many elements does the periodic table of elements count (as of 2023)?",
+    "type": "number",
+    "answer": 118
+  },
+  {
+    "id": 51,
+    "question": "How many years did the Old Kingdom of Ancient Egypt (2686-2181 BC) last?",
+    "type": "number",
+    "answer": 505
+  },
+  {
+    "id": 52,
+    "question": "How many meters below sea level is the surface of the Dead Sea?",
+    "type": "number",
+    "answer": 430
+  },
+  {
+    "id": 53,
+    "question": "How many inhabitants did the Republic of Venice have around 1500 (estimate)?",
+    "type": "number",
+    "answer": 2500000
+  },
+  {
+    "id": 54,
+    "question": "How many verses does Dante's 'Divina Comedy' contain?",
+    "type": "number",
+    "answer": 14233
+  },
+  {
+    "id": 55,
+    "question": "How many years did the Ming Dynasty rule in China?",
+    "type": "number",
+    "answer": 276
+  },
+  {
+    "id": 56,
+    "question": "How many chapters does 'Don Quixote' contain in both parts combined?",
+    "type": "number",
+    "answer": 126
+  },
+  {
+    "id": 57,
+    "question": "How many inhabitants did Bhutan have in 2023 (rounded)?",
+    "type": "number",
+    "answer": 787000
+  },
+  {
+    "id": 58,
+    "question": "How many meters high is the Merdeka 118 in Kuala Lumpur?",
+    "type": "number",
+    "answer": 679
+  },
+  {
+    "id": 59,
+    "question": "How many kilometers long is the Panama Canal?",
+    "type": "number",
+    "answer": 82
+  },
+  {
+    "id": 60,
+    "question": "How many islands does Indonesia have according to the official count from 2017?",
+    "type": "number",
+    "answer": 17508
+  },
+  {
+    "id": 61,
+    "question": "How many kilometers is the coastline of Antarctica?",
+    "type": "number",
+    "answer": 17968
+  },
+  {
+    "id": 62,
+    "question": "How many meters deep is the Black Sea at its deepest point?",
+    "type": "number",
+    "answer": 2212
+  },
+  {
+    "id": 63,
+    "question": "How many years lie between the fall of the Western Roman Empire in 476 and the coronation of Charlemagne as Emperor in 800?",
+    "type": "number",
+    "answer": 324
+  },
+  {
+    "id": 64,
+    "question": "How many hours did the Apollo 11 mission take from launch to splashdown?",
+    "type": "number",
+    "answer": 195
+  },
+  {
+    "id": 65,
+    "question": "How many bits does an IPv6 address contain?",
+    "type": "number",
+    "answer": 128
+  },
+  {
+    "id": 66,
+    "question": "How many bytes are in a Pebibyte (PiB)?",
+    "type": "number",
+    "answer": 1125899906842624
+  },
+  {
+    "id": 67,
+    "question": "How many meters high is Mont Blanc?",
+    "type": "number",
+    "answer": 4808
+  },
+  {
+    "id": 68,
+    "question": "How many inhabitants does Iceland have in total in 2023 (rounded)?",
+    "type": "number",
+    "answer": 388000
+  },
+  {
+    "id": 69,
+    "question": "How many intersections does a 19x19 Go board have?",
+    "type": "number",
+    "answer": 361
+  },
+  {
+    "id": 70,
+    "question": "How many member states does the African Union have?",
+    "type": "number",
+    "answer": 55
+  },
+  {
+    "id": 71,
+    "question": "How many kilometers is the Earth's polar diameter?",
+    "type": "number",
+    "answer": 12713
+  },
+  {
+    "id": 72,
+    "question": "How many days does the sidereal rotation of the Sun last at the equator?",
+    "type": "number",
+    "answer": 24.47
+  },
+  {
+    "id": 73,
+    "question": "How many inhabitants did Tenochtitlán have around 1519 (estimate)?",
+    "type": "number",
+    "answer": 200000
+  },
+  {
+    "id": 74,
+    "question": "How many meters high is Mount Etna?",
+    "type": "number",
+    "answer": 3357
+  },
+  {
+    "id": 75,
+    "question": "How many kilometers is the London Underground (TfL) network?",
+    "type": "number",
+    "answer": 402
+  },
+  {
+    "id": 76,
+    "question": "How many inhabitants does the Lagos metropolitan area have (2023 estimate)?",
+    "type": "number",
+    "answer": 15000000
+  },
+  {
+    "id": 77,
+    "question": "How many words are in the original text of the US Constitution?",
+    "type": "number",
+    "answer": 4543
+  },
+  {
+    "id": 78,
+    "question": "How many meters deep is Lake Constance at its deepest point?",
+    "type": "number",
+    "answer": 251
+  },
+  {
+    "id": 79,
+    "question": "How many combinations are possible in the German Lotto 6 out of 49?",
+    "type": "number",
+    "answer": 13983816
+  },
+  {
+    "id": 80,
+    "question": "How many meters high is Dhaulagiri I?",
+    "type": "number",
+    "answer": 8167
+  },
+  {
+    "id": 81,
+    "question": "How many qubits did Google's Sycamore processor use in its 2019 demonstration run?",
+    "type": "number",
+    "answer": 53
+  },
+  {
+    "id": 82,
+    "question": "How many nanometers is the mean wavelength of the sodium D line?",
+    "type": "number",
+    "answer": 589
+  },
+  {
+    "id": 83,
+    "question": "How many gigajoules of energy are equal to one kiloton of TNT?",
+    "type": "number",
+    "answer": 4184
+  },
+  {
+    "id": 84,
+    "question": "How many minutes did the longest total solar eclipse of the 21st century last (July 11, 2010)?",
+    "type": "number",
+    "answer": 6.63
+  },
+  {
+    "id": 85,
+    "question": "How many meters high is K2?",
+    "type": "number",
+    "answer": 8611
+  },
+  {
+    "id": 86,
+    "question": "How many states does India have?",
+    "type": "number",
+    "answer": 28
+  },
+  {
+    "id": 87,
+    "question": "How many years did the construction of the Sagrada Família take until 2023 since the foundation stone was laid?",
+    "type": "number",
+    "answer": 141
+  },
+  {
+    "id": 88,
+    "question": "How many kilometers long is the Mississippi-Missouri river system?",
+    "type": "number",
+    "answer": 6275
+  },
+  {
+    "id": 89,
+    "question": "How many characters are in the Unicode standard version 15.0?",
+    "type": "number",
+    "answer": 149813
+  },
+  {
+    "id": 90,
+    "question": "How many hertz is the fundamental frequency of the Schumann resonance?",
+    "type": "number",
+    "answer": 7.83
+  },
+  {
+    "id": 91,
+    "question": "How many meters is the average thickness of the Antarctic ice sheet?",
+    "type": "number",
+    "answer": 2160
+  },
+  {
+    "id": 92,
+    "question": "How many inhabitants does the European Union have in 2023 (rounded)?",
+    "type": "number",
+    "answer": 448000000
+  },
+  {
+    "id": 93,
+    "question": "How many protons does the element einsteinium have?",
+    "type": "number",
+    "answer": 99
+  },
+  {
+    "id": 94,
+    "question": "How many kilometers is Jupiter's equatorial circumference?",
+    "type": "number",
+    "answer": 439264
+  },
+  {
+    "id": 95,
+    "question": "How many bytes does a SHA-256 hash output contain?",
+    "type": "number",
+    "answer": 32
+  },
+  {
+    "id": 96,
+    "question": "How many degrees is the tilt of the Earth's axis?",
+    "type": "number",
+    "answer": 23.44
+  },
+  {
+    "id": 97,
+    "question": "How many kilograms does a cubic meter of seawater weigh on average?",
+    "type": "number",
+    "answer": 1025
+  },
+  {
+    "id": 98,
+    "question": "How many meters is the wavelength of a 100 MHz radio wave?",
+    "type": "number",
+    "answer": 2.998
+  },
+  {
+    "id": 99,
+    "question": "How many inhabitants did the Inca Empire have around 1530 (estimate)?",
+    "type": "number",
+    "answer": 12000000
+  },
+  {
+    "id": 100,
+    "question": "How many years is the Gregorian calendar cycle before the leap year pattern repeats?",
+    "type": "number",
+    "answer": 400
+  },
+  {
+    "id": 101,
+    "question": "How many keys does a classical piano have?",
+    "type": "number",
+    "answer": 88
+  },
+  {
+    "id": 102,
+    "question": "How many federal states does Germany have?",
+    "type": "number",
+    "answer": 16
+  },
+  {
+    "id": 103,
+    "question": "How many nodes does the minimum necessary DNS root zone inventory contain globally?",
+    "type": "number",
+    "answer": 13
+  },
+  {
+    "id": 104,
+    "question": "In what year was the first manned moon landing?",
+    "type": "number",
+    "answer": 1969
+  },
+  {
+    "id": 105,
+    "question": "How many planets are in our solar system?",
+    "type": "number",
+    "answer": 8
+  },
+  {
+    "id": 106,
+    "question": "How many minutes does an official football game last without added time?",
+    "type": "number",
+    "answer": 90
+  },
+  {
+    "id": 107,
+    "question": "How many chess squares are on a standard chess board?",
+    "type": "number",
+    "answer": 64
+  },
+  {
+    "id": 108,
+    "question": "How many players are on the pitch at the same time in a rugby union team?",
+    "type": "number",
+    "answer": 15
+  },
+  {
+    "id": 109,
+    "question": "How many sides does an icosahedron have?",
+    "type": "number",
+    "answer": 20
+  },
+  {
+    "id": 110,
+    "question": "How many years did the Hundred Years' War last?",
+    "type": "number",
+    "answer": 116
+  },
+  {
+    "id": 111,
+    "question": "How many letters are in the modern Greek alphabet?",
+    "type": "number",
+    "answer": 24
+  },
+  {
+    "id": 112,
+    "question": "How many protons does the element gold contain?",
+    "type": "number",
+    "answer": 79
+  },
+  {
+    "id": 113,
+    "question": "How many inhabitants does Austria have (as of 2023, rounded)?",
+    "type": "number",
+    "answer": 9000000
+  },
+  {
+    "id": 114,
+    "question": "How many weeks are in a leap year?",
+    "type": "number",
+    "answer": 53
+  },
+  {
+    "id": 115,
+    "question": "How many meters high is Mount Everest?",
+    "type": "number",
+    "answer": 8849
+  },
+  {
+    "id": 116,
+    "question": "How many degrees Celsius is the freezing point of water?",
+    "type": "number",
+    "answer": 0
+  },
+  {
+    "id": 117,
+    "question": "How many hearts does an octopus have?",
+    "type": "number",
+    "answer": 3
+  },
+  {
+    "id": 118,
+    "question": "How many players are on the field at the same time per team in baseball?",
+    "type": "number",
+    "answer": 9
+  },
+  {
+    "id": 119,
+    "question": "How many states does the USA have?",
+    "type": "number",
+    "answer": 50
+  },
+  {
+    "id": 120,
+    "question": "How many days does it take the Earth to revolve around the sun?",
+    "type": "number",
+    "answer": 365.25
+  },
+  {
+    "id": 121,
+    "question": "How many keys does a standard computer keyboard (without numpad) have?",
+    "type": "number",
+    "answer": 88
+  },
+  {
+    "id": 122,
+    "question": "How many steps does the Statue of Liberty have from base to crown?",
+    "type": "number",
+    "answer": 354
+  },
+  {
+    "id": 123,
+    "question": "How many spokes does a classic bicycle front wheel typically have?",
+    "type": "number",
+    "answer": 32
+  },
+  {
+    "id": 124,
+    "question": "How many chapters does the Bible (Protestant edition) have?",
+    "type": "number",
+    "answer": 1189
+  },
+  {
+    "id": 125,
+    "question": "How many kilometers long is the Nile?",
+    "type": "number",
+    "answer": 6650
+  },
+  {
+    "id": 126,
+    "question": "How many countries are in the European Union (as of 2023)?",
+    "type": "number",
+    "answer": 27
+  },
+  {
+    "id": 127,
+    "question": "How many zeros does the number one trillion have in the German number system?",
+    "type": "number",
+    "answer": 12
+  },
+  {
+    "id": 128,
+    "question": "How many teeth does an adult normally have?",
+    "type": "number",
+    "answer": 32
+  },
+  {
+    "id": 129,
+    "question": "How many meters is a marathon?",
+    "type": "number",
+    "answer": 42195
+  },
+  {
+    "id": 130,
+    "question": "How many colors are in the traditional rainbow?",
+    "type": "number",
+    "answer": 7
+  },
+  {
+    "id": 131,
+    "question": "How many players does a volleyball team have on the field?",
+    "type": "number",
+    "answer": 6
+  },
+  {
+    "id": 132,
+    "question": "How many stars are on the European Union flag?",
+    "type": "number",
+    "answer": 12
+  },
+  {
+    "id": 133,
+    "question": "How many elements does the periodic table contain (as of 2023)?",
+    "type": "number",
+    "answer": 118
+  },
+  {
+    "id": 134,
+    "question": "How many carats is pure gold?",
+    "type": "number",
+    "answer": 24
+  },
+  {
+    "id": 135,
+    "question": "How many time zones does Russia have?",
+    "type": "number",
+    "answer": 11
+  },
+  {
+    "id": 136,
+    "question": "How many keys does a standard clarinet have?",
+    "type": "number",
+    "answer": 17
+  },
+  {
+    "id": 137,
+    "question": "How many days does the Orient Express take from Paris to Istanbul in the historical timetable?",
+    "type": "number",
+    "answer": 6
+  },
+  {
+    "id": 138,
+    "question": "How many chancellors did the Federal Republic of Germany have until 2023?",
+    "type": "number",
+    "answer": 9
+  },
+  {
+    "id": 139,
+    "question": "How many decibels is the hearing threshold of an average person?",
+    "type": "number",
+    "answer": 0
+  },
+  {
+    "id": 140,
+    "question": "How many teeth does an adult lion have?",
+    "type": "number",
+    "answer": 30
+  },
+  {
+    "id": 141,
+    "question": "How many years is the orbital period of Halley’s Comet?",
+    "type": "number",
+    "answer": 75.3
+  },
+  {
+    "id": 142,
+    "question": "How many meters high is Cologne Cathedral?",
+    "type": "number",
+    "answer": 157
+  },
+  {
+    "id": 143,
+    "question": "How many rings does the Olympic symbol have?",
+    "type": "number",
+    "answer": 5
+  },
+  {
+    "id": 144,
+    "question": "How many years does a US senator serve in office?",
+    "type": "number",
+    "answer": 6
+  },
+  {
+    "id": 145,
+    "question": "How many megapixels does a 4K UHD image (3840x2160) have?",
+    "type": "number",
+    "answer": 8.29
+  },
+  {
+    "id": 146,
+    "question": "What is the minimum number of people allowed to sit in the Bundestag according to the law?",
+    "type": "number",
+    "answer": 598
+  },
+  {
+    "id": 147,
+    "question": "How many dice eyes does a standard backgammon set have in total?",
+    "type": "number",
+    "answer": 168
+  },
+  {
+    "id": 148,
+    "question": "How many milliliters does a classic wine bottle hold?",
+    "type": "number",
+    "answer": 750
+  },
+  {
+    "id": 149,
+    "question": "How many players does a water polo team have in the pool?",
+    "type": "number",
+    "answer": 7
+  },
+  {
+    "id": 150,
+    "question": "How many minutes does an NHL hockey game last without overtime?",
+    "type": "number",
+    "answer": 60
+  },
+  {
+    "id": 151,
+    "question": "How many months did the Burj Khalifa construction project take (around)?",
+    "type": "number",
+    "answer": 72
+  },
+  {
+    "id": 152,
+    "question": "How many sides does a dodecagon have?",
+    "type": "number",
+    "answer": 12
+  },
+  {
+    "id": 153,
+    "question": "How many letters are in the Hawaiian alphabet?",
+    "type": "number",
+    "answer": 13
+  },
+  {
+    "id": 154,
+    "question": "How many kilometers per hour is the speed of sound in air at 20°C?",
+    "type": "number",
+    "answer": 343
+  },
+  {
+    "id": 155,
+    "question": "How many floors does the Eiffel Tower have?",
+    "type": "number",
+    "answer": 3
+  },
+  {
+    "id": 156,
+    "question": "How many active volcanoes are there in Iceland?",
+    "type": "number",
+    "answer": 32
+  },
+  {
+    "id": 157,
+    "question": "How many inhabitants does Berlin have (2023, rounded)?",
+    "type": "number",
+    "answer": 3700000
+  },
+  {
+    "id": 158,
+    "question": "How many knots make up the Sargasso Sea in the Atlantic?",
+    "type": "number",
+    "answer": 4
+  },
+  {
+    "id": 159,
+    "question": "How many seconds does it take for the International Space Station to complete a complete orbit around the Earth?",
+    "type": "number",
+    "answer": 5550
+  },
+  {
+    "id": 160,
+    "question": "How many keys does a church organ have per manual on average?",
+    "type": "number",
+    "answer": 61
+  },
+  {
+    "id": 161,
+    "question": "What is the maximum number of functions an officer's line Swiss Army knife can offer?",
+    "type": "number",
+    "answer": 33
+  },
+  {
+    "id": 162,
+    "question": "How many players does an Olympic basketball team have on the field?",
+    "type": "number",
+    "answer": 5
+  },
+  {
+    "id": 163,
+    "question": "How many countries border the Mediterranean?",
+    "type": "number",
+    "answer": 21
+  },
+  {
+    "id": 164,
+    "question": "How many meters is the Golden Gate Bridge in San Francisco?",
+    "type": "number",
+    "answer": 2737
+  },
+  {
+    "id": 165,
+    "question": "How many years did Queen Victoria reign?",
+    "type": "number",
+    "answer": 63
+  },
+  {
+    "id": 166,
+    "question": "How many wingspan in meters does an Airbus A380 have?",
+    "type": "number",
+    "answer": 79.75
+  },
+  {
+    "id": 167,
+    "question": "How many inhabitants does Switzerland have (2023, rounded)?",
+    "type": "number",
+    "answer": 8800000
+  },
+  {
+    "id": 168,
+    "question": "How many pharaohs ruled in Ancient Egypt (approximately)?",
+    "type": "number",
+    "answer": 170
+  },
+  {
+    "id": 169,
+    "question": "How many years did it take to build the Great Wall of China (main sections)?",
+    "type": "number",
+    "answer": 2000
+  },
+  {
+    "id": 170,
+    "question": "How many calories does a gram of fat provide?",
+    "type": "number",
+    "answer": 9
+  },
+  {
+    "id": 171,
+    "question": "How many imperial districts did the Holy Roman Empire of the German Nation have around 1512?",
+    "type": "number",
+    "answer": 10
+  },
+  {
+    "id": 172,
+    "question": "How many symphonies did Beethoven compose?",
+    "type": "number",
+    "answer": 9
+  },
+  {
+    "id": 173,
+    "question": "How many verses does the Deutschlandlied officially have?",
+    "type": "number",
+    "answer": 1
+  },
+  {
+    "id": 174,
+    "question": "How many light years away is Proxima Centauri from Earth?",
+    "type": "number",
+    "answer": 4.24
+  },
+  {
+    "id": 175,
+    "question": "How many bones does an adult human body have?",
+    "type": "number",
+    "answer": 206
+  },
+  {
+    "id": 176,
+    "question": "How many kilometers is the Rhine?",
+    "type": "number",
+    "answer": 1230
+  },
+  {
+    "id": 177,
+    "question": "How many UNESCO World Heritage Sites does Italy have (2023)?",
+    "type": "number",
+    "answer": 58
+  },
+  {
+    "id": 178,
+    "question": "How many entries does the Pascal triangle have in the 10th line?",
+    "type": "number",
+    "answer": 11
+  },
+  {
+    "id": 179,
+    "question": "How many years is the average age of first-time mothers in Germany (2022)?",
+    "type": "number",
+    "answer": 30.4
+  },
+  {
+    "id": 180,
+    "question": "What is the maximum number of minutes a typical TED Talk presentation lasts?",
+    "type": "number",
+    "answer": 18
+  },
+  {
+    "id": 181,
+    "question": "How many continents are there on earth?",
+    "type": "number",
+    "answer": 7
+  },
+  {
+    "id": 182,
+    "question": "How many pages is the Gutenberg Bible (per volume)?",
+    "type": "number",
+    "answer": 1282
+  },
+  {
+    "id": 183,
+    "question": "How many seconds does it take for light to travel from the sun to the earth?",
+    "type": "number",
+    "answer": 499
+  },
+  {
+    "id": 184,
+    "question": "Approximately how many people did NASA employ in 2022?",
+    "type": "number",
+    "answer": 18000
+  },
+  {
+    "id": 185,
+    "question": "How many kilometers is Japan's coastline?",
+    "type": "number",
+    "answer": 29751
+  },
+  {
+    "id": 186,
+    "question": "How many degrees is a full angle?",
+    "type": "number",
+    "answer": 360
+  },
+  {
+    "id": 187,
+    "question": "How many moons does the planet Jupiter have (2023)?",
+    "type": "number",
+    "answer": 95
+  },
+  {
+    "id": 188,
+    "question": "How many inhabitants does Mexico have (2023, rounded)?",
+    "type": "number",
+    "answer": 128000000
+  },
+  {
+    "id": 189,
+    "question": "How many keys does a standard accordion have (treble)?",
+    "type": "number",
+    "answer": 41
+  },
+  {
+    "id": 190,
+    "question": "How many days does Ramadan last on average?",
+    "type": "number",
+    "answer": 29.5
+  },
+  {
+    "id": 191,
+    "question": "How many countries border Germany?",
+    "type": "number",
+    "answer": 9
+  },
+  {
+    "id": 192,
+    "question": "How many meters high is the television tower in Berlin?",
+    "type": "number",
+    "answer": 368
+  },
+  {
+    "id": 193,
+    "question": "How many members does the UN have (2023)?",
+    "type": "number",
+    "answer": 193
+  },
+  {
+    "id": 194,
+    "question": "How many years is the average life expectancy worldwide (2022)?",
+    "type": "number",
+    "answer": 72.6
+  },
+  {
+    "id": 195,
+    "question": "How many fields does a Sudoku grid have?",
+    "type": "number",
+    "answer": 81
+  },
+  {
+    "id": 196,
+    "question": "How many players does a lacrosse team have on the field?",
+    "type": "number",
+    "answer": 10
+  },
+  {
+    "id": 197,
+    "question": "How many dances does the world dance program of standard dances include?",
+    "type": "number",
+    "answer": 5
+  },
+  {
+    "id": 198,
+    "question": "How many semitones are there in an octave in Western music?",
+    "type": "number",
+    "answer": 12
+  },
+  {
+    "id": 199,
+    "question": "How many years did the Trojan War last according to myth?",
+    "type": "number",
+    "answer": 10
+  },
+  {
+    "id": 200,
+    "question": "How many layers of stone does the Great Pyramid have?",
+    "type": "number",
+    "answer": 203
+  },
+  {
+    "id": 201,
+    "question": "How many kilometers is the ring road around Iceland?",
+    "type": "number",
+    "answer": 1332
+  },
+  {
+    "id": 202,
+    "question": "How many inhabitants does the city of Vilnius have in 2023 (rounded)?",
+    "type": "number",
+    "answer": 600000
+  },
+  {
+    "id": 203,
+    "question": "How many meters deep is the Mariana Trench at its deepest point (Challenger Deep)?",
+    "type": "number",
+    "answer": 10984
+  },
+  {
+    "id": 204,
+    "question": "How many stairs officially lead to the observation deck on the 86th floor in the Empire State Building?",
+    "type": "number",
+    "answer": 1576
+  },
+  {
+    "id": 205,
+    "question": "How many liters of water fall on average as rain per year in Berlin (measured in millimeters)?",
+    "type": "number",
+    "answer": 570
+  },
+  {
+    "id": 206,
+    "question": "How many kilometers long is the Rhine from its source to its mouth?",
+    "type": "number",
+    "answer": 1230
+  },
+  {
+    "id": 207,
+    "question": "How many members does the German Bundestag have since 2021, including overhang and compensation mandates?",
+    "type": "number",
+    "answer": 736
+  },
+  {
+    "id": 208,
+    "question": "How many calories does an average apple (medium size) contain in kilocalories?",
+    "type": "number",
+    "answer": 95
+  },
+  {
+    "id": 209,
+    "question": "How many years did the Hundred Years' War actually last?",
+    "type": "number",
+    "answer": 116
+  },
+  {
+    "id": 210,
+    "question": "How many inhabitants does Luxembourg City have in 2023 (rounded)?",
+    "type": "number",
+    "answer": 135000
+  },
+  {
+    "id": 211,
+    "question": "How many kilometers long is the A7 motorway in Germany?",
+    "type": "number",
+    "answer": 962
+  },
+  {
+    "id": 212,
+    "question": "About how many tiles cover the floor of the Sistine Chapel?",
+    "type": "number",
+    "answer": 600
+  },
+  {
+    "id": 213,
+    "question": "How many different amino acids are used in building human proteins?",
+    "type": "number",
+    "answer": 20
+  },
+  {
+    "id": 214,
+    "question": "How many meters is the diameter of the Large Hadron Collider at CERN (approximately)?",
+    "type": "number",
+    "answer": 8400
+  },
+  {
+    "id": 215,
+    "question": "How many verses does the German national anthem officially contain?",
+    "type": "number",
+    "answer": 1
+  },
+  {
+    "id": 216,
+    "question": "How many meters high is the Burj Khalifa?",
+    "type": "number",
+    "answer": 828
+  },
+  {
+    "id": 217,
+    "question": "How many players does a squad have at a World Cup since 2022?",
+    "type": "number",
+    "answer": 26
+  },
+  {
+    "id": 218,
+    "question": "How many bones does the human body have in adulthood?",
+    "type": "number",
+    "answer": 206
+  },
+  {
+    "id": 219,
+    "question": "How many elements does the periodic table contain (as of 2023)?",
+    "type": "number",
+    "answer": 118
+  },
+  {
+    "id": 220,
+    "question": "How many days did the Berlin Airlift last from 1948 to 1949?",
+    "type": "number",
+    "answer": 322
+  },
+  {
+    "id": 221,
+    "question": "How many kilometers does the Great Wall of China including its side walls measure according to official measurements?",
+    "type": "number",
+    "answer": 21196
+  },
+  {
+    "id": 222,
+    "question": "How many inhabitants does the city of Marrakech have (rounded to 2022)?",
+    "type": "number",
+    "answer": 980000
+  },
+  {
+    "id": 223,
+    "question": "How many chess fields are on a classic chess board?",
+    "type": "number",
+    "answer": 64
+  },
+  {
+    "id": 224,
+    "question": "How many kilometers is the average distance between the Earth and the Moon?",
+    "type": "number",
+    "answer": 384400
+  },
+  {
+    "id": 225,
+    "question": "How many minutes was the longest recorded Wimbledon men's final (2019 Djokovic vs. Federer)?",
+    "type": "number",
+    "answer": 295
+  },
+  {
+    "id": 226,
+    "question": "How many residents live in Singapore (as of 2022, rounded)?",
+    "type": "number",
+    "answer": 5700000
+  },
+  {
+    "id": 227,
+    "question": "How many pages does the Gutenberg Bible have on average per volume?",
+    "type": "number",
+    "answer": 324
+  },
+  {
+    "id": 228,
+    "question": "How many planets did the solar system have according to the IAU definition as of 2006?",
+    "type": "number",
+    "answer": 8
+  },
+  {
+    "id": 229,
+    "question": "How many kilometers does a ray of light travel in a vacuum in one second?",
+    "type": "number",
+    "answer": 299792
+  },
+  {
+    "id": 230,
+    "question": "How many inhabitants does the city of Lisbon have (metropolitan area, rounded 2022)?",
+    "type": "number",
+    "answer": 2800000
+  },
+  {
+    "id": 231,
+    "question": "How many tons did the Statue of Liberty weigh when it was inaugurated, including the foundation?",
+    "type": "number",
+    "answer": 22500
+  },
+  {
+    "id": 232,
+    "question": "How many people did NASA employ at the time of the Apollo 11 mission (approximately)?",
+    "type": "number",
+    "answer": 400000
+  },
+  {
+    "id": 233,
+    "question": "How many meters high is Table Mountain in South Africa?",
+    "type": "number",
+    "answer": 1085
+  },
+  {
+    "id": 234,
+    "question": "How many kilometers does the Danube measure from source to mouth?",
+    "type": "number",
+    "answer": 2857
+  },
+  {
+    "id": 235,
+    "question": "How many volumes does the complete edition of Thomas Mann's works (Fischer Edition) contain?",
+    "type": "number",
+    "answer": 13
+  },
+  {
+    "id": 236,
+    "question": "How many active volcanoes are there in Indonesia (approximately)?",
+    "type": "number",
+    "answer": 120
+  },
+  {
+    "id": 237,
+    "question": "How many countries will be members of the United Nations (UNO) in 2023?",
+    "type": "number",
+    "answer": 193
+  },
+  {
+    "id": 238,
+    "question": "How many meters high is the highest waterfall in the world, the Salto Ángel?",
+    "type": "number",
+    "answer": 979
+  },
+  {
+    "id": 239,
+    "question": "How many people died when Mount Vesuvius erupted in 79 AD (estimate)?",
+    "type": "number",
+    "answer": 16000
+  },
+  {
+    "id": 240,
+    "question": "How many chapters does the novel \"The Lord of the Rings\" have in the standard edition (excluding appendices)?",
+    "type": "number",
+    "answer": 62
+  },
+  {
+    "id": 241,
+    "question": "How many countries does the Nile flow through on its way to the Mediterranean?",
+    "type": "number",
+    "answer": 11
+  },
+  {
+    "id": 242,
+    "question": "How many kilometers is the Camino Francés from Saint-Jean-Pied-de-Port to Santiago de Compostela?",
+    "type": "number",
+    "answer": 780
+  },
+  {
+    "id": 243,
+    "question": "How many meters high was Cologne Cathedral when it was completed in 1880?",
+    "type": "number",
+    "answer": 157
+  },
+  {
+    "id": 244,
+    "question": "How many years did Queen Elizabeth II rule Great Britain?",
+    "type": "number",
+    "answer": 70
+  },
+  {
+    "id": 245,
+    "question": "How many workers were involved in the construction of the Panama Canal (estimate)?",
+    "type": "number",
+    "answer": 40000
+  },
+  {
+    "id": 246,
+    "question": "How many meters is the wingspan of the Airbus A380?",
+    "type": "number",
+    "answer": 79
+  },
+  {
+    "id": 247,
+    "question": "How many inhabitants does the city of Addis Ababa have (as of 2022, rounded)?",
+    "type": "number",
+    "answer": 3600000
+  },
+  {
+    "id": 248,
+    "question": "How many bridges does the city of Venice have (rounded)?",
+    "type": "number",
+    "answer": 435
+  },
+  {
+    "id": 249,
+    "question": "How many pages are Leonardo da Vinci's Leicester Codex?",
+    "type": "number",
+    "answer": 72
+  },
+  {
+    "id": 250,
+    "question": "How many years did the construction of the Sagrada Família take until 2023 since the foundation stone was laid?",
+    "type": "number",
+    "answer": 141
+  },
+  {
+    "id": 251,
+    "question": "How many UNESCO World Heritage sites are there in Germany (as of 2023)?",
+    "type": "number",
+    "answer": 52
+  },
+  {
+    "id": 252,
+    "question": "How many kilometers is the distance of the New York City Marathon?",
+    "type": "number",
+    "answer": 42
+  },
+  {
+    "id": 253,
+    "question": "How many inhabitants does the city of Montevideo have (rounded 2022)?",
+    "type": "number",
+    "answer": 1700000
+  },
+  {
+    "id": 254,
+    "question": "How many years old was Leonardo da Vinci?",
+    "type": "number",
+    "answer": 67
+  },
+  {
+    "id": 255,
+    "question": "How many meters deep is Lake Baikal at its maximum?",
+    "type": "number",
+    "answer": 1642
+  },
+  {
+    "id": 256,
+    "question": "How many musicians are in a classical string quartet?",
+    "type": "number",
+    "answer": 4
+  },
+  {
+    "id": 257,
+    "question": "How many inhabitants did the Aztec Empire have at the time of Moctezuma II (estimate)?",
+    "type": "number",
+    "answer": 15000000
+  },
+  {
+    "id": 258,
+    "question": "How many figures does a set of the Russian board game Matryoshka contain (on average)?",
+    "type": "number",
+    "answer": 5
+  },
+  {
+    "id": 259,
+    "question": "How many liters capacity does an Olympic-sized swimming pool (50 m) have?",
+    "type": "number",
+    "answer": 2500000
+  },
+  {
+    "id": 260,
+    "question": "How many years did it take to build the Parthenon in Athens?",
+    "type": "number",
+    "answer": 9
+  },
+  {
+    "id": 261,
+    "question": "How many inhabitants does the city of Hanoi have (metropolitan area, rounded 2022)?",
+    "type": "number",
+    "answer": 8000000
+  },
+  {
+    "id": 262,
+    "question": "How many meters long is the Colosseum in Rome on its longest axis?",
+    "type": "number",
+    "answer": 188
+  },
+  {
+    "id": 263,
+    "question": "How many states does India have?",
+    "type": "number",
+    "answer": 28
+  },
+  {
+    "id": 264,
+    "question": "How many kilometers long is the Panama Canal?",
+    "type": "number",
+    "answer": 82
+  },
+  {
+    "id": 265,
+    "question": "How many people live in the Catalonia region (rounded 2022)?",
+    "type": "number",
+    "answer": 7600000
+  },
+  {
+    "id": 266,
+    "question": "How many meters high is the highest peak in the Alps, Mont Blanc?",
+    "type": "number",
+    "answer": 4808
+  },
+  {
+    "id": 267,
+    "question": "How many residents does the city of Boston (metropolitan area, rounded 2022) have?",
+    "type": "number",
+    "answer": 4900000
+  },
+  {
+    "id": 268,
+    "question": "How many players does a rugby union team have on the field?",
+    "type": "number",
+    "answer": 15
+  },
+  {
+    "id": 269,
+    "question": "How many islands are in the Philippines (approximately)?",
+    "type": "number",
+    "answer": 7641
+  },
+  {
+    "id": 270,
+    "question": "How many hours does it take for the International Space Station (ISS) to complete a complete orbit around the Earth?",
+    "type": "number",
+    "answer": 1
+  },
+  {
+    "id": 271,
+    "question": "How many meters high is Victoria Falls?",
+    "type": "number",
+    "answer": 108
+  },
+  {
+    "id": 272,
+    "question": "How many inhabitants does the city of Cape Town (metropolitan area, rounded 2022) have?",
+    "type": "number",
+    "answer": 4600000
+  },
+  {
+    "id": 273,
+    "question": "How many locomotives are there in the longest freight train ever used in Australia (2001 record)?",
+    "type": "number",
+    "answer": 8
+  },
+  {
+    "id": 274,
+    "question": "How many inhabitants does the city of Tallinn have (rounded to 2022)?",
+    "type": "number",
+    "answer": 450000
+  },
+  {
+    "id": 275,
+    "question": "How many years did it take to build the Great Mosque of Cordoba?",
+    "type": "number",
+    "answer": 200
+  },
+  {
+    "id": 276,
+    "question": "How many meters high is the television tower in Berlin including the antenna?",
+    "type": "number",
+    "answer": 368
+  },
+  {
+    "id": 277,
+    "question": "How many countries border the Mediterranean?",
+    "type": "number",
+    "answer": 21
+  },
+  {
+    "id": 278,
+    "question": "How many inhabitants does the city of Auckland have (metropolitan area, rounded 2022)?",
+    "type": "number",
+    "answer": 1700000
+  },
+  {
+    "id": 279,
+    "question": "How many works does the canon of Grimm's children's and household fairy tales contain in the 1857 edition?",
+    "type": "number",
+    "answer": 200
+  },
+  {
+    "id": 280,
+    "question": "How many kilometers long is the route of the famous Transalpine Express in New Zealand?",
+    "type": "number",
+    "answer": 223
+  },
+  {
+    "id": 281,
+    "question": "How many years old is the Shwedagon Pagoda Shrine in Myanmar (estimate)?",
+    "type": "number",
+    "answer": 2600
+  },
+  {
+    "id": 282,
+    "question": "How many meters long is the Hoover Dam?",
+    "type": "number",
+    "answer": 379
+  },
+  {
+    "id": 283,
+    "question": "How many inhabitants does the city of Córdoba in Argentina have (rounded 2022)?",
+    "type": "number",
+    "answer": 1500000
+  },
+  {
+    "id": 284,
+    "question": "How many books are in the Library of Congress collection (rounded)?",
+    "type": "number",
+    "answer": 170000000
+  },
+  {
+    "id": 285,
+    "question": "How many meters is the height difference between the Zugspitze and the Partnachklamm?",
+    "type": "number",
+    "answer": 2962
+  },
+  {
+    "id": 286,
+    "question": "How many inhabitants does the city of Porto (metropolitan area, rounded 2022) have?",
+    "type": "number",
+    "answer": 1700000
+  },
+  {
+    "id": 287,
+    "question": "How many countries border Chad?",
+    "type": "number",
+    "answer": 6
+  },
+  {
+    "id": 288,
+    "question": "How many pages is the novel \"War and Peace\" in the original Russian edition (approximately)?",
+    "type": "number",
+    "answer": 1300
+  },
+  {
+    "id": 289,
+    "question": "How many meters high is the tallest tower of Notre-Dame de Paris Cathedral?",
+    "type": "number",
+    "answer": 69
+  },
+  {
+    "id": 290,
+    "question": "How many inhabitants does the city of Casablanca (metropolitan area, rounded 2022) have?",
+    "type": "number",
+    "answer": 4300000
+  },
+  {
+    "id": 291,
+    "question": "How many kilometers long is the Seine from source to mouth?",
+    "type": "number",
+    "answer": 777
+  },
+  {
+    "id": 292,
+    "question": "How many people live in the Quebec region (rounded 2022)?",
+    "type": "number",
+    "answer": 8700000
+  },
+  {
+    "id": 293,
+    "question": "How many bridges span the River Thames in London (approximately)?",
+    "type": "number",
+    "answer": 35
+  },
+  {
+    "id": 294,
+    "question": "How many kilometers long is the Way of St. James Via de la Plata?",
+    "type": "number",
+    "answer": 1000
+  },
+  {
+    "id": 295,
+    "question": "How many inhabitants does the city of San José in Costa Rica (metropolitan area, rounded 2022) have?",
+    "type": "number",
+    "answer": 1700000
+  },
+  {
+    "id": 296,
+    "question": "How many kilometers long is the Grand Canyon at its longest extent?",
+    "type": "number",
+    "answer": 446
+  },
+  {
+    "id": 297,
+    "question": "How many inhabitants does the city of Oslo (metropolitan area, rounded 2022) have?",
+    "type": "number",
+    "answer": 1100000
+  },
+  {
+    "id": 298,
+    "question": "How many states make up the Council of Europe (as of 2023)?",
+    "type": "number",
+    "answer": 46
+  },
+  {
+    "id": 299,
+    "question": "How many years did it take to build the Taj Mahal?",
+    "type": "number",
+    "answer": 22
+  },
+  {
+    "id": 300,
+    "question": "How many pages does the first edition of Immanuel Kant's \"Critique of Pure Reason\" contain?",
+    "type": "number",
+    "answer": 856
+  }
+]

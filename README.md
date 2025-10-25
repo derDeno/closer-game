@@ -9,7 +9,7 @@ Ein einfaches Schätzspiel für bis zu acht Spieler:innen. Die Teilnehmenden tre
 ## Features
 
 - Lobby-System ohne Accounts: Spieler:innen wählen lediglich einen Namen und einen 4-stelligen Code.
-- Fragenkatalog aus einer lokalen `questions.json`.
+- Sprachspezifische Fragenkataloge aus lokalen JSON-Dateien.
 - Gleichzeitiges Antworten aller Teilnehmenden, automatische Auswertung bei Zahlenfragen.
 - Responsive Oberfläche, optimiert für Smartphones.
 - Keine persistenten Daten – alles läuft nur innerhalb der aktuellen Session.
@@ -37,7 +37,8 @@ Anschließend ist das Spiel unter `http://localhost:3000` erreichbar.
 
 ## Fragenkatalog anpassen
 
-Die Datei [`questions.json`](./questions.json) enthält die Fragen. Jede Frage besteht aus:
+Die Fragen befinden sich im Ordner [`questions`](./questions). Für jede Sprache existiert eine eigene Datei im Format
+`questions.<sprache>.json`, beispielsweise [`questions/questions.de.json`](./questions/questions.de.json). Jede Frage besteht aus:
 
 ```json
 {
