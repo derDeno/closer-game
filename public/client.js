@@ -2,6 +2,13 @@ const socket = io({ autoConnect: false });
 
 const entryScreen = document.getElementById('entry-screen');
 const lobbyScreen = document.getElementById('lobby-screen');
+const entryModeSelect = document.getElementById('entry-mode-select');
+const entryFormPanel = document.getElementById('entry-form-panel');
+const selectJoinBtn = document.getElementById('select-join-btn');
+const selectCreateBtn = document.getElementById('select-create-btn');
+const entryBackBtn = document.getElementById('entry-back-btn');
+const joinSettings = document.getElementById('join-settings');
+const createSettings = document.getElementById('create-settings');
 const joinBtn = document.getElementById('join-btn');
 const createBtn = document.getElementById('create-btn');
 const nameInput = document.getElementById('name-input');
@@ -15,7 +22,7 @@ const fixedConfig = document.getElementById('fixed-config');
 const customQuestionsSection = document.getElementById('custom-questions-section');
 const customQuestionsList = document.getElementById('custom-questions-list');
 const addCustomQuestionBtn = document.getElementById('add-custom-question-btn');
-const useOnlyCustomCheckbox = document.getElementById('use-only-custom');
+const questionCatalogSelect = document.getElementById('question-catalog-select');
 const lobbyCodeEl = document.getElementById('lobby-code');
 const playerListEl = document.getElementById('player-list');
 const questionArea = document.getElementById('question-area');
@@ -26,7 +33,6 @@ const answerHint = document.getElementById('answer-hint');
 const resultsArea = document.getElementById('results-area');
 const summaryArea = document.getElementById('summary-area');
 const highscoreBtn = document.getElementById('show-highscore-btn');
-const statusArea = document.getElementById('status-area');
 const readyBtn = document.getElementById('ready-btn');
 const leaveBtn = document.getElementById('leave-btn');
 const voteBtn = document.getElementById('end-vote-btn');
@@ -49,6 +55,10 @@ const translations = {
     languageLabel: 'Sprache',
     languageOptionDe: 'Deutsch',
     languageOptionEn: 'Englisch',
+    questionCatalogLabel: 'Fragenkatalog',
+    questionCatalogDefault: 'Standardfragen',
+    questionCatalogCustom: 'Eigene Fragen',
+    backToModeSelection: 'Zurück',
     modeLegend: 'Rundenmodus',
     modeFixedLabel: 'Feste Anzahl von Fragen',
     modeFixedCountLabel: 'Anzahl der Fragen',
@@ -57,7 +67,6 @@ const translations = {
     customQuestionsDescription: 'Füge eigene Fragen hinzu, um eine individuelle Runde zu spielen.',
     addCustomQuestion: 'Eigene Frage hinzufügen',
     addCustomQuestionAria: 'Eigene Frage hinzufügen',
-    useOnlyCustomLabel: 'Nur eigene Fragen verwenden',
     customQuestionHint: 'Gib eine Frage und die korrekte Zahl ein.',
     customQuestionLabel: 'Frage {index}',
     customQuestionPlaceholder: 'Frage',
@@ -91,11 +100,6 @@ const translations = {
     playerStatusFinished: 'Spiel beendet',
     playerStatusReady: 'Bereit',
     playerStatusWaiting: 'Wartet',
-    statusCollecting: 'Runde läuft – gib deine Antwort ein!',
-    statusWaiting: 'Warte auf den Start der Runde.',
-    statusResults: 'Runde beendet. Klicke auf "Bereit" um fortzufahren.',
-    statusFinishedWithSummary: 'Spiel beendet. Klicke auf „Highscore anzeigen“, um die Rangliste zu sehen.',
-    statusFinished: 'Spiel beendet.',
     voteLabel: 'Spiel beenden (Abstimmung)',
     voteLabelWithCount: 'Spiel beenden ({count}/{required})',
     voteStatus: 'Stimmen für Spielende: {count}/{required}{names}',
@@ -130,6 +134,10 @@ const translations = {
     languageLabel: 'Language',
     languageOptionDe: 'German',
     languageOptionEn: 'English',
+    questionCatalogLabel: 'Question catalog',
+    questionCatalogDefault: 'Default questions',
+    questionCatalogCustom: 'Custom questions',
+    backToModeSelection: 'Back',
     modeLegend: 'Round mode',
     modeFixedLabel: 'Fixed number of questions',
     modeFixedCountLabel: 'Number of questions',
@@ -138,7 +146,6 @@ const translations = {
     customQuestionsDescription: 'Add your own questions to play a custom round.',
     addCustomQuestion: 'Add custom question',
     addCustomQuestionAria: 'Add custom question',
-    useOnlyCustomLabel: 'Use only custom questions',
     customQuestionHint: 'Provide a question and the correct number.',
     customQuestionLabel: 'Question {index}',
     customQuestionPlaceholder: 'Question',
@@ -172,11 +179,6 @@ const translations = {
     playerStatusFinished: 'Game finished',
     playerStatusReady: 'Ready',
     playerStatusWaiting: 'Waiting',
-    statusCollecting: 'Round in progress – enter your answer!',
-    statusWaiting: 'Waiting for the round to start.',
-    statusResults: 'Round finished. Click "Ready" to continue.',
-    statusFinishedWithSummary: 'Game finished. Click "Show highscore" to see the standings.',
-    statusFinished: 'Game finished.',
     voteLabel: 'End game (vote)',
     voteLabelWithCount: 'End game ({count}/{required})',
     voteStatus: 'Votes to end the game: {count}/{required}{names}',
@@ -335,14 +337,17 @@ function updateCustomQuestionLabels() {
   if (addCustomQuestionBtn) {
     addCustomQuestionBtn.disabled = rows.length >= MAX_CUSTOM_QUESTIONS;
   }
+}
 
-  if (useOnlyCustomCheckbox) {
-    if (rows.length === 0) {
-      useOnlyCustomCheckbox.checked = false;
-      useOnlyCustomCheckbox.disabled = true;
-    } else {
-      useOnlyCustomCheckbox.disabled = false;
-    }
+function updateQuestionCatalogUI() {
+  if (!customQuestionsSection || !questionCatalogSelect) {
+    return;
+  }
+
+  if (questionCatalogSelect.value === 'custom') {
+    customQuestionsSection.classList.remove('hidden');
+  } else {
+    customQuestionsSection.classList.add('hidden');
   }
 }
 
@@ -414,12 +419,14 @@ function createCustomQuestionRow({ question = '', answer = '' } = {}) {
   removeButton.setAttribute('data-i18n-aria-label', 'removeCustomQuestionAria');
   removeButton.addEventListener('click', () => {
     row.remove();
+    updateCustomQuestionLabels();
     applyTranslations();
   });
   actions.append(removeButton);
 
   row.append(fields, actions);
   customQuestionsList.append(row);
+  updateCustomQuestionLabels();
   applyTranslations();
 }
 
@@ -737,6 +744,7 @@ function showEntry() {
   lobbyScreen.classList.remove('round-active');
   entryScreen.classList.remove('hidden');
   lobbyScreen.classList.add('hidden');
+  showEntryModeSelection();
 }
 
 function showLobby() {
@@ -745,6 +753,38 @@ function showLobby() {
   document.body.classList.add('lobby-view');
   document.body.classList.remove('round-active');
   lobbyScreen.classList.remove('round-active');
+}
+
+function showEntryModeSelection() {
+  entryModeSelect?.classList.remove('hidden');
+  entryFormPanel?.classList.add('hidden');
+  joinSettings?.classList.add('hidden');
+  createSettings?.classList.add('hidden');
+  joinBtn.classList.add('hidden');
+  createBtn.classList.add('hidden');
+  joinBtn.disabled = false;
+  createBtn.disabled = false;
+  errorEl.textContent = '';
+}
+
+function showEntryForm(mode) {
+  const isJoinMode = mode === 'join';
+
+  entryModeSelect?.classList.add('hidden');
+  entryFormPanel?.classList.remove('hidden');
+  joinSettings?.classList.toggle('hidden', !isJoinMode);
+  createSettings?.classList.toggle('hidden', isJoinMode);
+  joinBtn.classList.toggle('hidden', !isJoinMode);
+  createBtn.classList.toggle('hidden', isJoinMode);
+  joinBtn.disabled = false;
+  createBtn.disabled = false;
+  errorEl.textContent = '';
+
+  if (!isJoinMode) {
+    updateQuestionCatalogUI();
+    updateQuestionModeUI();
+  }
+  nameInput.focus();
 }
 
 function updateQuestionModeUI() {
@@ -781,8 +821,9 @@ async function createLobby() {
       questionCountInput.value = String(questionCount);
     }
 
-    const customQuestions = collectCustomQuestions();
-    if (useOnlyCustomCheckbox?.checked && customQuestions.length === 0) {
+    const useCustomCatalog = questionCatalogSelect?.value === 'custom';
+    const customQuestions = useCustomCatalog ? collectCustomQuestions() : [];
+    if (useCustomCatalog && customQuestions.length === 0) {
       errorEl.textContent = t('errorCustomRequired');
       return;
     }
@@ -795,7 +836,7 @@ async function createLobby() {
         questionCount,
         language: currentLanguage,
         customQuestions,
-        useOnlyCustom: Boolean(useOnlyCustomCheckbox?.checked && customQuestions.length > 0)
+        useOnlyCustom: useCustomCatalog
       })
     });
     const data = await response.json().catch(() => null);
@@ -990,10 +1031,6 @@ function renderPlayers() {
     div.appendChild(statusEl);
     playerListEl.appendChild(div);
   });
-}
-
-function setStatus(message) {
-  statusArea.textContent = message || '';
 }
 
 function resetRoundUI() {
@@ -1230,8 +1267,6 @@ function applyLobbyState(state) {
     voteBtn.disabled = false;
   }
 
-  let statusMessage = null;
-
   if (currentLobbyStatus === 'collecting' && state.currentQuestion) {
     questionText.textContent = state.currentQuestion.question;
     questionArea.classList.remove('hidden');
@@ -1247,7 +1282,6 @@ function applyLobbyState(state) {
       answerHint.textContent = '';
     }
     readyBtn.classList.add('hidden');
-    statusMessage = t('statusCollecting');
   } else if (currentLobbyStatus === 'waiting') {
     prepareSummary(null);
     questionArea.classList.add('hidden');
@@ -1262,11 +1296,9 @@ function applyLobbyState(state) {
       readyBtn.disabled = true;
       readyBtn.textContent = t('readyConfirmed');
     }
-    statusMessage = t('statusWaiting');
   } else if (currentLobbyStatus === 'results' && state.lastResults && !lastResultsShown) {
     prepareSummary(null);
     displayResults(state.lastResults);
-    statusMessage = t('statusResults');
   } else if (currentLobbyStatus === 'finished') {
     questionArea.classList.add('hidden');
     readyBtn.classList.add('hidden');
@@ -1276,11 +1308,6 @@ function applyLobbyState(state) {
     answerInput.disabled = true;
     answerHint.textContent = '';
     prepareSummary(state.finalSummary || null);
-    statusMessage = pendingSummary ? t('statusFinishedWithSummary') : t('statusFinished');
-  }
-
-  if (statusMessage !== null) {
-    setStatus(statusMessage);
   }
 
   renderPlayers();
@@ -1288,6 +1315,13 @@ function applyLobbyState(state) {
 
 joinBtn.addEventListener('click', joinLobby);
 createBtn.addEventListener('click', createLobby);
+selectJoinBtn?.addEventListener('click', () => {
+  showEntryForm('join');
+});
+selectCreateBtn?.addEventListener('click', () => {
+  showEntryForm('create');
+});
+entryBackBtn?.addEventListener('click', showEntryModeSelection);
 modeFixedRadio.addEventListener('change', updateQuestionModeUI);
 modeUnlimitedRadio.addEventListener('change', updateQuestionModeUI);
 
@@ -1295,6 +1329,10 @@ if (languageSelect) {
   languageSelect.addEventListener('change', () => {
     setLanguage(languageSelect.value, { updateSelect: false });
   });
+}
+
+if (questionCatalogSelect) {
+  questionCatalogSelect.addEventListener('change', updateQuestionCatalogUI);
 }
 
 if (addCustomQuestionBtn) {
@@ -1374,10 +1412,6 @@ voteBtn.addEventListener('click', () => {
   socket.emit('voteEndGame', response => {
     if (!response?.success) {
       voteBtn.disabled = false;
-      const message = translateErrorCode(response?.errorCode, 'voteNotAllowed');
-      if (message) {
-        setStatus(message);
-      }
     }
   });
 });
@@ -1416,7 +1450,6 @@ socket.on('playersUpdate', players => {
 
 socket.on('roundStarted', payload => {
   questionText.textContent = payload.question;
-  setStatus(t('statusCollecting'));
   resetRoundUI();
   currentLobbyStatus = 'collecting';
   document.body.classList.add('round-active');
@@ -1438,7 +1471,6 @@ socket.on('roundResults', payload => {
   document.body.classList.remove('round-active');
   lobbyScreen.classList.remove('round-active');
   renderPlayers();
-  setStatus(t('statusResults'));
 });
 
 socket.on('gameSummary', summary => {
@@ -1446,11 +1478,10 @@ socket.on('gameSummary', summary => {
   prepareSummary(summary);
   document.body.classList.remove('round-active');
   lobbyScreen.classList.remove('round-active');
-  const message = pendingSummary ? t('statusFinishedWithSummary') : t('statusFinished');
-  setStatus(message);
   renderPlayers();
 });
 
+updateQuestionCatalogUI();
 setLanguage(languageSelect?.value || currentLanguage);
 updateQuestionModeUI();
 showEntry();

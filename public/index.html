@@ -20,76 +20,96 @@
         <img src="/logo.png" alt="Näher Draan Logo" class="app-logo" data-i18n-alt="logoAlt" />
         <h1 class="visually-hidden" data-i18n="appTitle">Näher Draan</h1>
         <p class="tagline" data-i18n="tagline">Tritt einer Lobby bei und zeige dein Schätz-Talent!</p>
-        <div class="form-group">
-          <label for="name-input" data-i18n="nameLabel">Dein Name</label>
-          <input
-            id="name-input"
-            type="text"
-            maxlength="18"
-            placeholder="Spieler"
-            data-i18n-placeholder="namePlaceholder"
-            required
-          />
-        </div>
-        <div class="form-group">
-          <label for="code-input" data-i18n="codeLabel">Lobby-Code</label>
-          <input id="code-input" type="text" maxlength="4" placeholder="ABCD" data-i18n-placeholder="codePlaceholder" />
-        </div>
-        <div class="form-group">
-          <label for="language-select" data-i18n="languageLabel">Sprache</label>
-          <select id="language-select">
-            <option value="de" data-i18n-option="languageOptionDe">Deutsch</option>
-            <option value="en" data-i18n-option="languageOptionEn">English</option>
-          </select>
-        </div>
-        <fieldset class="form-group" id="round-options">
-          <legend data-i18n="modeLegend">Rundenmodus</legend>
-          <label class="option-row">
-            <input
-              type="radio"
-              name="question-mode"
-              id="mode-fixed"
-              value="fixed"
-              checked
-            />
-            <span data-i18n="modeFixedLabel">Feste Anzahl von Fragen</span>
-          </label>
-          <div class="option-nested" id="fixed-config">
-            <label for="question-count" data-i18n="modeFixedCountLabel">Anzahl der Fragen</label>
-            <input
-              id="question-count"
-              type="number"
-              min="1"
-              max="99"
-              step="1"
-              value="5"
-            />
-          </div>
-          <label class="option-row">
-            <input type="radio" name="question-mode" id="mode-unlimited" value="unlimited" />
-            <span data-i18n="modeUnlimitedLabel">Unbegrenzt – Spielende per Abstimmung</span>
-          </label>
-        </fieldset>
-        <section id="custom-questions-section" class="custom-questions">
-          <div class="custom-questions-header">
-            <h2 data-i18n="customQuestionsHeading">Eigene Fragen</h2>
-            <p class="hint" data-i18n="customQuestionsDescription">
-              Füge eigene Fragen hinzu, um eine individuelle Runde zu spielen.
-            </p>
-          </div>
-          <div id="custom-questions-list" class="custom-question-list"></div>
-          <button id="add-custom-question-btn" class="secondary" type="button" data-i18n="addCustomQuestion">
-            Eigene Frage hinzufügen
+        <div id="entry-mode-select" class="entry-mode-select">
+          <button id="select-join-btn" class="primary entry-choice" type="button" data-i18n="joinButton">
+            Lobby beitreten
           </button>
-          <label class="option-row custom-only-option">
-            <input type="checkbox" id="use-only-custom" />
-            <span data-i18n="useOnlyCustomLabel">Nur eigene Fragen verwenden</span>
-          </label>
-          <p class="hint" data-i18n="customQuestionHint">Gib eine Frage und die korrekte Zahl ein.</p>
-        </section>
-        <div class="actions">
-          <button id="join-btn" class="primary" data-i18n="joinButton">Lobby beitreten</button>
-          <button id="create-btn" class="secondary" data-i18n="createButton">Neue Lobby erstellen</button>
+          <button id="select-create-btn" class="secondary entry-choice" type="button" data-i18n="createButton">
+            Neue Lobby erstellen
+          </button>
+        </div>
+        <div id="entry-form-panel" class="entry-form-panel hidden">
+          <button id="entry-back-btn" class="link entry-back" type="button" data-i18n="backToModeSelection">
+            Zurück
+          </button>
+          <div class="form-group">
+            <label for="name-input" data-i18n="nameLabel">Dein Name</label>
+            <input
+              id="name-input"
+              type="text"
+              maxlength="18"
+              placeholder="Spieler"
+              data-i18n-placeholder="namePlaceholder"
+              required
+            />
+          </div>
+          <div id="join-settings" class="entry-mode-panel hidden">
+            <div class="form-group">
+              <label for="code-input" data-i18n="codeLabel">Lobby-Code</label>
+              <input id="code-input" type="text" maxlength="4" placeholder="ABCD" data-i18n-placeholder="codePlaceholder" />
+            </div>
+          </div>
+          <div id="create-settings" class="entry-mode-panel hidden">
+            <div class="form-group">
+              <label for="language-select" data-i18n="languageLabel">Sprache</label>
+              <select id="language-select">
+                <option value="de" data-i18n-option="languageOptionDe">Deutsch</option>
+                <option value="en" data-i18n-option="languageOptionEn">English</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="question-catalog-select" data-i18n="questionCatalogLabel">Fragenkatalog</label>
+              <select id="question-catalog-select">
+                <option value="default" data-i18n-option="questionCatalogDefault">Standardfragen</option>
+                <option value="custom" data-i18n-option="questionCatalogCustom">Eigene Fragen</option>
+              </select>
+            </div>
+            <fieldset class="form-group" id="round-options">
+              <legend data-i18n="modeLegend">Rundenmodus</legend>
+              <label class="option-row">
+                <input
+                  type="radio"
+                  name="question-mode"
+                  id="mode-fixed"
+                  value="fixed"
+                  checked
+                />
+                <span data-i18n="modeFixedLabel">Feste Anzahl von Fragen</span>
+              </label>
+              <div class="option-nested" id="fixed-config">
+                <label for="question-count" data-i18n="modeFixedCountLabel">Anzahl der Fragen</label>
+                <input
+                  id="question-count"
+                  type="number"
+                  min="1"
+                  max="99"
+                  step="1"
+                  value="5"
+                />
+              </div>
+              <label class="option-row">
+                <input type="radio" name="question-mode" id="mode-unlimited" value="unlimited" />
+                <span data-i18n="modeUnlimitedLabel">Unbegrenzt – Spielende per Abstimmung</span>
+              </label>
+            </fieldset>
+            <section id="custom-questions-section" class="custom-questions hidden">
+              <div class="custom-questions-header">
+                <h2 data-i18n="customQuestionsHeading">Eigene Fragen</h2>
+                <p class="hint" data-i18n="customQuestionsDescription">
+                  Füge eigene Fragen hinzu, um eine individuelle Runde zu spielen.
+                </p>
+              </div>
+              <div id="custom-questions-list" class="custom-question-list"></div>
+              <button id="add-custom-question-btn" class="secondary" type="button" data-i18n="addCustomQuestion">
+                Eigene Frage hinzufügen
+              </button>
+              <p class="hint" data-i18n="customQuestionHint">Gib eine Frage und die korrekte Zahl ein.</p>
+            </section>
+          </div>
+          <div class="actions">
+            <button id="join-btn" class="primary hidden" data-i18n="joinButton">Lobby beitreten</button>
+            <button id="create-btn" class="primary hidden" data-i18n="createButton">Neue Lobby erstellen</button>
+          </div>
         </div>
         <p id="entry-error" class="error" role="alert"></p>
       </section>
@@ -125,7 +145,6 @@
           <div class="players" id="player-list"></div>
         </div>
         <div class="stage">
-          <div id="status-area" role="status" aria-live="polite"></div>
           <div id="question-area" class="hidden">
             <p id="question-text"></p>
             <form id="answer-form">
