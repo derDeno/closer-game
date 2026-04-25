@@ -80,6 +80,23 @@ function resolveLanguage(language) {
   return SUPPORTED_LANGUAGES.includes(normalized) ? normalized : DEFAULT_LANGUAGE;
 }
 
+function escapeRegExp(value) {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+function getNumberSeparators(language = DEFAULT_LANGUAGE) {
+  const locale = resolveLanguage(language) === 'de' ? 'de-DE' : 'en-US';
+  const parts = new Intl.NumberFormat(locale).formatToParts(12345.6);
+  return {
+    decimal: parts.find(part => part.type === 'decimal')?.value || '.',
+    group: parts.find(part => part.type === 'group')?.value || ','
+  };
+}
+
+function removeSeparator(value, separator) {
+  return separator ? value.replace(new RegExp(escapeRegExp(separator), 'g'), '') : value;
+}
+
 function getBaseQuestions(language) {
   const lang = resolveLanguage(language);
   const entries = Array.isArray(questionsByLanguage[lang]) ? questionsByLanguage[lang] : [];
@@ -109,7 +126,7 @@ function normalizeCustomQuestions(rawCustomQuestions, language) {
     if (typeof entry?.answer === 'number') {
       numericAnswer = Number.isFinite(entry.answer) ? entry.answer : null;
     } else {
-      numericAnswer = parseNumericAnswer(entry?.answer);
+      numericAnswer = parseNumericAnswer(entry?.answer, questionLanguage);
     }
 
     if (typeof numericAnswer !== 'number') {
@@ -159,7 +176,7 @@ function pickQuestion(lobby) {
   return choice ?? null;
 }
 
-function parseNumericAnswer(value) {
+function parseNumericAnswer(value, language = DEFAULT_LANGUAGE) {
   if (typeof value === 'number') {
     return Number.isFinite(value) ? value : null;
   }
@@ -184,19 +201,57 @@ function parseNumericAnswer(value) {
       return null;
     }
 
-    if (normalized.includes(',')) {
-      normalized = normalized.replace(/\./g, '').replace(',', '.');
-    } else if (/^\d{1,3}(\.\d{3})+$/.test(normalized)) {
-      normalized = normalized.replace(/\./g, '');
-    } else {
-      normalized = normalized.replace(/,/g, '');
+    const { decimal, group } = getNumberSeparators(language);
+    const separatorMatches = normalized.match(/[.,]/g) || [];
+    const uniqueSeparators = [...new Set(separatorMatches)];
+    let decimalSeparator = null;
+
+    if (uniqueSeparators.length > 1) {
+      const lastComma = normalized.lastIndexOf(',');
+      const lastDot = normalized.lastIndexOf('.');
+      decimalSeparator = lastComma > lastDot ? ',' : '.';
+    } else if (uniqueSeparators.length === 1) {
+      const separator = uniqueSeparators[0];
+      const separatorCount = separatorMatches.length;
+      const thousandsPattern = new RegExp(`^\\d{1,3}(${escapeRegExp(separator)}\\d{3})+$`);
+
+      if (separator === group && thousandsPattern.test(normalized)) {
+        normalized = removeSeparator(normalized, group);
+      } else if (separatorCount > 1 && thousandsPattern.test(normalized)) {
+        normalized = removeSeparator(normalized, separator);
+      } else if (separator === decimal) {
+        decimalSeparator = separator;
+      } else if (thousandsPattern.test(normalized)) {
+        normalized = removeSeparator(normalized, separator);
+      } else {
+        decimalSeparator = separator;
+      }
     }
 
-    let result = (negative ? '-' : '') + normalized;
-    if (result.endsWith('.')) {
-      result = result.slice(0, -1);
+    normalized = decimalSeparator === group ? normalized : removeSeparator(normalized, group);
+
+    let integerPart = normalized;
+    let fractionPart = '';
+
+    if (decimalSeparator) {
+      const splitIndex = normalized.lastIndexOf(decimalSeparator);
+      integerPart = normalized.slice(0, splitIndex);
+      fractionPart = normalized.slice(splitIndex + 1);
     }
 
+    integerPart = integerPart.replace(/[^0-9]/g, '');
+    fractionPart = fractionPart.replace(/[^0-9]/g, '');
+
+    if (integerPart.length === 0 && fractionPart.length > 0) {
+      integerPart = '0';
+    }
+
+    const hasDigits = integerPart.length > 0 || fractionPart.length > 0;
+    if (!hasDigits) {
+      return null;
+    }
+
+    const result = `${negative ? '-' : ''}${integerPart || '0'}${fractionPart.length > 0 ? `.${fractionPart}` : ''}`;
     const parsed = Number(result);
     return Number.isFinite(parsed) ? parsed : null;
   }
@@ -317,7 +372,7 @@ function startRound(lobby) {
 function evaluateRound(lobby) {
   const question = lobby.currentQuestion;
   const answers = getConnectedPlayers(lobby).map(player => {
-    const numeric = parseNumericAnswer(player.answer);
+    const numeric = parseNumericAnswer(player.answer, lobby.language);
     const distance = typeof question?.answer === 'number' && numeric !== null ? Math.abs(numeric - question.answer) : null;
     return {
       playerId: player.id,

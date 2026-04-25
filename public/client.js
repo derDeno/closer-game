@@ -489,7 +489,24 @@ function formatDistance(value) {
   return distanceFormatter.format(value);
 }
 
-function normalizeNumericString(value) {
+function escapeRegExp(value) {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+function getNumberSeparators(language = currentLanguage) {
+  const locale = getLanguageConfig(language).locale;
+  const parts = new Intl.NumberFormat(locale).formatToParts(12345.6);
+  return {
+    decimal: parts.find(part => part.type === 'decimal')?.value || '.',
+    group: parts.find(part => part.type === 'group')?.value || ','
+  };
+}
+
+function removeSeparator(value, separator) {
+  return separator ? value.replace(new RegExp(escapeRegExp(separator), 'g'), '') : value;
+}
+
+function normalizeNumericString(value, language = currentLanguage) {
   if (typeof value !== 'string') {
     return null;
   }
@@ -516,11 +533,38 @@ function normalizeNumericString(value) {
     return null;
   }
 
-  const lastComma = normalized.lastIndexOf(',');
-  const lastDot = normalized.lastIndexOf('.');
+  const { decimal, group } = getNumberSeparators(language);
+  const separatorMatches = normalized.match(/[.,]/g) || [];
+  const uniqueSeparators = [...new Set(separatorMatches)];
+  const thousandsPattern = new RegExp(`^\\d{1,3}(${escapeRegExp(uniqueSeparators[0] || '')}\\d{3})+$`);
   let decimalSeparator = null;
 
-  if (lastComma !== -1 || lastDot !== -1) {
+  if (uniqueSeparators.length > 1) {
+    const lastComma = normalized.lastIndexOf(',');
+    const lastDot = normalized.lastIndexOf('.');
+    decimalSeparator = lastComma > lastDot ? ',' : '.';
+  } else if (uniqueSeparators.length === 1) {
+    const separator = uniqueSeparators[0];
+    const separatorCount = separatorMatches.length;
+    if (separator === group && thousandsPattern.test(normalized)) {
+      normalized = removeSeparator(normalized, group);
+    } else if (separatorCount > 1 && thousandsPattern.test(normalized)) {
+      normalized = removeSeparator(normalized, separator);
+    } else if (separator === decimal) {
+      decimalSeparator = separator;
+    } else if (thousandsPattern.test(normalized)) {
+      normalized = removeSeparator(normalized, separator);
+    } else {
+      decimalSeparator = separator;
+    }
+  }
+
+  normalized = decimalSeparator === group ? normalized : removeSeparator(normalized, group);
+
+  const lastComma = normalized.lastIndexOf(',');
+  const lastDot = normalized.lastIndexOf('.');
+
+  if (!decimalSeparator && (lastComma !== -1 || lastDot !== -1)) {
     decimalSeparator = lastComma > lastDot ? ',' : '.';
   }
 
@@ -1102,7 +1146,7 @@ answerForm.addEventListener('submit', event => {
   if (formatted) {
     answerInput.value = formatted;
   }
-  socket.emit('submitAnswer', normalized);
+  socket.emit('submitAnswer', numericValue);
   answerSubmitted = true;
   answerInput.disabled = true;
   answerHint.textContent = t('answerSent');
