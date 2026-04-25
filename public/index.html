@@ -19,7 +19,6 @@
       <section id="entry-screen" class="card">
         <img src="/logo.png" alt="Näher Draan Logo" class="app-logo" data-i18n-alt="logoAlt" />
         <h1 class="visually-hidden" data-i18n="appTitle">Näher Draan</h1>
-        <p class="tagline" data-i18n="tagline">Tritt einer Lobby bei und zeige dein Schätz-Talent!</p>
         <div id="entry-mode-select" class="entry-mode-select">
           <button id="select-join-btn" class="primary entry-choice" type="button" data-i18n="joinButton">
             Lobby beitreten
@@ -29,8 +28,9 @@
           </button>
         </div>
         <div id="entry-form-panel" class="entry-form-panel hidden">
-          <button id="entry-back-btn" class="link entry-back" type="button" data-i18n="backToModeSelection">
-            Zurück
+          <button id="entry-back-btn" class="link entry-back" type="button">
+            <span aria-hidden="true">‹</span>
+            <span data-i18n="backToModeSelection">Zurück</span>
           </button>
           <div class="form-group">
             <label for="name-input" data-i18n="nameLabel">Dein Name</label>

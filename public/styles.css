@@ -109,11 +109,6 @@ h1,
   font-weight: 700;
 }
 
-.tagline {
-  color: #94a3b8;
-  margin-top: -0.5rem;
-}
-
 .entry-mode-select,
 .entry-form-panel,
 .entry-mode-panel {
@@ -129,6 +124,9 @@ h1,
 }
 
 .entry-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
   align-self: flex-start;
 }
 
