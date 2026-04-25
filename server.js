@@ -672,7 +672,8 @@ io.on('connection', socket => {
 
     if (!player || player.hasSubmitted) return;
 
-    player.answer = typeof answer === 'string' ? answer.trim() : answer;
+    const parsedAnswer = parseNumericAnswer(answer, lobby.language);
+    player.answer = parsedAnswer ?? (typeof answer === 'string' ? answer.trim() : answer);
     player.hasSubmitted = true;
 
     io.to(lobby.code).emit('answerReceived', {
