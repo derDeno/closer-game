@@ -4,6 +4,7 @@ import express from 'express';
 import { fileURLToPath } from 'url';
 import { Server as SocketIOServer } from 'socket.io';
 import http from 'http';
+import crypto from 'crypto';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -18,6 +19,7 @@ const io = new SocketIOServer(server, {
 
 const PORT = process.env.PORT || 3000;
 const MAX_PLAYERS = 8;
+const DISCONNECTED_PLAYER_TTL_MS = 5 * 60 * 1000;
 const QUESTIONS_DIR = path.join(__dirname, 'questions');
 const LEGACY_QUESTIONS_PATH = path.join(__dirname, 'questions.json');
 
@@ -155,6 +157,14 @@ function generateLobbyCode() {
     code = Array.from({ length: 4 }, () => alphabet[Math.floor(Math.random() * alphabet.length)]).join('');
   } while (lobbies.has(code));
   return code;
+}
+
+function generatePlayerId(lobby) {
+  let id = '';
+  do {
+    id = crypto.randomUUID();
+  } while (lobby.players[id]);
+  return id;
 }
 
 function pickQuestion(lobby) {
@@ -526,9 +536,8 @@ function finalizeGame(lobby, reason, resultsOverride) {
 }
 
 function allPlayersSubmitted(lobby) {
-  return Object.values(lobby.players)
-    .filter(player => player.connected)
-    .every(player => player.hasSubmitted);
+  const connectedPlayers = Object.values(lobby.players).filter(player => player.connected);
+  return connectedPlayers.length > 0 && connectedPlayers.every(player => player.hasSubmitted);
 }
 
 function allPlayersReady(lobby) {
@@ -576,6 +585,7 @@ app.post('/lobbies', (req, res) => {
     gameFinished: false,
     finalSummary: null,
     playerStats: new Map(),
+    disconnectTimers: new Map(),
     questionPool,
     customQuestions,
     baseQuestionCount,
@@ -587,42 +597,62 @@ app.post('/lobbies', (req, res) => {
 });
 
 io.on('connection', socket => {
-  socket.on('joinLobby', ({ code, name }, callback) => {
+  socket.on('joinLobby', ({ code, name, playerId }, callback) => {
     const lobby = lobbies.get(code?.toUpperCase());
     if (!lobby) {
       callback?.({ errorCode: 'LOBBY_NOT_FOUND' });
       return;
     }
 
-    if (Object.values(lobby.players).filter(p => p.connected).length >= MAX_PLAYERS) {
-      callback?.({ errorCode: 'LOBBY_FULL' });
-      return;
-    }
-
     const trimmedName = String(name || '').trim().slice(0, 18);
     const displayName = trimmedName.length > 0 ? trimmedName : 'Spieler';
+    const requestedPlayerId = typeof playerId === 'string' ? playerId.trim() : '';
+    let player = requestedPlayerId ? lobby.players[requestedPlayerId] : null;
 
-    lobby.players[socket.id] = {
-      id: socket.id,
-      name: displayName,
-      answer: null,
-      hasSubmitted: false,
-      ready: false,
-      connected: true
-    };
+    if (player) {
+      const previousSocketId = player.socketId;
+      const timer = lobby.disconnectTimers.get(player.id);
+      if (timer) {
+        clearTimeout(timer);
+        lobby.disconnectTimers.delete(player.id);
+      }
 
-    ensurePlayerStats(lobby, socket.id, displayName);
+      player.name = displayName;
+      player.socketId = socket.id;
+      player.connected = true;
+      if (previousSocketId && previousSocketId !== socket.id) {
+        io.sockets.sockets.get(previousSocketId)?.disconnect(true);
+      }
+    } else {
+      if (Object.values(lobby.players).filter(p => p.connected).length >= MAX_PLAYERS) {
+        callback?.({ errorCode: 'LOBBY_FULL' });
+        return;
+      }
+
+      const id = generatePlayerId(lobby);
+      player = {
+        id,
+        socketId: socket.id,
+        name: displayName,
+        answer: null,
+        hasSubmitted: false,
+        ready: false,
+        connected: true
+      };
+      lobby.players[id] = player;
+    }
+
+    ensurePlayerStats(lobby, player.id, displayName);
 
     socket.join(lobby.code);
     broadcastLobby(lobby);
-    callback?.({ success: true, lobby: getLobbyState(lobby), playerId: socket.id });
+    callback?.({ success: true, lobby: getLobbyState(lobby), playerId: player.id });
   });
 
   socket.on('submitAnswer', answer => {
-    const lobby = findLobbyBySocket(socket.id);
+    const { lobby, player } = findLobbyAndPlayerBySocket(socket.id) || {};
     if (!lobby || lobby.gameFinished || !lobby.collectingAnswers) return;
 
-    const player = lobby.players[socket.id];
     if (!player || player.hasSubmitted) return;
 
     player.answer = typeof answer === 'string' ? answer.trim() : answer;
@@ -641,9 +671,8 @@ io.on('connection', socket => {
   });
 
   socket.on('playerReady', () => {
-    const lobby = findLobbyBySocket(socket.id);
+    const { lobby, player } = findLobbyAndPlayerBySocket(socket.id) || {};
     if (!lobby || lobby.collectingAnswers || lobby.gameFinished) return;
-    const player = lobby.players[socket.id];
     if (!player) return;
     player.ready = true;
     broadcastPlayers(lobby);
@@ -653,7 +682,7 @@ io.on('connection', socket => {
   });
 
   socket.on('startRound', () => {
-    const lobby = findLobbyBySocket(socket.id);
+    const { lobby } = findLobbyAndPlayerBySocket(socket.id) || {};
     if (!lobby || lobby.collectingAnswers || lobby.gameFinished) return;
     if (!lobby.currentQuestion) {
       startRound(lobby);
@@ -661,18 +690,18 @@ io.on('connection', socket => {
   });
 
   socket.on('voteEndGame', callback => {
-    const lobby = findLobbyBySocket(socket.id);
+    const { lobby, player } = findLobbyAndPlayerBySocket(socket.id) || {};
     if (!lobby || !lobby.isUnlimited || lobby.gameFinished) {
       callback?.({ success: false, errorCode: 'VOTE_NOT_ALLOWED' });
       return;
     }
 
-    if (lobby.endVotes.has(socket.id)) {
+    if (lobby.endVotes.has(player.id)) {
       callback?.({ success: false, errorCode: 'VOTE_ALREADY_CAST' });
       return;
     }
 
-    lobby.endVotes.add(socket.id);
+    lobby.endVotes.add(player.id);
     broadcastLobby(lobby);
 
     const connectedCount = getConnectedPlayers(lobby).length;
@@ -683,34 +712,73 @@ io.on('connection', socket => {
     callback?.({ success: true });
   });
 
-  socket.on('disconnect', () => {
-    const lobby = findLobbyBySocket(socket.id);
-    if (!lobby) return;
-
-    delete lobby.players[socket.id];
-    socket.leave(lobby.code);
-    lobby.endVotes.delete(socket.id);
-
-    const remaining = Object.keys(lobby.players).length;
-    if (remaining === 0) {
-      lobbies.delete(lobby.code);
-    } else {
-      if (lobby.collectingAnswers && allPlayersSubmitted(lobby)) {
-        evaluateRound(lobby);
-      } else {
-        broadcastLobby(lobby);
-      }
+  socket.on('leaveLobby', callback => {
+    const { lobby, player } = findLobbyAndPlayerBySocket(socket.id) || {};
+    if (lobby && player) {
+      removePlayerFromLobby(lobby, player.id);
     }
+    callback?.({ success: true });
+  });
+
+  socket.on('disconnect', () => {
+    markPlayerDisconnected(socket.id);
   });
 });
 
-function findLobbyBySocket(socketId) {
+function findLobbyAndPlayerBySocket(socketId) {
   for (const lobby of lobbies.values()) {
-    if (lobby.players[socketId]) {
-      return lobby;
+    const player = Object.values(lobby.players).find(entry => entry.socketId === socketId);
+    if (player) {
+      return { lobby, player };
     }
   }
   return null;
+}
+
+function removePlayerFromLobby(lobby, playerId) {
+  const timer = lobby.disconnectTimers.get(playerId);
+  if (timer) {
+    clearTimeout(timer);
+    lobby.disconnectTimers.delete(playerId);
+  }
+
+  delete lobby.players[playerId];
+  lobby.endVotes.delete(playerId);
+
+  if (Object.keys(lobby.players).length === 0) {
+    lobbies.delete(lobby.code);
+    return;
+  }
+
+  if (lobby.collectingAnswers && allPlayersSubmitted(lobby)) {
+    evaluateRound(lobby);
+  } else {
+    broadcastLobby(lobby);
+  }
+}
+
+function markPlayerDisconnected(socketId) {
+  const found = findLobbyAndPlayerBySocket(socketId);
+  if (!found) return;
+
+  const { lobby, player } = found;
+  player.connected = false;
+  player.socketId = null;
+  lobby.endVotes.delete(player.id);
+
+  if (lobby.collectingAnswers && allPlayersSubmitted(lobby)) {
+    evaluateRound(lobby);
+  } else {
+    broadcastLobby(lobby);
+  }
+
+  const timer = setTimeout(() => {
+    const current = lobby.players[player.id];
+    if (current && !current.connected) {
+      removePlayerFromLobby(lobby, player.id);
+    }
+  }, DISCONNECTED_PLAYER_TTL_MS);
+  lobby.disconnectTimers.set(player.id, timer);
 }
 
 server.listen(PORT, () => {

@@ -482,6 +482,39 @@ let latestPlayers = [];
 let pendingSummary = null;
 let summaryVisible = false;
 
+const LOBBY_SESSION_KEY = 'closer-game:lobby-session';
+
+function getSavedLobbySession() {
+  try {
+    const parsed = JSON.parse(window.localStorage.getItem(LOBBY_SESSION_KEY) || 'null');
+    if (!parsed || typeof parsed !== 'object') {
+      return null;
+    }
+    const code = typeof parsed.code === 'string' ? parsed.code.trim().toUpperCase() : '';
+    const name = typeof parsed.name === 'string' ? parsed.name.trim() : '';
+    const playerId = typeof parsed.playerId === 'string' ? parsed.playerId.trim() : '';
+    return code && name && playerId ? { code, name, playerId } : null;
+  } catch (error) {
+    return null;
+  }
+}
+
+function saveLobbySession({ code, name, playerId }) {
+  try {
+    window.localStorage.setItem(LOBBY_SESSION_KEY, JSON.stringify({ code, name, playerId }));
+  } catch (error) {
+    // Browsers can deny storage in private or restricted modes; reconnect still works in memory.
+  }
+}
+
+function clearLobbySession() {
+  try {
+    window.localStorage.removeItem(LOBBY_SESSION_KEY);
+  } catch (error) {
+    // Ignore storage failures.
+  }
+}
+
 function formatDistance(value) {
   if (typeof value !== 'number' || Number.isNaN(value)) {
     return null;
@@ -720,7 +753,10 @@ function joinLobby() {
     socket.connect();
   }
 
-  socket.emit('joinLobby', { code, name }, response => {
+  const savedSession = getSavedLobbySession();
+  const playerId = savedSession?.code === code ? savedSession.playerId : currentPlayerId;
+
+  socket.emit('joinLobby', { code, name, playerId }, response => {
     if (!response?.success) {
       const message = translateErrorCode(response?.errorCode, 'errorJoinFailed');
       errorEl.textContent = message;
@@ -731,6 +767,9 @@ function joinLobby() {
 
     currentLobbyCode = code;
     currentPlayerId = response.playerId || null;
+    if (currentPlayerId) {
+      saveLobbySession({ code, name, playerId: currentPlayerId });
+    }
     lobbyCodeEl.textContent = code;
     showLobby();
     answerInput.value = '';
@@ -740,6 +779,39 @@ function joinLobby() {
     readySent = false;
     lastResultsShown = false;
 
+    if (response.lobby) {
+      lobbyLanguage = response.lobby?.settings?.language || currentLanguage;
+      setLanguage(lobbyLanguage, { updateSelect: true });
+      applyLobbyState(response.lobby);
+    }
+  });
+}
+
+function rejoinCurrentLobby() {
+  const code = currentLobbyCode || codeInput.value.trim().toUpperCase();
+  const name = nameInput.value.trim();
+
+  if (!code || !name || !currentPlayerId) {
+    return;
+  }
+
+  socket.emit('joinLobby', { code, name, playerId: currentPlayerId }, response => {
+    if (!response?.success) {
+      clearLobbySession();
+      currentLobbyCode = null;
+      currentPlayerId = null;
+      showEntry();
+      errorEl.textContent = translateErrorCode(response?.errorCode, 'errorJoinFailed');
+      joinBtn.disabled = false;
+      createBtn.disabled = false;
+      return;
+    }
+
+    currentLobbyCode = code;
+    currentPlayerId = response.playerId || currentPlayerId;
+    saveLobbySession({ code, name, playerId: currentPlayerId });
+    lobbyCodeEl.textContent = code;
+    showLobby();
     if (response.lobby) {
       lobbyLanguage = response.lobby?.settings?.language || currentLanguage;
       setLanguage(lobbyLanguage, { updateSelect: true });
@@ -1000,6 +1072,12 @@ function applyLobbyState(state) {
   if (!state) return;
 
   currentLobbyStatus = state.status || 'waiting';
+  const currentPlayer = Array.isArray(state.players) && currentPlayerId
+    ? state.players.find(player => player.id === currentPlayerId)
+    : null;
+  if (currentLobbyStatus === 'waiting') {
+    readySent = Boolean(currentPlayer?.ready);
+  }
 
   if (!lobbyLanguage && state.settings?.language) {
     lobbyLanguage = state.settings.language;
@@ -1044,7 +1122,11 @@ function applyLobbyState(state) {
     resultsArea.classList.add('hidden');
     summaryArea.classList.add('hidden');
     prepareSummary(null);
-    if (!answerSubmitted) {
+    answerSubmitted = Boolean(currentPlayer?.hasSubmitted);
+    if (answerSubmitted) {
+      answerInput.disabled = true;
+      answerHint.textContent = t('answerSent');
+    } else {
       answerInput.disabled = false;
       answerHint.textContent = '';
     }
@@ -1059,6 +1141,10 @@ function applyLobbyState(state) {
       readyBtn.classList.remove('hidden');
       readyBtn.disabled = false;
       readyBtn.textContent = t('readyStart');
+    } else {
+      readyBtn.classList.remove('hidden');
+      readyBtn.disabled = true;
+      readyBtn.textContent = t('readyConfirmed');
     }
     statusMessage = t('statusWaiting');
   } else if (currentLobbyStatus === 'results' && state.lastResults && !lastResultsShown) {
@@ -1161,7 +1247,18 @@ readyBtn.addEventListener('click', () => {
 });
 
 leaveBtn.addEventListener('click', () => {
-  window.location.reload();
+  clearLobbySession();
+  currentLobbyCode = null;
+  currentPlayerId = null;
+  if (socket.connected) {
+    const reloadTimer = window.setTimeout(() => window.location.reload(), 500);
+    socket.emit('leaveLobby', () => {
+      window.clearTimeout(reloadTimer);
+      window.location.reload();
+    });
+  } else {
+    window.location.reload();
+  }
 });
 
 voteBtn.addEventListener('click', () => {
@@ -1187,6 +1284,12 @@ socket.on('connect_error', () => {
   errorEl.textContent = t('connectionFailed');
   joinBtn.disabled = false;
   createBtn.disabled = false;
+});
+
+socket.on('connect', () => {
+  if (currentLobbyCode && currentPlayerId) {
+    rejoinCurrentLobby();
+  }
 });
 
 socket.on('lobbyUpdate', state => {
@@ -1237,3 +1340,14 @@ socket.on('gameSummary', summary => {
 setLanguage(languageSelect?.value || currentLanguage);
 updateQuestionModeUI();
 showEntry();
+
+const savedLobbySession = getSavedLobbySession();
+if (savedLobbySession) {
+  currentLobbyCode = savedLobbySession.code;
+  currentPlayerId = savedLobbySession.playerId;
+  nameInput.value = savedLobbySession.name;
+  codeInput.value = savedLobbySession.code;
+  joinBtn.disabled = true;
+  createBtn.disabled = true;
+  socket.connect();
+}
