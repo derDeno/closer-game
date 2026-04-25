@@ -481,12 +481,14 @@ let currentLobbyStatus = 'waiting';
 let latestPlayers = [];
 let pendingSummary = null;
 let summaryVisible = false;
+let rejoinInFlight = false;
 
 const LOBBY_SESSION_KEY = 'closer-game:lobby-session';
+const LOBBY_SESSION_COOKIE = 'closer_game_lobby_session';
 
-function getSavedLobbySession() {
+function parseLobbySession(value) {
   try {
-    const parsed = JSON.parse(window.localStorage.getItem(LOBBY_SESSION_KEY) || 'null');
+    const parsed = JSON.parse(value || 'null');
     if (!parsed || typeof parsed !== 'object') {
       return null;
     }
@@ -499,17 +501,85 @@ function getSavedLobbySession() {
   }
 }
 
-function saveLobbySession({ code, name, playerId }) {
+function readStoredValue(storage) {
   try {
-    window.localStorage.setItem(LOBBY_SESSION_KEY, JSON.stringify({ code, name, playerId }));
+    return storage?.getItem(LOBBY_SESSION_KEY) || null;
   } catch (error) {
-    // Browsers can deny storage in private or restricted modes; reconnect still works in memory.
+    return null;
+  }
+}
+
+function getLobbySessionCookie() {
+  const prefix = `${LOBBY_SESSION_COOKIE}=`;
+  const entry = document.cookie
+    .split(';')
+    .map(part => part.trim())
+    .find(part => part.startsWith(prefix));
+  if (!entry) {
+    return null;
+  }
+
+  try {
+    return decodeURIComponent(entry.slice(prefix.length));
+  } catch (error) {
+    return null;
+  }
+}
+
+function getSavedLobbySession() {
+  return parseLobbySession(readStoredValue(window.localStorage))
+    || parseLobbySession(readStoredValue(window.sessionStorage))
+    || parseLobbySession(getLobbySessionCookie());
+}
+
+function createPlayerId() {
+  if (window.crypto?.randomUUID) {
+    return window.crypto.randomUUID();
+  }
+  return `player-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 12)}`;
+}
+
+function saveLobbySession({ code, name, playerId }) {
+  const session = {
+    code: String(code || '').trim().toUpperCase(),
+    name: String(name || '').trim(),
+    playerId: String(playerId || '').trim()
+  };
+  if (!session.code || !session.name || !session.playerId) {
+    return;
+  }
+
+  const value = JSON.stringify(session);
+  try {
+    window.localStorage.setItem(LOBBY_SESSION_KEY, value);
+  } catch (error) {
+    // Browsers can deny storage in private or restricted modes.
+  }
+  try {
+    window.sessionStorage.setItem(LOBBY_SESSION_KEY, value);
+  } catch (error) {
+    // Keep going; the cookie fallback may still work.
+  }
+  try {
+    document.cookie = `${LOBBY_SESSION_COOKIE}=${encodeURIComponent(value)}; max-age=86400; path=/; samesite=lax`;
+  } catch (error) {
+    // Reconnect still works while the page keeps its in-memory state.
   }
 }
 
 function clearLobbySession() {
   try {
     window.localStorage.removeItem(LOBBY_SESSION_KEY);
+  } catch (error) {
+    // Ignore storage failures.
+  }
+  try {
+    window.sessionStorage.removeItem(LOBBY_SESSION_KEY);
+  } catch (error) {
+    // Ignore storage failures.
+  }
+  try {
+    document.cookie = `${LOBBY_SESSION_COOKIE}=; max-age=0; path=/; samesite=lax`;
   } catch (error) {
     // Ignore storage failures.
   }
@@ -749,15 +819,23 @@ function joinLobby() {
   createBtn.disabled = true;
   errorEl.textContent = '';
 
+  const savedSession = getSavedLobbySession();
+  const playerId = savedSession?.code === code
+    ? savedSession.playerId
+    : currentPlayerId || createPlayerId();
+  currentLobbyCode = code;
+  currentPlayerId = playerId;
+  saveLobbySession({ code, name, playerId });
+
   if (!socket.connected) {
     socket.connect();
   }
 
-  const savedSession = getSavedLobbySession();
-  const playerId = savedSession?.code === code ? savedSession.playerId : currentPlayerId;
-
   socket.emit('joinLobby', { code, name, playerId }, response => {
     if (!response?.success) {
+      clearLobbySession();
+      currentLobbyCode = null;
+      currentPlayerId = null;
       const message = translateErrorCode(response?.errorCode, 'errorJoinFailed');
       errorEl.textContent = message;
       joinBtn.disabled = false;
@@ -765,7 +843,6 @@ function joinLobby() {
       return;
     }
 
-    currentLobbyCode = code;
     currentPlayerId = response.playerId || null;
     if (currentPlayerId) {
       saveLobbySession({ code, name, playerId: currentPlayerId });
@@ -788,14 +865,17 @@ function joinLobby() {
 }
 
 function rejoinCurrentLobby() {
+  const savedSession = getSavedLobbySession();
   const code = currentLobbyCode || codeInput.value.trim().toUpperCase();
-  const name = nameInput.value.trim();
+  const name = nameInput.value.trim() || savedSession?.name || '';
 
-  if (!code || !name || !currentPlayerId) {
+  if (!code || !name || !currentPlayerId || rejoinInFlight) {
     return;
   }
 
+  rejoinInFlight = true;
   socket.emit('joinLobby', { code, name, playerId: currentPlayerId }, response => {
+    rejoinInFlight = false;
     if (!response?.success) {
       clearLobbySession();
       currentLobbyCode = null;
@@ -818,6 +898,27 @@ function rejoinCurrentLobby() {
       applyLobbyState(response.lobby);
     }
   });
+}
+
+function resumeLobbyConnection() {
+  const savedSession = getSavedLobbySession();
+  if (savedSession && (!currentLobbyCode || !currentPlayerId)) {
+    currentLobbyCode = savedSession.code;
+    currentPlayerId = savedSession.playerId;
+    nameInput.value = savedSession.name;
+    codeInput.value = savedSession.code;
+  }
+
+  if (!currentLobbyCode || !currentPlayerId) {
+    return;
+  }
+
+  if (!socket.connected) {
+    socket.connect();
+    return;
+  }
+
+  rejoinCurrentLobby();
 }
 
 function updatePlayers(players = []) {
@@ -1287,8 +1388,15 @@ socket.on('connect_error', () => {
 });
 
 socket.on('connect', () => {
-  if (currentLobbyCode && currentPlayerId) {
-    rejoinCurrentLobby();
+  resumeLobbyConnection();
+});
+
+window.addEventListener('pageshow', resumeLobbyConnection);
+window.addEventListener('focus', resumeLobbyConnection);
+window.addEventListener('online', resumeLobbyConnection);
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'visible') {
+    resumeLobbyConnection();
   }
 });
 
@@ -1349,5 +1457,5 @@ if (savedLobbySession) {
   codeInput.value = savedLobbySession.code;
   joinBtn.disabled = true;
   createBtn.disabled = true;
-  socket.connect();
+  resumeLobbyConnection();
 }
