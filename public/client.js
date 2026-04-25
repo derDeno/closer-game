@@ -6,11 +6,16 @@ const joinBtn = document.getElementById('join-btn');
 const createBtn = document.getElementById('create-btn');
 const nameInput = document.getElementById('name-input');
 const codeInput = document.getElementById('code-input');
+const languageSelect = document.getElementById('language-select');
 const errorEl = document.getElementById('entry-error');
 const modeFixedRadio = document.getElementById('mode-fixed');
 const modeUnlimitedRadio = document.getElementById('mode-unlimited');
 const questionCountInput = document.getElementById('question-count');
 const fixedConfig = document.getElementById('fixed-config');
+const customQuestionsSection = document.getElementById('custom-questions-section');
+const customQuestionsList = document.getElementById('custom-questions-list');
+const addCustomQuestionBtn = document.getElementById('add-custom-question-btn');
+const useOnlyCustomCheckbox = document.getElementById('use-only-custom');
 const lobbyCodeEl = document.getElementById('lobby-code');
 const playerListEl = document.getElementById('player-list');
 const questionArea = document.getElementById('question-area');
@@ -26,6 +31,447 @@ const readyBtn = document.getElementById('ready-btn');
 const leaveBtn = document.getElementById('leave-btn');
 const voteBtn = document.getElementById('end-vote-btn');
 
+const DEFAULT_LANGUAGE = 'de';
+
+const languageConfigs = {
+  de: { locale: 'de-DE', label: 'Deutsch', langAttr: 'de' },
+  en: { locale: 'en-US', label: 'English', langAttr: 'en' }
+};
+
+const translations = {
+  de: {
+    appTitle: 'Näher Draan',
+    tagline: 'Tritt einer Lobby bei und zeige dein Schätz-Talent!',
+    nameLabel: 'Dein Name',
+    namePlaceholder: 'Spieler',
+    codeLabel: 'Lobby-Code',
+    codePlaceholder: 'ABCD',
+    languageLabel: 'Sprache',
+    languageOptionDe: 'Deutsch',
+    languageOptionEn: 'Englisch',
+    modeLegend: 'Rundenmodus',
+    modeFixedLabel: 'Feste Anzahl von Fragen',
+    modeFixedCountLabel: 'Anzahl der Fragen',
+    modeUnlimitedLabel: 'Unbegrenzt – Spielende per Abstimmung',
+    customQuestionsHeading: 'Eigene Fragen',
+    customQuestionsDescription: 'Füge eigene Fragen hinzu, um eine individuelle Runde zu spielen.',
+    addCustomQuestion: 'Eigene Frage hinzufügen',
+    addCustomQuestionAria: 'Eigene Frage hinzufügen',
+    useOnlyCustomLabel: 'Nur eigene Fragen verwenden',
+    customQuestionHint: 'Gib eine Frage und die korrekte Zahl ein.',
+    customQuestionLabel: 'Frage {index}',
+    customQuestionPlaceholder: 'Frage',
+    customAnswerLabel: 'Antwort',
+    customAnswerPlaceholder: 'Antwort',
+    removeCustomQuestion: 'Entfernen',
+    removeCustomQuestionAria: 'Eigene Frage entfernen',
+    joinButton: 'Lobby beitreten',
+    createButton: 'Neue Lobby erstellen',
+    entryErrorName: 'Bitte gib deinen Namen ein.',
+    entryErrorQuestionCount: 'Bitte gib eine gültige Anzahl an Fragen ein.',
+    entryErrorCode: 'Bitte gib einen gültigen 4-stelligen Code ein.',
+    entryErrorGeneric: 'Lobby konnte nicht erstellt werden.',
+    errorCreateLobby: 'Lobby konnte nicht erstellt werden.',
+    errorNoQuestionsAvailable: 'Es stehen keine Fragen zur Verfügung.',
+    errorJoinFailed: 'Beitritt fehlgeschlagen.',
+    errorCustomRequired: 'Bitte füge mindestens eine gültige eigene Frage hinzu.',
+    lobbyNotFound: 'Lobby nicht gefunden.',
+    lobbyFull: 'Die Lobby ist bereits voll.',
+    voteNotAllowed: 'Eine Abstimmung ist derzeit nicht möglich.',
+    voteAlready: 'Du hast bereits für das Spielende gestimmt.',
+    connectionFailed: 'Verbindung fehlgeschlagen.',
+    submitAnswer: 'Antwort senden',
+    answerPlaceholder: 'Deine Antwort',
+    answerRequired: 'Bitte gib eine Zahl ein.',
+    answerInvalid: 'Bitte gib eine gültige Zahl ein.',
+    answerSent: 'Antwort gesendet. Warte auf die anderen Spieler…',
+    playerStatusOffline: 'Offline',
+    playerStatusSubmitted: 'Antwort gesendet',
+    playerStatusPending: 'Antwort ausstehend',
+    playerStatusFinished: 'Spiel beendet',
+    playerStatusReady: 'Bereit',
+    playerStatusWaiting: 'Wartet',
+    statusCollecting: 'Runde läuft – gib deine Antwort ein!',
+    statusWaiting: 'Warte auf den Start der Runde.',
+    statusResults: 'Runde beendet. Klicke auf "Bereit" um fortzufahren.',
+    statusFinishedWithSummary: 'Spiel beendet. Klicke auf „Highscore anzeigen“, um die Rangliste zu sehen.',
+    statusFinished: 'Spiel beendet.',
+    voteLabel: 'Spiel beenden (Abstimmung)',
+    voteLabelWithCount: 'Spiel beenden ({count}/{required})',
+    voteStatus: 'Stimmen für Spielende: {count}/{required}{names}',
+    voteStatusNames: ' – {names}',
+    resultsCorrectAnswer: 'Richtige Antwort: {answer}',
+    badgeClosest: 'Am nächsten dran',
+    badgeFarthest: 'Am weitesten weg',
+    readyNextRound: 'Bereit für nächste Runde',
+    readyStart: 'Bereit zum Start',
+    readyConfirmed: 'Bereit!',
+    summaryHeading: 'Highscore des Spiels',
+    summaryRounds: 'Gespielte Runden: {count}',
+    summaryReasonVote: 'Das Spiel wurde per Abstimmung beendet.',
+    summaryReasonLimit: 'Das Spiel endete nach der festgelegten Rundenanzahl.',
+    summaryReasonNoQuestions: 'Das Spiel endete, da keine Fragen mehr verfügbar waren.',
+    summaryPoints: 'Punkte: {value}',
+    summaryAverageDeviation: 'Ø Abweichung: {value}',
+    summaryAverageDeviationNone: 'Ø Abweichung: –',
+    summaryEmpty: 'Keine gültigen Antworten verfügbar.',
+    showHighscore: 'Highscore anzeigen',
+    leaveLobby: 'Lobby verlassen',
+    logoAlt: 'Näher Draan Logo',
+    entryTitle: 'Näher Draan'
+  },
+  en: {
+    appTitle: 'Closer Game',
+    tagline: 'Join a lobby and show off your estimation skills!',
+    nameLabel: 'Your name',
+    namePlaceholder: 'Player',
+    codeLabel: 'Lobby code',
+    codePlaceholder: 'ABCD',
+    languageLabel: 'Language',
+    languageOptionDe: 'German',
+    languageOptionEn: 'English',
+    modeLegend: 'Round mode',
+    modeFixedLabel: 'Fixed number of questions',
+    modeFixedCountLabel: 'Number of questions',
+    modeUnlimitedLabel: 'Unlimited – vote to end the game',
+    customQuestionsHeading: 'Custom questions',
+    customQuestionsDescription: 'Add your own questions to play a custom round.',
+    addCustomQuestion: 'Add custom question',
+    addCustomQuestionAria: 'Add custom question',
+    useOnlyCustomLabel: 'Use only custom questions',
+    customQuestionHint: 'Provide a question and the correct number.',
+    customQuestionLabel: 'Question {index}',
+    customQuestionPlaceholder: 'Question',
+    customAnswerLabel: 'Answer',
+    customAnswerPlaceholder: 'Answer',
+    removeCustomQuestion: 'Remove',
+    removeCustomQuestionAria: 'Remove custom question',
+    joinButton: 'Join lobby',
+    createButton: 'Create new lobby',
+    entryErrorName: 'Please enter your name.',
+    entryErrorQuestionCount: 'Please enter a valid number of questions.',
+    entryErrorCode: 'Please enter a valid 4-letter code.',
+    entryErrorGeneric: 'Failed to create lobby.',
+    errorCreateLobby: 'Failed to create lobby.',
+    errorNoQuestionsAvailable: 'No questions available.',
+    errorJoinFailed: 'Failed to join lobby.',
+    errorCustomRequired: 'Please add at least one valid custom question.',
+    lobbyNotFound: 'Lobby not found.',
+    lobbyFull: 'The lobby is already full.',
+    voteNotAllowed: 'A vote to end the game is not possible right now.',
+    voteAlready: 'You have already voted to end the game.',
+    connectionFailed: 'Connection failed.',
+    submitAnswer: 'Submit answer',
+    answerPlaceholder: 'Your answer',
+    answerRequired: 'Please enter a number.',
+    answerInvalid: 'Please enter a valid number.',
+    answerSent: 'Answer submitted. Waiting for the other players…',
+    playerStatusOffline: 'Offline',
+    playerStatusSubmitted: 'Answer submitted',
+    playerStatusPending: 'Answer pending',
+    playerStatusFinished: 'Game finished',
+    playerStatusReady: 'Ready',
+    playerStatusWaiting: 'Waiting',
+    statusCollecting: 'Round in progress – enter your answer!',
+    statusWaiting: 'Waiting for the round to start.',
+    statusResults: 'Round finished. Click "Ready" to continue.',
+    statusFinishedWithSummary: 'Game finished. Click "Show highscore" to see the standings.',
+    statusFinished: 'Game finished.',
+    voteLabel: 'End game (vote)',
+    voteLabelWithCount: 'End game ({count}/{required})',
+    voteStatus: 'Votes to end the game: {count}/{required}{names}',
+    voteStatusNames: ' – {names}',
+    resultsCorrectAnswer: 'Correct answer: {answer}',
+    badgeClosest: 'Closest',
+    badgeFarthest: 'Farthest',
+    readyNextRound: 'Ready for next round',
+    readyStart: 'Ready to start',
+    readyConfirmed: 'Ready!',
+    summaryHeading: 'Game highscore',
+    summaryRounds: 'Rounds played: {count}',
+    summaryReasonVote: 'The game was ended by a vote.',
+    summaryReasonLimit: 'The game ended after the set number of rounds.',
+    summaryReasonNoQuestions: 'The game ended because no questions were available.',
+    summaryPoints: 'Points: {value}',
+    summaryAverageDeviation: 'Avg. deviation: {value}',
+    summaryAverageDeviationNone: 'Avg. deviation: –',
+    summaryEmpty: 'No valid answers available.',
+    showHighscore: 'Show highscore',
+    leaveLobby: 'Leave lobby',
+    logoAlt: 'Closer Game logo',
+    entryTitle: 'Closer Game'
+  }
+};
+
+let currentLanguage = DEFAULT_LANGUAGE;
+let lobbyLanguage = null;
+
+let distanceFormatter;
+let numberFormatter;
+let integerFormatter;
+
+function getLanguageConfig(language) {
+  const normalized = typeof language === 'string' ? language.trim().toLowerCase() : DEFAULT_LANGUAGE;
+  return languageConfigs[normalized] || languageConfigs[DEFAULT_LANGUAGE];
+}
+
+function formatTemplate(template, params) {
+  if (typeof template !== 'string') {
+    return '';
+  }
+  return template.replace(/\{(\w+)\}/g, (_, key) => {
+    const value = params[key];
+    return typeof value === 'undefined' ? `{${key}}` : String(value);
+  });
+}
+
+function t(key, params = {}) {
+  const translationsForLanguage = translations[currentLanguage] || translations[DEFAULT_LANGUAGE] || {};
+  const fallback = translations[DEFAULT_LANGUAGE] || {};
+  const template = translationsForLanguage[key] ?? fallback[key] ?? '';
+  return formatTemplate(template, params);
+}
+
+function parseI18nParams(value) {
+  if (!value) {
+    return {};
+  }
+  try {
+    return JSON.parse(value);
+  } catch (error) {
+    return {};
+  }
+}
+
+function updateFormatters() {
+  const config = getLanguageConfig(currentLanguage);
+  const locale = config.locale;
+  distanceFormatter = new Intl.NumberFormat(locale, {
+    maximumFractionDigits: 2,
+    useGrouping: true
+  });
+  numberFormatter = new Intl.NumberFormat(locale, {
+    maximumFractionDigits: 20,
+    useGrouping: true
+  });
+  integerFormatter = new Intl.NumberFormat(locale, {
+    maximumFractionDigits: 0,
+    useGrouping: true
+  });
+}
+
+function applyTranslations() {
+  document.title = t('appTitle');
+  const config = getLanguageConfig(currentLanguage);
+  document.documentElement.lang = config.langAttr;
+
+  updateCustomQuestionLabels();
+
+  document.querySelectorAll('[data-i18n]').forEach(element => {
+    const key = element.getAttribute('data-i18n');
+    if (!key) return;
+    const params = parseI18nParams(element.getAttribute('data-i18n-params'));
+    element.textContent = t(key, params);
+  });
+
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(element => {
+    const key = element.getAttribute('data-i18n-placeholder');
+    if (!key) return;
+    const params = parseI18nParams(element.getAttribute('data-i18n-params'));
+    element.setAttribute('placeholder', t(key, params));
+  });
+
+  document.querySelectorAll('[data-i18n-aria-label]').forEach(element => {
+    const key = element.getAttribute('data-i18n-aria-label');
+    if (!key) return;
+    const params = parseI18nParams(element.getAttribute('data-i18n-params'));
+    element.setAttribute('aria-label', t(key, params));
+  });
+
+  document.querySelectorAll('[data-i18n-alt]').forEach(element => {
+    const key = element.getAttribute('data-i18n-alt');
+    if (!key) return;
+    const params = parseI18nParams(element.getAttribute('data-i18n-params'));
+    element.setAttribute('alt', t(key, params));
+  });
+
+  document.querySelectorAll('[data-i18n-option]').forEach(element => {
+    const key = element.getAttribute('data-i18n-option');
+    if (!key) return;
+    const params = parseI18nParams(element.getAttribute('data-i18n-params'));
+    element.textContent = t(key, params);
+  });
+
+  if (addCustomQuestionBtn) {
+    addCustomQuestionBtn.setAttribute('aria-label', t('addCustomQuestionAria'));
+  }
+}
+
+function setLanguage(language, { updateSelect = true } = {}) {
+  const configKey = typeof language === 'string' ? language.trim().toLowerCase() : DEFAULT_LANGUAGE;
+  currentLanguage = translations[configKey] ? configKey : DEFAULT_LANGUAGE;
+  if (updateSelect && languageSelect && languageSelect.value !== currentLanguage) {
+    languageSelect.value = currentLanguage;
+  }
+  updateFormatters();
+  applyTranslations();
+}
+
+const MAX_CUSTOM_QUESTIONS = 50;
+
+function updateCustomQuestionLabels() {
+  if (!customQuestionsList) {
+    return;
+  }
+
+  const rows = Array.from(customQuestionsList.querySelectorAll('.custom-question-row'));
+  rows.forEach((row, index) => {
+    const label = row.querySelector('.custom-question-label');
+    if (label) {
+      label.setAttribute('data-i18n-params', JSON.stringify({ index: index + 1 }));
+    }
+  });
+
+  if (addCustomQuestionBtn) {
+    addCustomQuestionBtn.disabled = rows.length >= MAX_CUSTOM_QUESTIONS;
+  }
+
+  if (useOnlyCustomCheckbox) {
+    if (rows.length === 0) {
+      useOnlyCustomCheckbox.checked = false;
+      useOnlyCustomCheckbox.disabled = true;
+    } else {
+      useOnlyCustomCheckbox.disabled = false;
+    }
+  }
+}
+
+function createCustomQuestionRow({ question = '', answer = '' } = {}) {
+  if (!customQuestionsList) {
+    return;
+  }
+  if (customQuestionsList.querySelectorAll('.custom-question-row').length >= MAX_CUSTOM_QUESTIONS) {
+    return;
+  }
+
+  const row = document.createElement('div');
+  row.className = 'custom-question-row';
+
+  const fields = document.createElement('div');
+  fields.className = 'custom-question-fields';
+
+  const questionGroup = document.createElement('div');
+  questionGroup.className = 'form-group';
+  const questionLabel = document.createElement('label');
+  questionLabel.className = 'custom-question-label';
+  questionLabel.setAttribute('data-i18n', 'customQuestionLabel');
+  questionGroup.append(questionLabel);
+  const questionInput = document.createElement('input');
+  questionInput.type = 'text';
+  questionInput.maxLength = 200;
+  questionInput.value = question;
+  questionInput.className = 'custom-question-input';
+  questionInput.setAttribute('data-i18n-placeholder', 'customQuestionPlaceholder');
+  questionInput.setAttribute('placeholder', t('customQuestionPlaceholder'));
+  questionGroup.append(questionInput);
+
+  const answerGroup = document.createElement('div');
+  answerGroup.className = 'form-group';
+  const answerLabel = document.createElement('label');
+  answerLabel.setAttribute('data-i18n', 'customAnswerLabel');
+  answerGroup.append(answerLabel);
+  const answerInput = document.createElement('input');
+  answerInput.type = 'text';
+  answerInput.inputMode = 'decimal';
+  answerInput.value = answer;
+  answerInput.className = 'custom-answer-input';
+  answerInput.setAttribute('data-i18n-placeholder', 'customAnswerPlaceholder');
+  answerInput.setAttribute('placeholder', t('customAnswerPlaceholder'));
+  answerInput.addEventListener('blur', () => {
+    const normalized = normalizeNumericString(answerInput.value);
+    if (!normalized) {
+      answerInput.value = '';
+      return;
+    }
+    const parsed = Number(normalized);
+    if (Number.isFinite(parsed)) {
+      const formatted = formatNumericValue(parsed);
+      if (formatted) {
+        answerInput.value = formatted;
+      }
+    }
+  });
+  answerGroup.append(answerInput);
+
+  fields.append(questionGroup, answerGroup);
+
+  const actions = document.createElement('div');
+  actions.className = 'custom-question-actions';
+  const removeButton = document.createElement('button');
+  removeButton.type = 'button';
+  removeButton.className = 'link remove-custom-question';
+  removeButton.setAttribute('data-i18n', 'removeCustomQuestion');
+  removeButton.setAttribute('data-i18n-aria-label', 'removeCustomQuestionAria');
+  removeButton.addEventListener('click', () => {
+    row.remove();
+    applyTranslations();
+  });
+  actions.append(removeButton);
+
+  row.append(fields, actions);
+  customQuestionsList.append(row);
+  applyTranslations();
+}
+
+function collectCustomQuestions() {
+  if (!customQuestionsList) {
+    return [];
+  }
+
+  const rows = Array.from(customQuestionsList.querySelectorAll('.custom-question-row'));
+  const collected = [];
+
+  for (const row of rows) {
+    const questionInput = row.querySelector('.custom-question-input');
+    const answerInput = row.querySelector('.custom-answer-input');
+    const questionText = questionInput?.value?.trim();
+    const normalizedAnswer = normalizeNumericString(answerInput?.value ?? '');
+
+    if (!questionText || !normalizedAnswer) {
+      continue;
+    }
+
+    const numericAnswer = Number(normalizedAnswer);
+    if (!Number.isFinite(numericAnswer)) {
+      continue;
+    }
+
+    collected.push({ question: questionText, answer: numericAnswer });
+    if (collected.length >= MAX_CUSTOM_QUESTIONS) {
+      break;
+    }
+  }
+
+  return collected;
+}
+
+const errorCodeTranslations = {
+  LOBBY_NOT_FOUND: 'lobbyNotFound',
+  LOBBY_FULL: 'lobbyFull',
+  VOTE_NOT_ALLOWED: 'voteNotAllowed',
+  VOTE_ALREADY_CAST: 'voteAlready',
+  NO_CUSTOM_QUESTIONS: 'errorCustomRequired',
+  NO_QUESTIONS_AVAILABLE: 'errorNoQuestionsAvailable'
+};
+
+function translateErrorCode(code, fallbackKey) {
+  if (typeof code !== 'string' || code.length === 0) {
+    return fallbackKey ? t(fallbackKey) : '';
+  }
+  const key = errorCodeTranslations[code] || fallbackKey;
+  return key ? t(key) : '';
+}
+
 let currentLobbyCode = null;
 let currentPlayerId = null;
 let answerSubmitted = false;
@@ -36,20 +482,38 @@ let latestPlayers = [];
 let pendingSummary = null;
 let summaryVisible = false;
 
-const distanceFormatter = new Intl.NumberFormat('de-DE', {
-  maximumFractionDigits: 2,
-  useGrouping: true
-});
+const LOBBY_SESSION_KEY = 'closer-game:lobby-session';
 
-const numberFormatter = new Intl.NumberFormat('de-DE', {
-  maximumFractionDigits: 20,
-  useGrouping: true
-});
+function getSavedLobbySession() {
+  try {
+    const parsed = JSON.parse(window.localStorage.getItem(LOBBY_SESSION_KEY) || 'null');
+    if (!parsed || typeof parsed !== 'object') {
+      return null;
+    }
+    const code = typeof parsed.code === 'string' ? parsed.code.trim().toUpperCase() : '';
+    const name = typeof parsed.name === 'string' ? parsed.name.trim() : '';
+    const playerId = typeof parsed.playerId === 'string' ? parsed.playerId.trim() : '';
+    return code && name && playerId ? { code, name, playerId } : null;
+  } catch (error) {
+    return null;
+  }
+}
 
-const integerFormatter = new Intl.NumberFormat('de-DE', {
-  maximumFractionDigits: 0,
-  useGrouping: true
-});
+function saveLobbySession({ code, name, playerId }) {
+  try {
+    window.localStorage.setItem(LOBBY_SESSION_KEY, JSON.stringify({ code, name, playerId }));
+  } catch (error) {
+    // Browsers can deny storage in private or restricted modes; reconnect still works in memory.
+  }
+}
+
+function clearLobbySession() {
+  try {
+    window.localStorage.removeItem(LOBBY_SESSION_KEY);
+  } catch (error) {
+    // Ignore storage failures.
+  }
+}
 
 function formatDistance(value) {
   if (typeof value !== 'number' || Number.isNaN(value)) {
@@ -58,30 +522,24 @@ function formatDistance(value) {
   return distanceFormatter.format(value);
 }
 
-function formatNumericValue(value, { integer = false } = {}) {
-  if (typeof value === 'number') {
-    if (!Number.isFinite(value)) {
-      return null;
-    }
-    return (integer ? integerFormatter : numberFormatter).format(value);
-  }
-
-  if (typeof value === 'string') {
-    const normalized = normalizeNumericString(value);
-    if (!normalized) {
-      return null;
-    }
-    const parsed = Number(normalized);
-    if (!Number.isFinite(parsed)) {
-      return null;
-    }
-    return (integer ? integerFormatter : numberFormatter).format(parsed);
-  }
-
-  return null;
+function escapeRegExp(value) {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
-function normalizeNumericString(value) {
+function getNumberSeparators(language = currentLanguage) {
+  const locale = getLanguageConfig(language).locale;
+  const parts = new Intl.NumberFormat(locale).formatToParts(12345.6);
+  return {
+    decimal: parts.find(part => part.type === 'decimal')?.value || '.',
+    group: parts.find(part => part.type === 'group')?.value || ','
+  };
+}
+
+function removeSeparator(value, separator) {
+  return separator ? value.replace(new RegExp(escapeRegExp(separator), 'g'), '') : value;
+}
+
+function normalizeNumericString(value, language = currentLanguage) {
   if (typeof value !== 'string') {
     return null;
   }
@@ -108,116 +566,87 @@ function normalizeNumericString(value) {
     return null;
   }
 
-  if (normalized.includes(',')) {
-    normalized = normalized.replace(/\./g, '').replace(',', '.');
-  } else if (/^\d{1,3}(\.\d{3})+$/.test(normalized)) {
-    normalized = normalized.replace(/\./g, '');
-  } else {
-    normalized = normalized.replace(/,/g, '');
-  }
-
-  const result = (negative ? '-' : '') + normalized;
-  return result.endsWith('.') ? result.slice(0, -1) : result;
-}
-
-function parseAnswerInputValue(value) {
-  if (typeof value !== 'string') {
-    return { formatted: '', normalized: '', hasDigits: false };
-  }
-
-  const trimmed = value.replace(/\s+/g, '');
-  if (trimmed.length === 0) {
-    return { formatted: '', normalized: '', hasDigits: false };
-  }
-
-  let negative = false;
-  let unsigned = trimmed;
-
-  if (unsigned.startsWith('-')) {
-    negative = true;
-    unsigned = unsigned.slice(1);
-  } else if (unsigned.startsWith('+')) {
-    unsigned = unsigned.slice(1);
-  }
-
-  const endsWithComma = unsigned.endsWith(',');
-
-  unsigned = unsigned.replace(/[^0-9.,]/g, '');
-
-  if (unsigned.length === 0) {
-    return { formatted: negative ? '-' : '', normalized: '', hasDigits: false };
-  }
-
+  const { decimal, group } = getNumberSeparators(language);
+  const separatorMatches = normalized.match(/[.,]/g) || [];
+  const uniqueSeparators = [...new Set(separatorMatches)];
+  const thousandsPattern = new RegExp(`^\\d{1,3}(${escapeRegExp(uniqueSeparators[0] || '')}\\d{3})+$`);
   let decimalSeparator = null;
-  let integerPart = unsigned;
+
+  if (uniqueSeparators.length > 1) {
+    const lastComma = normalized.lastIndexOf(',');
+    const lastDot = normalized.lastIndexOf('.');
+    decimalSeparator = lastComma > lastDot ? ',' : '.';
+  } else if (uniqueSeparators.length === 1) {
+    const separator = uniqueSeparators[0];
+    const separatorCount = separatorMatches.length;
+    if (separator === group && thousandsPattern.test(normalized)) {
+      normalized = removeSeparator(normalized, group);
+    } else if (separatorCount > 1 && thousandsPattern.test(normalized)) {
+      normalized = removeSeparator(normalized, separator);
+    } else if (separator === decimal) {
+      decimalSeparator = separator;
+    } else if (thousandsPattern.test(normalized)) {
+      normalized = removeSeparator(normalized, separator);
+    } else {
+      decimalSeparator = separator;
+    }
+  }
+
+  normalized = decimalSeparator === group ? normalized : removeSeparator(normalized, group);
+
+  const lastComma = normalized.lastIndexOf(',');
+  const lastDot = normalized.lastIndexOf('.');
+
+  if (!decimalSeparator && (lastComma !== -1 || lastDot !== -1)) {
+    decimalSeparator = lastComma > lastDot ? ',' : '.';
+  }
+
+  let integerPart = normalized;
   let fractionPart = '';
 
-  if (unsigned.includes(',')) {
-    decimalSeparator = ',';
-    const index = unsigned.indexOf(',');
-    integerPart = unsigned.slice(0, index);
-    fractionPart = unsigned.slice(index + 1);
+  if (decimalSeparator) {
+    const splitIndex = normalized.lastIndexOf(decimalSeparator);
+    integerPart = normalized.slice(0, splitIndex);
+    fractionPart = normalized.slice(splitIndex + 1);
   }
 
-  integerPart = integerPart.replace(/\D/g, '');
-  fractionPart = fractionPart.replace(/\D/g, '');
+  integerPart = integerPart.replace(/[^0-9]/g, '');
+  fractionPart = fractionPart.replace(/[^0-9]/g, '');
 
   if (integerPart.length === 0 && fractionPart.length > 0) {
     integerPart = '0';
   }
 
   const hasDigits = integerPart.length > 0 || fractionPart.length > 0;
-
-  let formattedInteger = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-  if (formattedInteger.length === 0 && hasDigits) {
-    formattedInteger = '0';
+  if (!hasDigits) {
+    return null;
   }
 
-  let formatted = formattedInteger;
-
-  const shouldShowDecimal = decimalSeparator === ',' && (fractionPart.length > 0 || endsWithComma);
-
-  if (decimalSeparator && shouldShowDecimal) {
-    formatted += ',' + fractionPart;
-    if (fractionPart.length === 0 && !endsWithComma) {
-      formatted = formattedInteger;
-    }
-  }
-
-  if (negative) {
-    formatted = formatted ? `-${formatted}` : '-';
-  }
-
-  const normalized = hasDigits
-    ? `${negative ? '-' : ''}${integerPart}${fractionPart.length > 0 ? `.${fractionPart}` : ''}`
-    : '';
-
-  return { formatted, normalized, hasDigits };
+  const normalizedNumber = `${negative ? '-' : ''}${integerPart || '0'}${fractionPart.length > 0 ? `.${fractionPart}` : ''}`;
+  return normalizedNumber;
 }
 
-function countDigitsBeforeIndex(value, index) {
-  if (!value || index <= 0) {
-    return 0;
-  }
-  const slice = value.slice(0, index);
-  return (slice.match(/\d/g) || []).length;
-}
-
-function findCaretPositionForDigitIndex(value, digitIndex) {
-  if (digitIndex <= 0) {
-    return value.startsWith('-') ? 1 : 0;
-  }
-
-  let digitsSeen = 0;
-  for (let i = 0; i < value.length; i += 1) {
-    if (/\d/.test(value[i])) {
-      digitsSeen += 1;
-      if (digitsSeen === digitIndex) {
-        return i + 1;
-      }
+function formatNumericValue(value, { integer = false } = {}) {
+  if (typeof value === 'number') {
+    if (!Number.isFinite(value)) {
+      return null;
     }
+    return (integer ? integerFormatter : numberFormatter).format(value);
   }
-  return value.length;
+
+  if (typeof value === 'string') {
+    const normalized = normalizeNumericString(value);
+    if (!normalized) {
+      return null;
+    }
+    const parsed = Number(normalized);
+    if (!Number.isFinite(parsed)) {
+      return null;
+    }
+    return (integer ? integerFormatter : numberFormatter).format(parsed);
+  }
+
+  return null;
 }
 
 function showEntry() {
@@ -250,7 +679,7 @@ async function createLobby() {
   try {
     const name = nameInput.value.trim();
     if (!name) {
-      errorEl.textContent = 'Bitte gib deinen Namen ein.';
+      errorEl.textContent = t('entryErrorName');
       nameInput.focus();
       return;
     }
@@ -262,25 +691,42 @@ async function createLobby() {
     if (mode === 'fixed') {
       const parsed = Number.parseInt(questionCountInput.value, 10);
       if (Number.isNaN(parsed) || parsed < 1) {
-        errorEl.textContent = 'Bitte gib eine gültige Anzahl an Fragen ein.';
+        errorEl.textContent = t('entryErrorQuestionCount');
         return;
       }
       questionCount = Math.min(parsed, 99);
       questionCountInput.value = String(questionCount);
     }
 
+    const customQuestions = collectCustomQuestions();
+    if (useOnlyCustomCheckbox?.checked && customQuestions.length === 0) {
+      errorEl.textContent = t('errorCustomRequired');
+      return;
+    }
+
     const response = await fetch('/lobbies', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ mode, questionCount })
+      body: JSON.stringify({
+        mode,
+        questionCount,
+        language: currentLanguage,
+        customQuestions,
+        useOnlyCustom: Boolean(useOnlyCustomCheckbox?.checked && customQuestions.length > 0)
+      })
     });
-    const data = await response.json();
-    if (data?.code) {
-      codeInput.value = data.code;
-      joinLobby();
+    const data = await response.json().catch(() => null);
+
+    if (!response.ok || !data?.code) {
+      const message = translateErrorCode(data?.errorCode, 'errorCreateLobby');
+      errorEl.textContent = message;
+      return;
     }
+
+    codeInput.value = data.code;
+    joinLobby();
   } catch (error) {
-    errorEl.textContent = 'Lobby konnte nicht erstellt werden.';
+    errorEl.textContent = t('errorCreateLobby');
   }
 }
 
@@ -289,13 +735,13 @@ function joinLobby() {
   const code = codeInput.value.trim().toUpperCase();
 
   if (!name) {
-    errorEl.textContent = 'Bitte gib deinen Namen ein.';
+    errorEl.textContent = t('entryErrorName');
     nameInput.focus();
     return;
   }
 
   if (!code || code.length !== 4) {
-    errorEl.textContent = 'Bitte gib einen gültigen 4-stelligen Code ein.';
+    errorEl.textContent = t('entryErrorCode');
     return;
   }
 
@@ -307,9 +753,13 @@ function joinLobby() {
     socket.connect();
   }
 
-  socket.emit('joinLobby', { code, name }, response => {
+  const savedSession = getSavedLobbySession();
+  const playerId = savedSession?.code === code ? savedSession.playerId : currentPlayerId;
+
+  socket.emit('joinLobby', { code, name, playerId }, response => {
     if (!response?.success) {
-      errorEl.textContent = response?.error || 'Beitritt fehlgeschlagen.';
+      const message = translateErrorCode(response?.errorCode, 'errorJoinFailed');
+      errorEl.textContent = message;
       joinBtn.disabled = false;
       createBtn.disabled = false;
       return;
@@ -317,6 +767,9 @@ function joinLobby() {
 
     currentLobbyCode = code;
     currentPlayerId = response.playerId || null;
+    if (currentPlayerId) {
+      saveLobbySession({ code, name, playerId: currentPlayerId });
+    }
     lobbyCodeEl.textContent = code;
     showLobby();
     answerInput.value = '';
@@ -327,6 +780,41 @@ function joinLobby() {
     lastResultsShown = false;
 
     if (response.lobby) {
+      lobbyLanguage = response.lobby?.settings?.language || currentLanguage;
+      setLanguage(lobbyLanguage, { updateSelect: true });
+      applyLobbyState(response.lobby);
+    }
+  });
+}
+
+function rejoinCurrentLobby() {
+  const code = currentLobbyCode || codeInput.value.trim().toUpperCase();
+  const name = nameInput.value.trim();
+
+  if (!code || !name || !currentPlayerId) {
+    return;
+  }
+
+  socket.emit('joinLobby', { code, name, playerId: currentPlayerId }, response => {
+    if (!response?.success) {
+      clearLobbySession();
+      currentLobbyCode = null;
+      currentPlayerId = null;
+      showEntry();
+      errorEl.textContent = translateErrorCode(response?.errorCode, 'errorJoinFailed');
+      joinBtn.disabled = false;
+      createBtn.disabled = false;
+      return;
+    }
+
+    currentLobbyCode = code;
+    currentPlayerId = response.playerId || currentPlayerId;
+    saveLobbySession({ code, name, playerId: currentPlayerId });
+    lobbyCodeEl.textContent = code;
+    showLobby();
+    if (response.lobby) {
+      lobbyLanguage = response.lobby?.settings?.language || currentLanguage;
+      setLanguage(lobbyLanguage, { updateSelect: true });
       applyLobbyState(response.lobby);
     }
   });
@@ -342,18 +830,18 @@ function updatePlayers(players = []) {
 
 function getPlayerStatus(player) {
   if (!player?.connected) {
-    return 'Offline';
+    return t('playerStatusOffline');
   }
 
   if (currentLobbyStatus === 'collecting') {
-    return player.hasSubmitted ? 'Antwort gesendet' : 'Antwort ausstehend';
+    return player.hasSubmitted ? t('playerStatusSubmitted') : t('playerStatusPending');
   }
 
   if (currentLobbyStatus === 'finished') {
-    return 'Spiel beendet';
+    return t('playerStatusFinished');
   }
 
-  return player.ready ? 'Bereit' : 'Wartet';
+  return player.ready ? t('playerStatusReady') : t('playerStatusWaiting');
 }
 
 function renderPlayers() {
@@ -437,7 +925,7 @@ function displayResults({ answers = [], correctAnswer, type }) {
       integer: typeof correctAnswer === 'number' && Number.isInteger(correctAnswer)
     });
     const answerText = formattedCorrect ?? correctAnswer;
-    correct.textContent = `Richtige Antwort: ${answerText}`;
+    correct.textContent = t('resultsCorrectAnswer', { answer: answerText });
     resultsArea.appendChild(correct);
   }
 
@@ -453,14 +941,14 @@ function displayResults({ answers = [], correctAnswer, type }) {
     if (entry.closest) {
       const badge = document.createElement('span');
       badge.className = 'badge good';
-      badge.textContent = 'Am nächsten dran';
+      badge.textContent = t('badgeClosest');
       div.appendChild(badge);
     }
 
     if (entry.farthest) {
       const badge = document.createElement('span');
       badge.className = 'badge bad';
-      badge.textContent = 'Am weitesten weg';
+      badge.textContent = t('badgeFarthest');
       div.appendChild(badge);
     }
 
@@ -469,7 +957,7 @@ function displayResults({ answers = [], correctAnswer, type }) {
 
   readyBtn.classList.remove('hidden');
   readyBtn.disabled = false;
-  readyBtn.textContent = 'Bereit für nächste Runde';
+  readyBtn.textContent = t('readyNextRound');
   lastResultsShown = true;
 }
 
@@ -489,6 +977,7 @@ function prepareSummary(summary) {
   if (pendingSummary) {
     highscoreBtn.classList.remove('hidden');
     highscoreBtn.disabled = false;
+    highscoreBtn.textContent = t('showHighscore');
   } else {
     highscoreBtn.classList.add('hidden');
     highscoreBtn.disabled = true;
@@ -512,24 +1001,28 @@ function renderSummary(summary) {
   summaryVisible = true;
 
   const heading = document.createElement('h3');
-  heading.textContent = 'Highscore des Spiels';
+  heading.textContent = t('summaryHeading');
   summaryArea.appendChild(heading);
 
   if (typeof data.roundsPlayed === 'number') {
     const roundsInfo = document.createElement('p');
     roundsInfo.className = 'hint';
     const formattedRounds = formatNumericValue(data.roundsPlayed, { integer: true });
-    roundsInfo.textContent = `Gespielte Runden: ${formattedRounds ?? data.roundsPlayed}`;
+    const roundsText = formattedRounds ?? data.roundsPlayed;
+    roundsInfo.textContent = t('summaryRounds', { count: roundsText });
     summaryArea.appendChild(roundsInfo);
   }
 
   if (data.reason) {
     const reasonText = document.createElement('p');
     reasonText.className = 'hint';
-    reasonText.textContent =
-      data.reason === 'vote'
-        ? 'Das Spiel wurde per Abstimmung beendet.'
-        : 'Das Spiel endete nach der festgelegten Rundenanzahl.';
+    if (data.reason === 'vote') {
+      reasonText.textContent = t('summaryReasonVote');
+    } else if (data.reason === 'no-questions') {
+      reasonText.textContent = t('summaryReasonNoQuestions');
+    } else {
+      reasonText.textContent = t('summaryReasonLimit');
+    }
     summaryArea.appendChild(reasonText);
   }
 
@@ -550,14 +1043,14 @@ function renderSummary(summary) {
 
       if (typeof entry.points === 'number') {
         const formattedPoints = formatNumericValue(entry.points, { integer: true });
-        parts.push(`Punkte: ${formattedPoints ?? entry.points}`);
+        parts.push(t('summaryPoints', { value: formattedPoints ?? entry.points }));
       }
 
       if (typeof entry.averageDeviation === 'number') {
         const formatted = formatDistance(entry.averageDeviation);
-        parts.push(`Ø Abweichung: ${formatted ?? entry.averageDeviation}`);
+        parts.push(t('summaryAverageDeviation', { value: formatted ?? entry.averageDeviation }));
       } else {
-        parts.push('Ø Abweichung: –');
+        parts.push(t('summaryAverageDeviationNone'));
       }
 
       details.textContent = parts.join(' | ');
@@ -570,7 +1063,7 @@ function renderSummary(summary) {
   } else {
     const empty = document.createElement('p');
     empty.className = 'hint';
-    empty.textContent = 'Keine gültigen Antworten verfügbar.';
+    empty.textContent = t('summaryEmpty');
     summaryArea.appendChild(empty);
   }
 }
@@ -579,6 +1072,17 @@ function applyLobbyState(state) {
   if (!state) return;
 
   currentLobbyStatus = state.status || 'waiting';
+  const currentPlayer = Array.isArray(state.players) && currentPlayerId
+    ? state.players.find(player => player.id === currentPlayerId)
+    : null;
+  if (currentLobbyStatus === 'waiting') {
+    readySent = Boolean(currentPlayer?.ready);
+  }
+
+  if (!lobbyLanguage && state.settings?.language) {
+    lobbyLanguage = state.settings.language;
+    setLanguage(lobbyLanguage, { updateSelect: true });
+  }
 
   if (Array.isArray(state.players)) {
     updatePlayers(state.players);
@@ -599,7 +1103,9 @@ function applyLobbyState(state) {
 
   if (settings.mode === 'unlimited' && currentLobbyStatus !== 'finished') {
     voteBtn.classList.remove('hidden');
-    const label = endVote ? `Spiel beenden (${endVote.count}/${endVote.required})` : 'Spiel beenden (Abstimmung)';
+    const label = endVote
+      ? t('voteLabelWithCount', { count: endVote.count, required: endVote.required })
+      : t('voteLabel');
     voteBtn.textContent = label;
     const hasVoted = Array.isArray(endVote?.voterIds) && currentPlayerId ? endVote.voterIds.includes(currentPlayerId) : false;
     voteBtn.disabled = hasVoted;
@@ -616,12 +1122,16 @@ function applyLobbyState(state) {
     resultsArea.classList.add('hidden');
     summaryArea.classList.add('hidden');
     prepareSummary(null);
-    if (!answerSubmitted) {
+    answerSubmitted = Boolean(currentPlayer?.hasSubmitted);
+    if (answerSubmitted) {
+      answerInput.disabled = true;
+      answerHint.textContent = t('answerSent');
+    } else {
       answerInput.disabled = false;
       answerHint.textContent = '';
     }
     readyBtn.classList.add('hidden');
-    statusMessage = 'Runde läuft – gib deine Antwort ein!';
+    statusMessage = t('statusCollecting');
   } else if (currentLobbyStatus === 'waiting') {
     prepareSummary(null);
     questionArea.classList.add('hidden');
@@ -630,13 +1140,17 @@ function applyLobbyState(state) {
     if (!readySent) {
       readyBtn.classList.remove('hidden');
       readyBtn.disabled = false;
-      readyBtn.textContent = 'Bereit zum Start';
+      readyBtn.textContent = t('readyStart');
+    } else {
+      readyBtn.classList.remove('hidden');
+      readyBtn.disabled = true;
+      readyBtn.textContent = t('readyConfirmed');
     }
-    statusMessage = 'Warte auf den Start der Runde.';
+    statusMessage = t('statusWaiting');
   } else if (currentLobbyStatus === 'results' && state.lastResults && !lastResultsShown) {
     prepareSummary(null);
     displayResults(state.lastResults);
-    statusMessage = 'Runde beendet. Klicke auf "Bereit" um fortzufahren.';
+    statusMessage = t('statusResults');
   } else if (currentLobbyStatus === 'finished') {
     questionArea.classList.add('hidden');
     readyBtn.classList.add('hidden');
@@ -646,14 +1160,17 @@ function applyLobbyState(state) {
     answerInput.disabled = true;
     answerHint.textContent = '';
     prepareSummary(state.finalSummary || null);
-    statusMessage = pendingSummary
-      ? 'Spiel beendet. Klicke auf „Highscore anzeigen“, um die Rangliste zu sehen.'
-      : 'Spiel beendet.';
+    statusMessage = pendingSummary ? t('statusFinishedWithSummary') : t('statusFinished');
   }
 
   if (endVote && currentLobbyStatus !== 'finished') {
-    const voterNames = Array.isArray(endVote.voterNames) && endVote.voterNames.length > 0 ? ` – ${endVote.voterNames.join(', ')}` : '';
-    const voteMessage = `Stimmen für Spielende: ${endVote.count}/${endVote.required}${voterNames}`;
+    const namesList = Array.isArray(endVote.voterNames) ? endVote.voterNames.filter(Boolean) : [];
+    const namesSuffix = namesList.length > 0 ? t('voteStatusNames', { names: namesList.join(', ') }) : '';
+    const voteMessage = t('voteStatus', {
+      count: endVote.count,
+      required: endVote.required,
+      names: namesSuffix
+    });
     statusMessage = statusMessage ? `${statusMessage} ${voteMessage}` : voteMessage;
   }
 
@@ -669,40 +1186,20 @@ createBtn.addEventListener('click', createLobby);
 modeFixedRadio.addEventListener('change', updateQuestionModeUI);
 modeUnlimitedRadio.addEventListener('change', updateQuestionModeUI);
 
-answerInput.addEventListener('input', () => {
-  const rawValue = answerInput.value;
-  const selectionStart = answerInput.selectionStart ?? rawValue.length;
-  const selectionEnd = answerInput.selectionEnd ?? selectionStart;
-  const digitsBeforeStart = countDigitsBeforeIndex(rawValue, selectionStart);
-  const digitsBeforeEnd = countDigitsBeforeIndex(rawValue, selectionEnd);
-  const { formatted } = parseAnswerInputValue(rawValue);
+if (languageSelect) {
+  languageSelect.addEventListener('change', () => {
+    setLanguage(languageSelect.value, { updateSelect: false });
+  });
+}
 
-  if (formatted !== rawValue) {
-    answerInput.value = formatted;
-  }
-
-  if (document.activeElement === answerInput) {
-    const updatedValue = answerInput.value;
-    const newStart = findCaretPositionForDigitIndex(updatedValue, digitsBeforeStart);
-    const newEnd = findCaretPositionForDigitIndex(updatedValue, digitsBeforeEnd);
-    const applyCaret = () => {
-      try {
-        answerInput.setSelectionRange(newStart, newEnd);
-      } catch (error) {
-        // Ignore selection errors in browsers that do not support setSelectionRange on unfocused inputs.
-      }
-    };
-
-    if (typeof window.requestAnimationFrame === 'function') {
-      window.requestAnimationFrame(applyCaret);
-    } else {
-      setTimeout(applyCaret, 0);
-    }
-  }
-});
+if (addCustomQuestionBtn) {
+  addCustomQuestionBtn.addEventListener('click', () => {
+    createCustomQuestionRow();
+  });
+}
 
 answerInput.addEventListener('blur', () => {
-  const { normalized } = parseAnswerInputValue(answerInput.value);
+  const normalized = normalizeNumericString(answerInput.value);
   if (!normalized) {
     answerInput.value = '';
     return;
@@ -710,7 +1207,10 @@ answerInput.addEventListener('blur', () => {
 
   const parsed = Number(normalized);
   if (Number.isFinite(parsed)) {
-    answerInput.value = formatNumericValue(parsed) ?? answerInput.value;
+    const formatted = formatNumericValue(parsed);
+    if (formatted) {
+      answerInput.value = formatted;
+    }
   }
 });
 
@@ -718,26 +1218,24 @@ answerForm.addEventListener('submit', event => {
   event.preventDefault();
   if (answerSubmitted) return;
   const rawAnswer = answerInput.value;
-  const trimmed = rawAnswer.trim();
-  if (!trimmed) {
-    answerHint.textContent = 'Bitte gib eine Zahl ein.';
+  const normalized = normalizeNumericString(rawAnswer);
+  if (!normalized) {
+    answerHint.textContent = t('answerRequired');
     return;
   }
-  const parsedAnswer = parseAnswerInputValue(rawAnswer);
-  if (!parsedAnswer.hasDigits || !parsedAnswer.normalized) {
-    answerHint.textContent = 'Bitte gib eine gültige Zahl ein.';
-    return;
-  }
-  const numericValue = Number(parsedAnswer.normalized);
+  const numericValue = Number(normalized);
   if (!Number.isFinite(numericValue)) {
-    answerHint.textContent = 'Bitte gib eine gültige Zahl ein.';
+    answerHint.textContent = t('answerInvalid');
     return;
   }
-  answerInput.value = parsedAnswer.formatted;
-  socket.emit('submitAnswer', parsedAnswer.normalized);
+  const formatted = formatNumericValue(numericValue);
+  if (formatted) {
+    answerInput.value = formatted;
+  }
+  socket.emit('submitAnswer', numericValue);
   answerSubmitted = true;
   answerInput.disabled = true;
-  answerHint.textContent = 'Antwort gesendet. Warte auf die anderen Spieler…';
+  answerHint.textContent = t('answerSent');
 });
 
 readyBtn.addEventListener('click', () => {
@@ -745,11 +1243,22 @@ readyBtn.addEventListener('click', () => {
   socket.emit('playerReady');
   readySent = true;
   readyBtn.disabled = true;
-  readyBtn.textContent = 'Bereit!';
+  readyBtn.textContent = t('readyConfirmed');
 });
 
 leaveBtn.addEventListener('click', () => {
-  window.location.reload();
+  clearLobbySession();
+  currentLobbyCode = null;
+  currentPlayerId = null;
+  if (socket.connected) {
+    const reloadTimer = window.setTimeout(() => window.location.reload(), 500);
+    socket.emit('leaveLobby', () => {
+      window.clearTimeout(reloadTimer);
+      window.location.reload();
+    });
+  } else {
+    window.location.reload();
+  }
 });
 
 voteBtn.addEventListener('click', () => {
@@ -758,8 +1267,9 @@ voteBtn.addEventListener('click', () => {
   socket.emit('voteEndGame', response => {
     if (!response?.success) {
       voteBtn.disabled = false;
-      if (response?.error) {
-        setStatus(response.error);
+      const message = translateErrorCode(response?.errorCode, 'voteNotAllowed');
+      if (message) {
+        setStatus(message);
       }
     }
   });
@@ -771,9 +1281,15 @@ highscoreBtn.addEventListener('click', () => {
 });
 
 socket.on('connect_error', () => {
-  errorEl.textContent = 'Verbindung fehlgeschlagen.';
+  errorEl.textContent = t('connectionFailed');
   joinBtn.disabled = false;
   createBtn.disabled = false;
+});
+
+socket.on('connect', () => {
+  if (currentLobbyCode && currentPlayerId) {
+    rejoinCurrentLobby();
+  }
 });
 
 socket.on('lobbyUpdate', state => {
@@ -786,7 +1302,7 @@ socket.on('playersUpdate', players => {
 
 socket.on('roundStarted', payload => {
   questionText.textContent = payload.question;
-  setStatus('Runde läuft – gib deine Antwort ein!');
+  setStatus(t('statusCollecting'));
   resetRoundUI();
   currentLobbyStatus = 'collecting';
   document.body.classList.add('round-active');
@@ -808,7 +1324,7 @@ socket.on('roundResults', payload => {
   document.body.classList.remove('round-active');
   lobbyScreen.classList.remove('round-active');
   renderPlayers();
-  setStatus('Runde beendet. Klicke auf "Bereit" um fortzufahren.');
+  setStatus(t('statusResults'));
 });
 
 socket.on('gameSummary', summary => {
@@ -816,12 +1332,22 @@ socket.on('gameSummary', summary => {
   prepareSummary(summary);
   document.body.classList.remove('round-active');
   lobbyScreen.classList.remove('round-active');
-  const message = pendingSummary
-    ? 'Spiel beendet. Klicke auf „Highscore anzeigen“, um die Rangliste zu sehen.'
-    : 'Spiel beendet.';
+  const message = pendingSummary ? t('statusFinishedWithSummary') : t('statusFinished');
   setStatus(message);
   renderPlayers();
 });
 
+setLanguage(languageSelect?.value || currentLanguage);
 updateQuestionModeUI();
 showEntry();
+
+const savedLobbySession = getSavedLobbySession();
+if (savedLobbySession) {
+  currentLobbyCode = savedLobbySession.code;
+  currentPlayerId = savedLobbySession.playerId;
+  nameInput.value = savedLobbySession.name;
+  codeInput.value = savedLobbySession.code;
+  joinBtn.disabled = true;
+  createBtn.disabled = true;
+  socket.connect();
+}

@@ -17,19 +17,33 @@
   <body>
     <main class="app">
       <section id="entry-screen" class="card">
-        <img src="/logo.png" alt="Näher Draan Logo" class="app-logo" />
-        <h1 class="visually-hidden">Näher Draan</h1>
-        <p class="tagline">Tritt einer Lobby bei und zeige dein Schätz-Talent!</p>
+        <img src="/logo.png" alt="Näher Draan Logo" class="app-logo" data-i18n-alt="logoAlt" />
+        <h1 class="visually-hidden" data-i18n="appTitle">Näher Draan</h1>
+        <p class="tagline" data-i18n="tagline">Tritt einer Lobby bei und zeige dein Schätz-Talent!</p>
         <div class="form-group">
-          <label for="name-input">Dein Name</label>
-          <input id="name-input" type="text" maxlength="18" placeholder="Spieler" required />
+          <label for="name-input" data-i18n="nameLabel">Dein Name</label>
+          <input
+            id="name-input"
+            type="text"
+            maxlength="18"
+            placeholder="Spieler"
+            data-i18n-placeholder="namePlaceholder"
+            required
+          />
         </div>
         <div class="form-group">
-          <label for="code-input">Lobby-Code</label>
-          <input id="code-input" type="text" maxlength="4" placeholder="ABCD" />
+          <label for="code-input" data-i18n="codeLabel">Lobby-Code</label>
+          <input id="code-input" type="text" maxlength="4" placeholder="ABCD" data-i18n-placeholder="codePlaceholder" />
+        </div>
+        <div class="form-group">
+          <label for="language-select" data-i18n="languageLabel">Sprache</label>
+          <select id="language-select">
+            <option value="de" data-i18n-option="languageOptionDe">Deutsch</option>
+            <option value="en" data-i18n-option="languageOptionEn">English</option>
+          </select>
         </div>
         <fieldset class="form-group" id="round-options">
-          <legend>Rundenmodus</legend>
+          <legend data-i18n="modeLegend">Rundenmodus</legend>
           <label class="option-row">
             <input
               type="radio"
@@ -38,10 +52,10 @@
               value="fixed"
               checked
             />
-            <span>Feste Anzahl von Fragen</span>
+            <span data-i18n="modeFixedLabel">Feste Anzahl von Fragen</span>
           </label>
           <div class="option-nested" id="fixed-config">
-            <label for="question-count">Anzahl der Fragen</label>
+            <label for="question-count" data-i18n="modeFixedCountLabel">Anzahl der Fragen</label>
             <input
               id="question-count"
               type="number"
@@ -53,12 +67,29 @@
           </div>
           <label class="option-row">
             <input type="radio" name="question-mode" id="mode-unlimited" value="unlimited" />
-            <span>Unbegrenzt – Spielende per Abstimmung</span>
+            <span data-i18n="modeUnlimitedLabel">Unbegrenzt – Spielende per Abstimmung</span>
           </label>
         </fieldset>
+        <section id="custom-questions-section" class="custom-questions">
+          <div class="custom-questions-header">
+            <h2 data-i18n="customQuestionsHeading">Eigene Fragen</h2>
+            <p class="hint" data-i18n="customQuestionsDescription">
+              Füge eigene Fragen hinzu, um eine individuelle Runde zu spielen.
+            </p>
+          </div>
+          <div id="custom-questions-list" class="custom-question-list"></div>
+          <button id="add-custom-question-btn" class="secondary" type="button" data-i18n="addCustomQuestion">
+            Eigene Frage hinzufügen
+          </button>
+          <label class="option-row custom-only-option">
+            <input type="checkbox" id="use-only-custom" />
+            <span data-i18n="useOnlyCustomLabel">Nur eigene Fragen verwenden</span>
+          </label>
+          <p class="hint" data-i18n="customQuestionHint">Gib eine Frage und die korrekte Zahl ein.</p>
+        </section>
         <div class="actions">
-          <button id="join-btn" class="primary">Lobby beitreten</button>
-          <button id="create-btn" class="secondary">Neue Lobby erstellen</button>
+          <button id="join-btn" class="primary" data-i18n="joinButton">Lobby beitreten</button>
+          <button id="create-btn" class="secondary" data-i18n="createButton">Neue Lobby erstellen</button>
         </div>
         <p id="entry-error" class="error" role="alert"></p>
       </section>
@@ -66,16 +97,17 @@
       <section id="lobby-screen" class="card hidden">
         <div class="lobby-top">
           <header class="lobby-header">
-            <span class="lobby-code" aria-label="Lobby-Code">
-              <span class="visually-hidden">Lobby-Code:</span>
+            <span class="lobby-code" aria-label="Lobby-Code" data-i18n-aria-label="codeLabel">
+              <span class="visually-hidden" data-i18n="codeLabel">Lobby-Code:</span>
               <span id="lobby-code"></span>
             </span>
-            <img src="/logo.png" alt="Näher Draan Logo" class="lobby-logo" />
+            <img src="/logo.png" alt="Näher Draan Logo" class="lobby-logo" data-i18n-alt="logoAlt" />
             <button
               id="leave-btn"
               class="link icon-button"
               type="button"
               aria-label="Lobby verlassen"
+              data-i18n-aria-label="leaveLobby"
             >
               <svg
                 viewBox="0 0 24 24"
@@ -87,7 +119,7 @@
                   d="M4.75 4A1.75 1.75 0 0 1 6.5 2.25h6.75A1.75 1.75 0 0 1 15 4v4.25a.75.75 0 0 1-1.5 0V4c0-.138-.112-.25-.25-.25H6.5a.25.25 0 0 0-.25.25v16c0 .138.112.25.25.25h6.75c.138 0 .25-.112.25-.25v-4.25a.75.75 0 0 1 1.5 0V20a1.75 1.75 0 0 1-1.75 1.75H6.5A1.75 1.75 0 0 1 4.75 20V4Zm12.47 6.47a.75.75 0 0 0-1.06 1.06l1.72 1.72H11a.75.75 0 0 0 0 1.5h6.88l-1.72 1.72a.75.75 0 1 0 1.06 1.06l3-3a.75.75 0 0 0 0-1.06l-3-3Z"
                 />
               </svg>
-              <span class="visually-hidden">Lobby verlassen</span>
+              <span class="visually-hidden" data-i18n="leaveLobby">Lobby verlassen</span>
             </button>
           </header>
           <div class="players" id="player-list"></div>
@@ -104,18 +136,21 @@
                 autocomplete="off"
                 required
                 placeholder="Deine Antwort"
+                data-i18n-placeholder="answerPlaceholder"
               />
-              <button type="submit" class="primary">Antwort senden</button>
+              <button type="submit" class="primary" data-i18n="submitAnswer">Antwort senden</button>
             </form>
             <p id="answer-hint" class="hint"></p>
           </div>
           <div id="results-area" class="hidden"></div>
           <div id="summary-area" class="hidden"></div>
-          <button id="show-highscore-btn" type="button" class="secondary hidden">
+          <button id="show-highscore-btn" type="button" class="secondary hidden" data-i18n="showHighscore">
             Highscore anzeigen
           </button>
-          <button id="ready-btn" class="primary hidden" type="button">Bereit für nächste Runde</button>
-          <button id="end-vote-btn" class="secondary hidden" type="button">
+          <button id="ready-btn" class="primary hidden" type="button" data-i18n="readyNextRound">
+            Bereit für nächste Runde
+          </button>
+          <button id="end-vote-btn" class="secondary hidden" type="button" data-i18n="voteLabel">
             Spiel beenden (Abstimmung)
           </button>
         </div>
