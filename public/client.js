@@ -47,7 +47,6 @@ const languageConfigs = {
 const translations = {
   de: {
     appTitle: 'Näher Draan',
-    tagline: 'Tritt einer Lobby bei und zeige dein Schätz-Talent!',
     nameLabel: 'Dein Name',
     namePlaceholder: 'Spieler',
     codeLabel: 'Lobby-Code',
@@ -126,7 +125,6 @@ const translations = {
   },
   en: {
     appTitle: 'Closer Game',
-    tagline: 'Join a lobby and show off your estimation skills!',
     nameLabel: 'Your name',
     namePlaceholder: 'Player',
     codeLabel: 'Lobby code',
