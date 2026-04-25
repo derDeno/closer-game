@@ -114,6 +114,24 @@ h1,
   margin-top: -0.5rem;
 }
 
+.entry-mode-select,
+.entry-form-panel,
+.entry-mode-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.entry-choice {
+  width: 100%;
+  min-height: 4.25rem;
+  font-size: 1.15rem;
+}
+
+.entry-back {
+  align-self: flex-start;
+}
+
 .form-group {
   display: flex;
   flex-direction: column;
@@ -346,12 +364,6 @@ button:disabled {
 
 body.round-active .stage {
   justify-content: center;
-}
-
-#status-area {
-  min-height: 1.5rem;
-  color: #cbd5f5;
-  text-align: center;
 }
 
 .player-card {
