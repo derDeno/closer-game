@@ -159,12 +159,26 @@ function generateLobbyCode() {
   return code;
 }
 
-function generatePlayerId(lobby) {
+function normalizePlayerId(value) {
+  const id = typeof value === 'string' ? value.trim() : '';
+  return /^[a-zA-Z0-9:_-]{8,80}$/.test(id) ? id : '';
+}
+
+function generatePlayerId(lobby, preferredId = '') {
+  if (preferredId && !lobby.players[preferredId]) {
+    return preferredId;
+  }
+
   let id = '';
   do {
     id = crypto.randomUUID();
   } while (lobby.players[id]);
   return id;
+}
+
+function findDisconnectedPlayerByName(lobby, name) {
+  const matches = Object.values(lobby.players).filter(player => !player.connected && player.name === name);
+  return matches.length === 1 ? matches[0] : null;
 }
 
 function pickQuestion(lobby) {
@@ -606,8 +620,11 @@ io.on('connection', socket => {
 
     const trimmedName = String(name || '').trim().slice(0, 18);
     const displayName = trimmedName.length > 0 ? trimmedName : 'Spieler';
-    const requestedPlayerId = typeof playerId === 'string' ? playerId.trim() : '';
+    const requestedPlayerId = normalizePlayerId(playerId);
     let player = requestedPlayerId ? lobby.players[requestedPlayerId] : null;
+    if (!player) {
+      player = findDisconnectedPlayerByName(lobby, displayName);
+    }
 
     if (player) {
       const previousSocketId = player.socketId;
@@ -629,7 +646,7 @@ io.on('connection', socket => {
         return;
       }
 
-      const id = generatePlayerId(lobby);
+      const id = generatePlayerId(lobby, requestedPlayerId);
       player = {
         id,
         socketId: socket.id,
@@ -655,7 +672,8 @@ io.on('connection', socket => {
 
     if (!player || player.hasSubmitted) return;
 
-    player.answer = typeof answer === 'string' ? answer.trim() : answer;
+    const parsedAnswer = parseNumericAnswer(answer, lobby.language);
+    player.answer = parsedAnswer ?? (typeof answer === 'string' ? answer.trim() : answer);
     player.hasSubmitted = true;
 
     io.to(lobby.code).emit('answerReceived', {

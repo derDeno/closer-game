@@ -305,6 +305,12 @@ button:disabled {
   align-items: center;
   gap: clamp(0.75rem, 2vw, 1.5rem);
   width: 100%;
+  position: sticky;
+  top: clamp(0.75rem, 2vw, 1.5rem);
+  z-index: 10;
+  padding: 0.4rem 0;
+  background: rgba(15, 23, 42, 0.94);
+  backdrop-filter: blur(12px);
 }
 
 .lobby-header .lobby-code {
@@ -412,6 +418,14 @@ body.round-active .stage {
 .hint {
   color: #94a3b8;
   min-height: 1rem;
+}
+
+.correct-answer {
+  margin: 0;
+  color: #f8fafc;
+  font-size: 1.15rem;
+  font-weight: 700;
+  line-height: 1.35;
 }
 
 #results-area {
